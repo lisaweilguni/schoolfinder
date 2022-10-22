@@ -65,8 +65,8 @@ export default function Header() {
               <Image
                 src="/images/logo_white.png"
                 alt="Schoolfinder logo"
-                width="152.4"
-                height="42.3"
+                width="168.9"
+                height="46.8"
               />
             </a>
           </Link>
