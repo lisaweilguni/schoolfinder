@@ -1,5 +1,6 @@
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
+import { big, darkText, lightText, middle } from '../utils/sharedStyles';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -17,17 +18,33 @@ function MyApp({ Component, pageProps }) {
           *::after {
             box-sizing: border-box;
           }
+
           body {
-            /* font-family: 'Khula', sans-serif; */
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-              Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-              sans-serif;
-            background-color: white;
-            color: #333333;
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: ${darkText};
             margin: 0;
-            line-height: 20px;
             font-size: 16px;
             min-height: 100vh;
+          }
+
+          h1 {
+            font-family: 'Khula', sans-serif;
+            font-size: ${big};
+            color: ${darkText};
+            margin: 0;
+          }
+
+          h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: ${middle};
+            color: ${lightText};
+          }
+
+          h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: '1.125rem';
+            color: ${lightText};
           }
         `}
       />
