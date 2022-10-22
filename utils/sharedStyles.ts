@@ -20,7 +20,7 @@ export const big = '3rem';
 
 // Buttons
 export const defaultButton = css`
-  display: table-cell;
+  display: inline-block;
   background-color: ${lightPurple};
   color: ${white};
   text-transform: uppercase;
@@ -29,11 +29,9 @@ export const defaultButton = css`
   border: 1px solid ${darkPurple};
   letter-spacing: 2px;
   cursor: pointer;
-  height: 40px;
   width: 162px;
-  vertical-align: middle;
+  padding: 10px 0;
   transition: 0.2s ease-in-out;
-  vertical-align: middle;
 
   :hover {
     background-color: ${darkPurple};
@@ -51,7 +49,7 @@ export const defaultButton = css`
 `;
 
 export const secondaryButton = css`
-  display: table-cell;
+  display: inline-block;
   background-color: ${white};
   color: ${darkText};
   text-transform: uppercase;
@@ -61,9 +59,8 @@ export const secondaryButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  height: 40px;
+  padding: 10px 0;
   width: 162px;
-  vertical-align: middle;
 
   :hover {
     background-color: ${orange};
@@ -84,7 +81,7 @@ export const secondaryButton = css`
 `;
 
 export const loginButton = css`
-  display: table-cell;
+  display: inline-block;
   background-color: ${white};
   color: ${darkText};
   text-transform: uppercase;
@@ -94,12 +91,11 @@ export const loginButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  height: 40px;
   width: 148px;
-  vertical-align: middle;
+  padding: 10px 0;
 
   :hover {
-    background-color: ${orange};
+    background-color: ${darkBlue};
     color: ${white};
   }
 
@@ -117,7 +113,7 @@ export const loginButton = css`
 `;
 
 export const formButton = css`
-  display: table-cell;
+  display: inline-block;
   background-color: ${lightPurple};
   color: ${white};
   text-transform: uppercase;
@@ -126,11 +122,9 @@ export const formButton = css`
   border: 1px solid ${darkPurple};
   letter-spacing: 2px;
   cursor: pointer;
-  height: 40px;
+  padding: 10px 0;
   width: 400px;
-  vertical-align: middle;
   transition: 0.2s ease-in-out;
-  vertical-align: middle;
 
   :hover {
     background-color: ${darkPurple};
@@ -148,7 +142,7 @@ export const formButton = css`
 `;
 
 export const addSchoolButtonSmall = css`
-  display: table-cell;
+  display: inline-block;
   background-color: ${lightPurple};
   color: ${white};
   text-transform: uppercase;
@@ -157,11 +151,9 @@ export const addSchoolButtonSmall = css`
   border: 1px solid ${darkPurple};
   letter-spacing: 2px;
   cursor: pointer;
-  height: 40px;
+  padding: 10px 0;
   width: 230px;
-  vertical-align: middle;
   transition: 0.2s ease-in-out;
-  vertical-align: middle;
 
   :hover {
     background-color: ${darkPurple};
@@ -179,7 +171,7 @@ export const addSchoolButtonSmall = css`
 `;
 
 export const deleteAccountButton = css`
-  display: table-cell;
+  display: inline-block;
   background-color: ${white};
   color: ${darkText};
   text-transform: uppercase;
@@ -189,9 +181,8 @@ export const deleteAccountButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  height: 40px;
+  padding: 10px 0;
   width: 230px;
-  vertical-align: middle;
 
   :hover {
     background-color: ${orange};
@@ -211,8 +202,7 @@ export const deleteAccountButton = css`
   }
 `;
 
-// Text fields
-
+// Text boxes
 export const categoryBox = css`
   background-color: ${white};
   color: ${darkText};
@@ -220,14 +210,12 @@ export const categoryBox = css`
   text-align: center;
   border-radius: 5px;
   border: 1px solid ${lightPurple};
-  height: 40px;
+  padding: 8px 0;
   width: 142px;
-  display: table-cell;
-  vertical-align: middle;
+  display: inline-block;
 `;
 
 // Input fields
-
 export const inputFieldLarge = css`
   display: flex;
   flex-direction: column;
@@ -277,4 +265,11 @@ export const inputFieldSmall = css`
     transition: all 300ms ease;
     border: 2px solid ${darkPurple};
   }
+`;
+
+// Layout
+export const mainLayout = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;

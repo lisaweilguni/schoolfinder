@@ -1,5 +1,6 @@
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
+import Layout from '../components/Layout';
 import { big, darkText, lightText, middle } from '../utils/sharedStyles';
 
 function MyApp({ Component, pageProps }) {
@@ -44,19 +45,13 @@ function MyApp({ Component, pageProps }) {
           h3 {
             font-family: 'Inter', sans-serif;
             font-size: '1.125rem';
-            color: ${lightText};
+            color: ${darkText};
           }
         `}
       />
-      {/* <CookieBanner /> */}
-      {/* <Layout>
-        {/*
-          The "Component" component refers to
-          the current page that is being rendered
-        */}
-      {/* <Component {...pageProps} /> */}
-      {/* </Layout> */}
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }

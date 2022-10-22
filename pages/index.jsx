@@ -1,15 +1,25 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
-import {
-  categoryBox,
-  defaultButton,
-  formButton,
-  inputFieldLarge,
-  inputFieldSmall,
-  loginButton,
-  secondaryButton,
-} from '../utils/sharedStyles';
+import { defaultButton, lightText, mainLayout } from '../utils/sharedStyles';
+
+const heroPageLayoutStyles = css`
+  margin-top: 60px;
+`;
+
+const titleSectionStyles = css`
+  max-width: 45%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const subTitleStyles = css`
+  color: ${lightText};
+  max-width: 70%;
+  line-height: 35px;
+  margin-bottom: 20px;
+`;
 
 export default function Home() {
   return (
@@ -19,38 +29,27 @@ export default function Home() {
         <meta name="description" content="Welcome to schoolfinder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <h1>Hello</h1>
-      <Link href="/search">
-        <a css={defaultButton}>Search</a>
-      </Link>
-      <br />
-      <br />
-      <Link href="/search">
-        <a css={secondaryButton}>Learn more</a>
-      </Link>
-      <br />
-      <br />
-      <Link href="/search">
-        <a css={loginButton}>Login</a>
-      </Link>
-      <br />
-      <br />
-      <Link href="/search">
-        <a css={formButton}>Sign up</a>
-      </Link>
-      <br />
-      <br />
-      <div css={categoryBox}>Design</div>
-      <br />
-      <br />
-      <div css={inputFieldLarge}>
-        <label htmlFor="first-name">First name</label>
-        <input id="first-name" />
-      </div>
-      <div css={inputFieldSmall}>
-        <label htmlFor="first-name">Your location</label>
-        <input id="first-name" />
+      <div css={heroPageLayoutStyles}>
+        <div css={mainLayout}>
+          <div css={titleSectionStyles}>
+            <h1>Supercharge your high school search.</h1>
+            <div css={subTitleStyles}>
+              Find your path in the jungle of high schools. Major life decisions
+              made easier.
+            </div>
+            <Link href="/schools/search">
+              <a css={defaultButton}>Search</a>
+            </Link>
+          </div>
+          <div>
+            <Image
+              src="/images/home.png"
+              alt="Illustration of a city with location icon in the middle"
+              width="813"
+              height="433"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

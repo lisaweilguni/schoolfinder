@@ -1,11 +1,55 @@
 import { css } from '@emotion/react';
+import Image from 'next/image';
 import Link from 'next/link';
+import {
+  darkBlue,
+  darkPurple,
+  darkText,
+  lightPurple,
+  loginButton,
+  white,
+} from '../utils/sharedStyles';
+
+const headerStyles = css`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  background: ${lightPurple};
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  padding-left: 170px;
+  padding-right: 170px;
+  height: 80px;
+  font-size: 0.9rem;
+`;
+
+const linkStyles = css`
+  text-decoration: none;
+  color: ${white};
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+
+  :hover {
+    color: ${darkText};
+    transition: 0.2s ease-in-out;
+  }
+`;
+
+const logoStyles = css`
+  align-items: center;
+  margin-top: 18px;
+`;
 
 const navStyles = css`
-  background-color: #ddd;
-  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  gap: 70px;
+  align-items: center;
   margin: 20px 10px;
   padding: 10px;
+
   > a + a {
     margin-left: 13px;
   }
@@ -14,12 +58,31 @@ const navStyles = css`
 export default function Header() {
   return (
     <header>
-      <nav css={navStyles}>
-        <Link href="/">Home</Link>
-        <Link href="/animals">Animals</Link>
-        <Link href="/about">About</Link>
-        <Link href="/fruits">Fruits</Link>
-      </nav>
+      <div css={headerStyles}>
+        <div css={logoStyles}>
+          <Link href="/">
+            <a>
+              <Image
+                src="/images/logo_white.png"
+                alt="Schoolfinder logo"
+                width="152.4"
+                height="42.3"
+              />
+            </a>
+          </Link>
+        </div>
+        <nav css={navStyles}>
+          <Link href="/schools/">
+            <a css={linkStyles}>Search</a>
+          </Link>
+          <Link href="/about">
+            <a css={linkStyles}>About</a>
+          </Link>
+          <Link href="/about">
+            <a css={loginButton}>Login</a>
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 }
