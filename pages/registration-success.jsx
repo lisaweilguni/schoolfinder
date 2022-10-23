@@ -4,11 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   addSchoolButtonSmall,
-  defaultButton,
   deleteAccountButton,
   lightText,
   mainLayout,
-  middle,
 } from '../utils/sharedStyles';
 
 const titleSectionStyles = css`

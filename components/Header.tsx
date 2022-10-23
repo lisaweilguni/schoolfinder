@@ -5,7 +5,6 @@ import {
   darkText,
   lightPurple,
   loginButton,
-  small,
   white,
 } from '../utils/sharedStyles';
 
@@ -20,7 +19,6 @@ const headerStyles = css`
   padding-left: 170px;
   padding-right: 170px;
   height: 80px;
-  font-size: ${small};
 `;
 
 const linkStyles = css`
@@ -77,7 +75,7 @@ export default function Header() {
           <Link href="/about">
             <a css={linkStyles}>About</a>
           </Link>
-          <Link href="/about">
+          <Link href="/login">
             <a css={loginButton}>Login</a>
           </Link>
         </nav>

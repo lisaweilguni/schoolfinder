@@ -1,7 +1,13 @@
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import { big, darkText, lightText, middle } from '../utils/sharedStyles';
+import {
+  big,
+  darkText,
+  lightText,
+  middle,
+  middle2,
+} from '../utils/sharedStyles';
 
 function MyApp({ Component, pageProps }) {
   return (

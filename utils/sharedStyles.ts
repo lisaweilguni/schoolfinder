@@ -14,7 +14,7 @@ export const white = '#FFFFFF';
 export const beige = '#FBF7F7';
 
 // Font sizes
-export const small = '0.9rem';
+export const small = '0.75rem';
 export const normal = '1rem';
 export const middle = '2rem';
 export const big = '3rem';
@@ -89,11 +89,12 @@ export const loginButton = css`
   text-align: center;
   border-radius: 5px;
   border: 1px solid ${grey};
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
   width: 148px;
   padding: 10px 0;
+  font-size: ${normal};
 
   :hover {
     background-color: ${darkBlue};
@@ -154,12 +155,12 @@ export const addSchoolButtonSmall = css`
   text-align: center;
   border-radius: 5px;
   border: 1px solid ${darkPurple};
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   cursor: pointer;
   padding: 10px 0;
   width: 230px;
   transition: 0.2s ease-in-out;
-  font-size: ${small};
+  font-size: ${normal};
 
   :hover {
     background-color: ${darkPurple};
@@ -184,12 +185,12 @@ export const deleteAccountButton = css`
   text-align: center;
   border-radius: 5px;
   border: 1px solid ${grey};
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
   padding: 10px 0;
   width: 230px;
-  font-size: ${small};
+  font-size: ${normal};
 
   :hover {
     background-color: ${orange};
