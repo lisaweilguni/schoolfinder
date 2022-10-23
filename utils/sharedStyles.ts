@@ -14,7 +14,8 @@ export const white = '#FFFFFF';
 export const beige = '#FBF7F7';
 
 // Font sizes
-export const small = '1em';
+export const small = '0.9rem';
+export const normal = '1rem';
 export const middle = '2rem';
 export const big = '3rem';
 

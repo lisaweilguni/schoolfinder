@@ -7,6 +7,7 @@ import {
   darkText,
   lightPurple,
   loginButton,
+  small,
   white,
 } from '../utils/sharedStyles';
 
@@ -21,7 +22,7 @@ const headerStyles = css`
   padding-left: 170px;
   padding-right: 170px;
   height: 80px;
-  font-size: 0.9rem;
+  font-size: ${small};
 `;
 
 const linkStyles = css`
