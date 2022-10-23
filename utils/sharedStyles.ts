@@ -126,6 +126,10 @@ export const formButton = css`
   padding: 10px 0;
   width: 400px;
   transition: 0.2s ease-in-out;
+  font-size: ${normal};
+  margin-top: 0.9rem;
+  margin-bottom: 0.9rem;
+  font-weight: light;
 
   :hover {
     background-color: ${darkPurple};
@@ -155,6 +159,7 @@ export const addSchoolButtonSmall = css`
   padding: 10px 0;
   width: 230px;
   transition: 0.2s ease-in-out;
+  font-size: ${small};
 
   :hover {
     background-color: ${darkPurple};
@@ -184,6 +189,7 @@ export const deleteAccountButton = css`
   transition: 0.2s ease-in-out;
   padding: 10px 0;
   width: 230px;
+  font-size: ${small};
 
   :hover {
     background-color: ${orange};
@@ -216,19 +222,21 @@ export const categoryBox = css`
   display: inline-block;
 `;
 
-// Input fields
+// Forms & Input Styles
 export const inputFieldLarge = css`
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  font-size: ${small};
 
   input {
     width: 400px;
-    height: 35px;
+    height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: transparent;
   }
+
   label {
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -238,7 +246,7 @@ export const inputFieldLarge = css`
     letter-spacing: 2px;
   }
   input:hover {
-    transition: all 300ms ease;
+    transition: 0.2s ease-in-out;
     border: 2px solid ${darkPurple};
   }
 `;
@@ -247,10 +255,11 @@ export const inputFieldSmall = css`
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  font-size: ${small};
 
   input {
     width: 200px;
-    height: 40px;
+    height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: transparent;
@@ -268,9 +277,27 @@ export const inputFieldSmall = css`
   }
 `;
 
+export const textBelowButtonStyles = css`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: ${small};
+  text-align: center;
+  justify-content: center;
+
+  a {
+    text-decoration: none;
+    color: ${darkPurple};
+  }
+
+  a:hover {
+    color: ${orange};
+  }
+`;
+
 // Layout
 export const mainLayout = css`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
