@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   defaultButton,
-  h1Styles,
   higherMarginTopLayout,
   lightText,
   mainLayout,
+  titleStyles,
 } from '../utils/sharedStyles';
 
 const titleSectionStyles = css`
@@ -34,7 +34,7 @@ export default function Home() {
       <div css={higherMarginTopLayout}>
         <div css={mainLayout}>
           <div css={titleSectionStyles}>
-            <h1 css={h1Styles}>Supercharge your high school search.</h1>
+            <h1 css={titleStyles}>Supercharge your high school search.</h1>
             <div css={subTitleStyles}>
               Find your path in the jungle of high schools. Major life decisions
               made easier.

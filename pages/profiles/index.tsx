@@ -12,8 +12,6 @@ import {
   mainLayout,
 } from '../../utils/sharedStyles';
 
-const profileDetailsStyles = css``;
-
 const profileInformationBox = css`
   display: flex;
   flex-direction: column;
@@ -29,7 +27,8 @@ const profileInformationBox = css`
 `;
 
 const imageStyles = css`
-  align-self: center;
+  display: flex;
+  align-items: end;
 `;
 
 const labelStyles = css`
@@ -59,7 +58,7 @@ export default function Profile() {
       </Head>
 
       <div css={mainLayout}>
-        <div css={profileDetailsStyles}>
+        <div>
           <h1 css={h1Styles}>Welcome, Lisa!</h1>
           <div css={profileInformationBox}>
             <div>

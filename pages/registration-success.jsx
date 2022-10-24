@@ -5,6 +5,8 @@ import Link from 'next/link';
 import {
   addSchoolButtonSmall,
   deleteAccountButton,
+  h1Styles,
+  higherMarginTopLayout,
   lightText,
   mainLayout,
 } from '../utils/sharedStyles';
@@ -37,29 +39,31 @@ export default function RegistrationSuccess() {
         <meta name="description" content="Registration successful" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div css={mainLayout}>
-        <div css={titleSectionStyles}>
-          <h1>Welcome, Lisa!</h1>
-          <div css={subTitleStyles}>
-            You've successfully created your account and everthing's set up to
-            add your school.
+      <div css={higherMarginTopLayout}>
+        <div css={mainLayout}>
+          <div css={titleSectionStyles}>
+            <h1 css={h1Styles}>Welcome, Lisa!</h1>
+            <div css={subTitleStyles}>
+              You've successfully created your account and everthing's set up to
+              add your school.
+            </div>
+            <div css={buttonSectionStyles}>
+              <Link href="/schools/addschool">
+                <a css={addSchoolButtonSmall}>Add your school</a>
+              </Link>
+              <Link href="/schools/">
+                <a css={deleteAccountButton}>View all schools</a>
+              </Link>
+            </div>
           </div>
-          <div css={buttonSectionStyles}>
-            <Link href="/schools/addschool">
-              <a css={addSchoolButtonSmall}>Add your school</a>
-            </Link>
-            <Link href="/schools/">
-              <a css={deleteAccountButton}>View all schools</a>
-            </Link>
+          <div>
+            <Image
+              src="/images/success.png"
+              alt="Illustration of a city with location icon in the middle"
+              width="535.8"
+              height="327.6"
+            />
           </div>
-        </div>
-        <div>
-          <Image
-            src="/images/success.png"
-            alt="Illustration of a city with location icon in the middle"
-            width="535.8"
-            height="327.6"
-          />
         </div>
       </div>
     </div>

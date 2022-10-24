@@ -18,33 +18,33 @@ export const white = '#FFFFFF';
 export const beige = '#FBF7F7';
 
 // Font sizes
-export const small = '0.75rem';
-export const normal = '1rem';
-export const middle = '2rem';
-export const big = '3rem';
+export const small = '0.875rem'; // 14px
+export const normal = '1rem'; // 16px
+export const middle = '2rem'; // 32px
+export const big = '3rem'; // 48px
 
 // Headings
-export const h1Styles = css`
+export const titleStyles = css`
+  font-family: 'Khula', sans-serif;
   margin: 0;
   font-weight: normal;
   font-size: ${big};
+`;
+
+export const h1Styles = css`
   font-family: 'Khula', sans-serif;
-  margin-bottom: 10px;
+  margin: 0;
+  font-weight: normal;
+  font-size: ${middle};
+  color: ${darkText};
+  margin-bottom: 15px;
 `;
 
 export const h2Styles = css`
   font-family: 'Inter', sans-serif;
   margin: 0;
-  font-weight: normal;
-  font-size: ${middle};
-  color: ${lightText};
-`;
-
-export const h3Styles = css`
-  font-family: 'Inter', sans-serif;
-  margin: 0;
   font-size: ${normal};
-  font-weight: 500;
+  font-weight: normal;
 `;
 
 // Buttons
@@ -61,7 +61,7 @@ export const defaultButton = css`
   width: 162px;
   padding: 10px 0;
   transition: 0.2s ease-in-out;
-  font-size: ${normal};
+  font-size: ${small};
   font-family: 'Inter', sans-serif;
 
   :hover {
@@ -92,7 +92,7 @@ export const secondaryButton = css`
   transition: 0.2s ease-in-out;
   padding: 10px 0;
   width: 162px;
-  font-size: ${normal};
+  font-size: ${small};
   font-family: 'Inter', sans-serif;
 
   :hover {
@@ -126,7 +126,7 @@ export const loginButton = css`
   transition: 0.2s ease-in-out;
   width: 148px;
   padding: 10px 0;
-  font-size: ${normal};
+  font-size: ${small};
   font-family: 'Inter', sans-serif;
 
   :hover {
@@ -192,9 +192,9 @@ export const addSchoolButtonSmall = css`
   letter-spacing: 1px;
   cursor: pointer;
   padding: 10px 0;
-  width: 200px;
+  width: 190px;
   transition: 0.2s ease-in-out;
-  font-size: ${normal};
+  font-size: ${small};
   font-family: 'Inter', sans-serif;
 
   :hover {
@@ -224,8 +224,8 @@ export const deleteAccountButton = css`
   cursor: pointer;
   transition: 0.2s ease-in-out;
   padding: 10px 0;
-  width: 200px;
-  font-size: ${normal};
+  width: 190px;
+  font-size: ${small};
   font-family: 'Inter', sans-serif;
 
   :hover {
@@ -292,7 +292,7 @@ export const inputFieldSmall = css`
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
-  font-size: ${normal};
+  font-size: ${small};
 
   input {
     width: 15vw;

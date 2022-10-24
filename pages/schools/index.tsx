@@ -8,9 +8,10 @@ import {
   defaultButton,
   grey,
   h1Styles,
-  h3Styles,
+  h2Styles,
   inputFieldSmall,
   secondaryButton,
+  small,
   white,
 } from '../../utils/sharedStyles';
 
@@ -48,6 +49,7 @@ const schoolPreviewBoxStyles = css`
   border-radius: 5px;
   box-shadow: 3px 3px 4px ${grey};
   padding: 20px 50px;
+  font-size: ${small};
 `;
 
 const schoolPreviewLeftStyles = css`
@@ -111,7 +113,7 @@ export default function Search() {
               />
             </div>
             <div css={schoolInfoStyles}>
-              <h3 css={h3Styles}>HTL Spengergasse</h3>
+              <h3 css={h2Styles}>HTL Spengergasse</h3>
               <div>Teststraße 36, 1050 Vienna</div>
               <div css={categorySectionStyles}>
                 <div css={categoryBox}>Design</div>

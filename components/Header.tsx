@@ -5,6 +5,7 @@ import {
   darkText,
   lightPurple,
   loginButton,
+  small,
   white,
 } from '../utils/sharedStyles';
 
@@ -19,6 +20,7 @@ const headerStyles = css`
   padding-left: 12vw;
   padding-right: 12vw;
   height: 80px;
+  font-size: ${small};
 `;
 
 const linkStyles = css`
@@ -35,8 +37,9 @@ const linkStyles = css`
 `;
 
 const logoStyles = css`
+  display: flex;
   align-items: center;
-  margin-top: 18px;
+  align-self: center;
 `;
 
 const navStyles = css`
@@ -62,8 +65,8 @@ export default function Header() {
               <Image
                 src="/images/logo_white.png"
                 alt="Schoolfinder logo"
-                width="168.9"
-                height="46.8"
+                width="140.75"
+                height="39"
               />
             </a>
           </Link>
