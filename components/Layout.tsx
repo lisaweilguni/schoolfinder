@@ -4,7 +4,7 @@ import Footer from './Footer';
 import Header from './Header';
 
 const mainStyles = css`
-  padding: 170px 170px;
+  padding: 22vh 12vw;
 `;
 
 type ChildrenProps = {

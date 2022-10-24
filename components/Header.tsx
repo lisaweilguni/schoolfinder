@@ -16,8 +16,8 @@ const headerStyles = css`
   position: fixed;
   z-index: 2;
   width: 100%;
-  padding-left: 170px;
-  padding-right: 170px;
+  padding-left: 12vw;
+  padding-right: 12vw;
   height: 80px;
 `;
 

@@ -2,7 +2,12 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { formButton, inputFieldLarge, mainLayout } from '../utils/sharedStyles';
+import {
+  formButton,
+  h1Styles,
+  inputFieldLarge,
+  mainLayout,
+} from '../utils/sharedStyles';
 
 const inputSectionStyles = css`
   max-width: 45%;
@@ -38,7 +43,7 @@ export default function AddSchool() {
             />
           </div>
           <div css={inputSectionStyles}>
-            <h1>Add your school</h1>
+            <h1 css={h1Styles}>Add your school</h1>
             <form>
               <div css={inputFieldLarge}>
                 <label htmlFor="school-name">Name</label>

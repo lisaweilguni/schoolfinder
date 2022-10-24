@@ -1,16 +1,20 @@
 import { css } from '@emotion/react';
 
-// Color Palette
+// Colour Palette
+
+// Main colours
 export const lightPurple = '#6C62FB';
 export const darkPurple = '#564EC9';
 export const orange = '#F39231';
 export const darkBlue = '#3F3D56';
 export const grey = '#A9A3A3';
 
+// Text colours
 export const darkText = '#161617';
 export const lightText = '#545454';
 export const white = '#FFFFFF';
 
+// Background colour
 export const beige = '#FBF7F7';
 
 // Font sizes
@@ -18,6 +22,30 @@ export const small = '0.75rem';
 export const normal = '1rem';
 export const middle = '2rem';
 export const big = '3rem';
+
+// Headings
+export const h1Styles = css`
+  margin: 0;
+  font-weight: normal;
+  font-size: ${big};
+  font-family: 'Khula', sans-serif;
+  margin-bottom: 10px;
+`;
+
+export const h2Styles = css`
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  font-weight: normal;
+  font-size: ${middle};
+  color: ${lightText};
+`;
+
+export const h3Styles = css`
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  font-size: ${normal};
+  font-weight: 500;
+`;
 
 // Buttons
 export const defaultButton = css`
@@ -33,6 +61,8 @@ export const defaultButton = css`
   width: 162px;
   padding: 10px 0;
   transition: 0.2s ease-in-out;
+  font-size: ${normal};
+  font-family: 'Inter', sans-serif;
 
   :hover {
     background-color: ${darkPurple};
@@ -62,9 +92,11 @@ export const secondaryButton = css`
   transition: 0.2s ease-in-out;
   padding: 10px 0;
   width: 162px;
+  font-size: ${normal};
+  font-family: 'Inter', sans-serif;
 
   :hover {
-    background-color: ${orange};
+    background-color: ${darkBlue};
     color: ${white};
   }
 
@@ -95,6 +127,7 @@ export const loginButton = css`
   width: 148px;
   padding: 10px 0;
   font-size: ${normal};
+  font-family: 'Inter', sans-serif;
 
   :hover {
     background-color: ${darkBlue};
@@ -125,12 +158,13 @@ export const formButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   padding: 10px 0;
-  width: 400px;
+  width: 27vw;
   transition: 0.2s ease-in-out;
   font-size: ${normal};
   margin-top: 0.9rem;
   margin-bottom: 0.9rem;
   font-weight: light;
+  font-family: 'Inter', sans-serif;
 
   :hover {
     background-color: ${darkPurple};
@@ -158,9 +192,10 @@ export const addSchoolButtonSmall = css`
   letter-spacing: 1px;
   cursor: pointer;
   padding: 10px 0;
-  width: 230px;
+  width: 200px;
   transition: 0.2s ease-in-out;
   font-size: ${normal};
+  font-family: 'Inter', sans-serif;
 
   :hover {
     background-color: ${darkPurple};
@@ -189,16 +224,17 @@ export const deleteAccountButton = css`
   cursor: pointer;
   transition: 0.2s ease-in-out;
   padding: 10px 0;
-  width: 230px;
+  width: 200px;
   font-size: ${normal};
+  font-family: 'Inter', sans-serif;
 
   :hover {
-    background-color: ${orange};
+    background-color: ${darkBlue};
     color: ${white};
   }
 
   :active {
-    background-color: ${darkBlue};
+    background-color: ${orange};
     color: ${white};
   }
 
@@ -231,7 +267,7 @@ export const inputFieldLarge = css`
   font-size: ${small};
 
   input {
-    width: 400px;
+    width: 27vw;
     height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
@@ -256,18 +292,19 @@ export const inputFieldSmall = css`
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
-  font-size: ${small};
+  font-size: ${normal};
 
   input {
-    width: 200px;
-    height: 30px;
+    width: 15vw;
+    height: 35px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
-    background-color: transparent;
+    background-color: ${white};
   }
   label {
     margin-bottom: 4px;
     letter-spacing: 1px;
+    text-align: left;
   }
   input::placeholder {
     letter-spacing: 2px;
@@ -301,4 +338,8 @@ export const mainLayout = css`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+`;
+
+export const higherMarginTopLayout = css`
+  margin-top: 60px;
 `;

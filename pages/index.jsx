@@ -2,11 +2,13 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { defaultButton, lightText, mainLayout } from '../utils/sharedStyles';
-
-const heroPageLayoutStyles = css`
-  margin-top: 60px;
-`;
+import {
+  defaultButton,
+  h1Styles,
+  higherMarginTopLayout,
+  lightText,
+  mainLayout,
+} from '../utils/sharedStyles';
 
 const titleSectionStyles = css`
   max-width: 45%;
@@ -29,10 +31,10 @@ export default function Home() {
         <meta name="description" content="Welcome to schoolfinder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div css={heroPageLayoutStyles}>
+      <div css={higherMarginTopLayout}>
         <div css={mainLayout}>
           <div css={titleSectionStyles}>
-            <h1>Supercharge your high school search.</h1>
+            <h1 css={h1Styles}>Supercharge your high school search.</h1>
             <div css={subTitleStyles}>
               Find your path in the jungle of high schools. Major life decisions
               made easier.

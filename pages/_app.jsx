@@ -6,7 +6,6 @@ import {
   darkText,
   lightText,
   middle,
-  middle2,
 } from '../utils/sharedStyles';
 
 function MyApp({ Component, pageProps }) {

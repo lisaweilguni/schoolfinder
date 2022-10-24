@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   formButton,
+  h1Styles,
   inputFieldLarge,
   mainLayout,
   textBelowButtonStyles,
@@ -43,7 +44,7 @@ export default function SignUp() {
             />
           </div>
           <div css={inputSectionStyles}>
-            <h1>Create account</h1>
+            <h1 css={h1Styles}>Create account</h1>
             <form>
               <div css={inputFieldLarge}>
                 <label htmlFor="first-name">First name</label>
