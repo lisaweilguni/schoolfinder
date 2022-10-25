@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import {
   formButton,
   h1Styles,
@@ -9,6 +11,7 @@ import {
   mainLayout,
   textBelowButtonStyles,
 } from '../utils/sharedStyles';
+import { RegisterResponseBody } from './api/register';
 
 const inputSectionStyles = css`
   max-width: 45%;
@@ -25,7 +28,52 @@ const imageStyles = css`
   align-self: center;
 `;
 
-export default function SignUp() {
+export default function Register() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const router = useRouter();
+
+  async function registerHandler() {
+    const registerResponse = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: firstName.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        email: email.toLowerCase(),
+        password,
+      }),
+    });
+
+    const registerResponseBody =
+      (await registerResponse.json()) as RegisterResponseBody;
+
+    if ('errors' in registerResponseBody) {
+      setErrors(registerResponseBody.errors);
+      return console.log(registerResponseBody.errors);
+    }
+
+    const returnTo = router.query.returnTo;
+    if (
+      returnTo &&
+      !Array.isArray(returnTo) && // Security: Validate returnTo parameter against valid path
+      // (because this is untrusted user input)
+      /^\/[a-zA-Z0-9-?=/]*$/.test(returnTo)
+    ) {
+      return await router.push(returnTo);
+    }
+
+    // refresh the user on state
+    // await props.refreshUserProfile();
+    // redirect user to user profile
+    await router.push(`/profile`);
+  }
+
   return (
     <div>
       <Head>
@@ -48,23 +96,52 @@ export default function SignUp() {
             <form>
               <div css={inputFieldLarge}>
                 <label htmlFor="first-name">First name</label>
-                <input id="first-name" />
+                <input
+                  id="first-name"
+                  value={firstName}
+                  onChange={(event) => {
+                    setFirstName(event.currentTarget.value);
+                  }}
+                />
               </div>
               <div css={inputFieldLarge}>
                 <label htmlFor="last-name">Last name</label>
-                <input id="last-name" />
+                <input
+                  id="last-name"
+                  value={lastName}
+                  onChange={(event) => {
+                    setLastName(event.currentTarget.value);
+                  }}
+                />
               </div>
               <div css={inputFieldLarge}>
                 <label htmlFor="e-mail">E-mail</label>
-                <input id="e-mail" />
+                <input
+                  id="e-mail"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.currentTarget.value);
+                  }}
+                />
               </div>
               <div css={inputFieldLarge}>
                 <label htmlFor="password">Password</label>
-                <input id="password" />
+                <input
+                  id="password"
+                  value={password}
+                  onChange={(event) => {
+                    setPassword(event.currentTarget.value);
+                  }}
+                />
               </div>
-              <Link href="/schools/search">
-                <button css={formButton}>Sign up</button>
-              </Link>
+              <button
+                css={formButton}
+                onClick={async () => {
+                  await registerHandler();
+                }}
+              >
+                Sign up
+              </button>
               <div css={textBelowButtonStyles}>
                 <div>Already registered?</div>
                 <Link href="/login">

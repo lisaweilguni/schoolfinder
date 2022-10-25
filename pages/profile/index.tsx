@@ -52,8 +52,8 @@ export default function Profile() {
   return (
     <div>
       <Head>
-        <title>Your Account</title>
-        <meta name="description" content="Your Account" />
+        <title>My Account</title>
+        <meta name="description" content="My Account" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

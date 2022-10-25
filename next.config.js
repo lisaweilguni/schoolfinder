@@ -1,13 +1,10 @@
-const withPWA = require('next-pwa')({
-  dest: 'public',
-});
-
 /** @type {import('next').NextConfig} */
-
-module.exports = withPWA({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
     emotion: true,
   },
-});
+};
+
+module.exports = nextConfig;
