@@ -53,3 +53,17 @@ export async function deleteExpiredSessions() {
 
   return sessions;
 }
+
+export async function deleteSessionByToken(token: string) {
+  const [session] = await sql<Session[]>`
+  DELETE FROM
+    sessions
+  WHERE
+    sessions.token = ${token}
+  RETURNING
+    id,
+    token
+  `;
+
+  return session;
+}
