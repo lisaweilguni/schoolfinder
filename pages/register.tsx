@@ -46,18 +46,20 @@ export default function Register() {
         firstName: firstName.toLowerCase(),
         lastName: lastName.toLowerCase(),
         email: email.toLowerCase(),
-        password,
+        password: password,
       }),
     });
 
     const registerResponseBody =
       (await registerResponse.json()) as RegisterResponseBody;
 
+    // Handle errors
     if ('errors' in registerResponseBody) {
       setErrors(registerResponseBody.errors);
       return console.log(registerResponseBody.errors);
     }
 
+    // Return user to the page & prevent untrusted user input
     const returnTo = router.query.returnTo;
     if (
       returnTo &&
@@ -68,10 +70,8 @@ export default function Register() {
       return await router.push(returnTo);
     }
 
-    // refresh the user on state
-    // await props.refreshUserProfile();
-    // redirect user to user profile
-    await router.push(`/profile`);
+    // Redirect user to registration successful page
+    await router.push(`/register-success`);
   }
 
   return (
@@ -93,62 +93,75 @@ export default function Register() {
           </div>
           <div css={inputSectionStyles}>
             <h1 css={h1Styles}>Create account</h1>
-            <form>
-              <div css={inputFieldLarge}>
-                <label htmlFor="first-name">First name</label>
-                <input
-                  id="first-name"
-                  value={firstName}
-                  onChange={(event) => {
-                    setFirstName(event.currentTarget.value);
-                  }}
-                />
-              </div>
-              <div css={inputFieldLarge}>
-                <label htmlFor="last-name">Last name</label>
-                <input
-                  id="last-name"
-                  value={lastName}
-                  onChange={(event) => {
-                    setLastName(event.currentTarget.value);
-                  }}
-                />
-              </div>
-              <div css={inputFieldLarge}>
-                <label htmlFor="e-mail">E-mail</label>
-                <input
-                  id="e-mail"
-                  value={email}
-                  onChange={(event) => {
-                    setEmail(event.currentTarget.value);
-                  }}
-                />
-              </div>
-              <div css={inputFieldLarge}>
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  value={password}
-                  onChange={(event) => {
-                    setPassword(event.currentTarget.value);
-                  }}
-                />
-              </div>
-              <button
-                css={formButton}
-                onClick={async () => {
-                  await registerHandler();
+            {errors.map((error) => {
+              return (
+                <p
+                  css={css`
+                    background-color: red;
+                    color: white;
+                    padding: 5px;
+                  `}
+                  key={error.message}
+                >
+                  ERROR: {error.message}
+                </p>
+              );
+            })}
+            <div css={inputFieldLarge}>
+              <label htmlFor="first-name">First name</label>
+              <input
+                id="first-name"
+                value={firstName}
+                onChange={(event) => {
+                  setFirstName(event.currentTarget.value);
                 }}
-              >
-                Sign up
-              </button>
-              <div css={textBelowButtonStyles}>
-                <div>Already registered?</div>
-                <Link href="/login">
-                  <a>Sign in here</a>
-                </Link>
-              </div>
-            </form>
+              />
+            </div>
+            <div css={inputFieldLarge}>
+              <label htmlFor="last-name">Last name</label>
+              <input
+                id="last-name"
+                value={lastName}
+                onChange={(event) => {
+                  setLastName(event.currentTarget.value);
+                }}
+              />
+            </div>
+            <div css={inputFieldLarge}>
+              <label htmlFor="e-mail">E-mail</label>
+              <input
+                id="e-mail"
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.currentTarget.value);
+                }}
+              />
+            </div>
+            <div css={inputFieldLarge}>
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.currentTarget.value);
+                }}
+              />
+            </div>
+            <button
+              css={formButton}
+              onClick={async () => {
+                await registerHandler();
+              }}
+            >
+              Sign up
+            </button>
+            <div css={textBelowButtonStyles}>
+              <div>Already registered?</div>
+              <Link href="/login">
+                <a>Sign in here</a>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

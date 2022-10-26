@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getUserByEmail, User } from '../../database/users';
 import {
   addSchoolButtonSmall,
   beige,
@@ -48,7 +50,23 @@ const buttonSectionStyles = css`
   margin-top: 10px;
 `;
 
-export default function Profile() {
+type Props = {
+  user?: User;
+};
+
+export default function Profile(props: Props) {
+  if (!props.user) {
+    return (
+      <>
+        <Head>
+          <title>User not found</title>
+          <meta name="description" content="User not found" />
+        </Head>
+        <h1 css={h1Styles}>404 - User not found</h1>
+      </>
+    );
+  }
+
   return (
     <div>
       <Head>
@@ -59,19 +77,19 @@ export default function Profile() {
 
       <div css={mainLayout}>
         <div>
-          <h1 css={h1Styles}>Welcome, Lisa!</h1>
+          <h1 css={h1Styles}>Welcome, {props.user.firstName}!</h1>
           <div css={profileInformationBox}>
             <div>
               <div css={labelStyles}>First name</div>
-              <div css={dataStyles}>Lisa</div>
+              <div css={dataStyles}>{props.user.firstName}</div>
             </div>
             <div>
               <div css={labelStyles}>Last name</div>
-              <div css={dataStyles}>Weilguni</div>
+              <div css={dataStyles}>{props.user.lastName}</div>
             </div>
             <div>
               <div css={labelStyles}>E-Mail</div>
-              <div css={dataStyles}>lisaweilguni@gmx.at</div>
+              <div css={dataStyles}>{props.user.email}</div>
             </div>
             <div css={buttonSectionStyles}>
               <div>
@@ -96,4 +114,20 @@ export default function Profile() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // Retrieve the username from the URL
+  const email = context.query.email as string;
+
+  const user = await getUserByEmail(email.toLowerCase());
+
+  if (!user) {
+    context.res.statusCode = 404;
+    return { props: {} };
+  }
+
+  return {
+    props: { user },
+  };
 }
