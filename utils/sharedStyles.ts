@@ -128,6 +128,7 @@ export const loginButton = css`
   padding: 10px 0;
   font-size: ${small};
   font-family: 'Inter', sans-serif;
+  text-decoration: none;
 
   :hover {
     background-color: ${darkBlue};

@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getUserByEmail, User } from '../../database/users';
+import { getUserBySessionToken, User } from '../database/users';
 import {
   addSchoolButtonSmall,
   beige,
@@ -12,7 +12,7 @@ import {
   h1Styles,
   lightText,
   mainLayout,
-} from '../../utils/sharedStyles';
+} from '../utils/sharedStyles';
 
 const profileInformationBox = css`
   display: flex;
@@ -91,16 +91,16 @@ export default function Profile(props: Props) {
               <div css={labelStyles}>E-Mail</div>
               <div css={dataStyles}>{props.user.email}</div>
             </div>
-            {/* <div css={buttonSectionStyles}>
+            <div css={buttonSectionStyles}>
               <div>
                 <button css={deleteAccountButton}>Delete account</button>
               </div>
               <div>
-                <Link href="/schools/addschool">
+                <Link href="/addschool">
                   <a css={addSchoolButtonSmall}>Add school</a>
                 </Link>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
         <div css={imageStyles}>
@@ -117,14 +117,17 @@ export default function Profile(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // Retrieve the username from the URL
-  const email = context.query.email as string;
+  const token = context.req.cookies.sessionToken;
 
-  const user = await getUserByEmail(email.toLowerCase());
+  const user = token && (await getUserBySessionToken(token));
 
   if (!user) {
-    context.res.statusCode = 404;
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/login?returnTo=/private-profile',
+        permanent: false,
+      },
+    };
   }
 
   return {

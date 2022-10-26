@@ -55,7 +55,7 @@ const navStyles = css`
   }
 `;
 
-export default function Header() {
+export default function Header(props) {
   return (
     <header>
       <div css={headerStyles}>
@@ -72,15 +72,34 @@ export default function Header() {
           </Link>
         </div>
         <nav css={navStyles}>
-          <Link href="/schools/">
-            <a css={linkStyles}>Search</a>
-          </Link>
-          <Link href="/about">
-            <a css={linkStyles}>About</a>
-          </Link>
-          <Link href="/login">
-            <a css={loginButton}>Login</a>
-          </Link>
+          {props.user ? (
+            <>
+              <Link href="/schools/">
+                <a css={linkStyles}>Search</a>
+              </Link>
+              <Link href="/about">
+                <a css={linkStyles}>About</a>
+              </Link>
+              <Link href="/private-profile">
+                <a css={linkStyles}>My Account</a>
+              </Link>
+              <a href="/logout" css={loginButton}>
+                Logout
+              </a>
+            </>
+          ) : (
+            <>
+              <Link href="/schools/">
+                <a css={linkStyles}>Search</a>
+              </Link>
+              <Link href="/about">
+                <a css={linkStyles}>About</a>
+              </Link>
+              <Link href="/login">
+                <a css={loginButton}>Login</a>
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>

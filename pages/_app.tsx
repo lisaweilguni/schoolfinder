@@ -1,9 +1,29 @@
 import { css, Global } from '@emotion/react';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
-import Layout from '../components/Layout';
+import { useCallback, useEffect, useState } from 'react';
+import Layout from '../components/Layout.js';
+import { User } from '../database/users';
 import { darkText } from '../utils/sharedStyles';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState<User>();
+
+  const refreshUserProfile = useCallback(async () => {
+    const profileResponse = await fetch('/api/profile');
+    const profileResponseBody = await profileResponse.json();
+
+    if ('errors' in profileResponseBody) {
+      setUser(undefined);
+    } else {
+      setUser(profileResponseBody.user);
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshUserProfile().catch(() => console.log('fetch api failed'));
+  }, [refreshUserProfile]);
+
   return (
     <>
       <Head>
@@ -30,8 +50,8 @@ function MyApp({ Component, pageProps }) {
           }
         `}
       />
-      <Layout>
-        <Component {...pageProps} />
+      <Layout user={user}>
+        <Component {...pageProps} refreshUserProfile={refreshUserProfile} />
       </Layout>
     </>
   );

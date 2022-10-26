@@ -7,18 +7,14 @@ const mainStyles = css`
   padding: 22vh 12vw;
 `;
 
-type ChildrenProps = {
-  children: JSX.Element;
-};
-
-export default function Layout(props: ChildrenProps) {
+export default function Layout(props) {
   return (
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header user={props.user} />
 
       <main css={mainStyles}>{props.children}</main>
 
