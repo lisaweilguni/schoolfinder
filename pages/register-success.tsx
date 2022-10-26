@@ -1,9 +1,12 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getUserBySessionToken, User } from '../database/users';
 import {
   addSchoolButtonSmall,
+  capitalizeText,
   deleteAccountButton,
   h1Styles,
   higherMarginTopLayout,
@@ -31,7 +34,11 @@ const buttonSectionStyles = css`
   gap: 20px;
 `;
 
-export default function RegistrationSuccess() {
+type Props = {
+  user?: User;
+};
+
+export default function RegistrationSuccess(props: Props) {
   return (
     <div>
       <Head>
@@ -42,7 +49,10 @@ export default function RegistrationSuccess() {
       <div css={higherMarginTopLayout}>
         <div css={mainLayout}>
           <div css={titleSectionStyles}>
-            <h1 css={h1Styles}>Welcome, Lisa!</h1>
+            <h1 css={h1Styles}>
+              Welcome, <span css={capitalizeText}>{props.user?.firstName}</span>
+              !
+            </h1>
             <div css={subTitleStyles}>
               You've successfully created your account and everthing's set up to
               add your school.
@@ -68,4 +78,23 @@ export default function RegistrationSuccess() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = context.req.cookies.sessionToken;
+
+  const user = token && (await getUserBySessionToken(token));
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: '/login?returnTo=/private-profile',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user },
+  };
 }

@@ -347,12 +347,12 @@ export const higherMarginTopLayout = css`
 
 // Errors
 
-// export const errorMessageStyles = css`
-//   color: white;
-//   background-color: #ed6183;
-//   padding: 5px;
-// `;
-
 export const errorMessageStyles = css`
   color: #ed6183;
+`;
+
+// Capitalize
+
+export const capitalizeText = css`
+  text-transform: capitalize;
 `;

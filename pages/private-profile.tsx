@@ -7,6 +7,7 @@ import { getUserBySessionToken, User } from '../database/users';
 import {
   addSchoolButtonSmall,
   beige,
+  capitalizeText,
   deleteAccountButton,
   grey,
   h1Styles,
@@ -40,6 +41,11 @@ const labelStyles = css`
 `;
 
 const dataStyles = css`
+  color: ${lightText};
+  text-transform: capitalize;
+`;
+
+const emailStyles = css`
   color: ${lightText};
 `;
 
@@ -77,7 +83,9 @@ export default function Profile(props: Props) {
 
       <div css={mainLayout}>
         <div>
-          <h1 css={h1Styles}>Welcome, {props.user.firstName}!</h1>
+          <h1 css={h1Styles}>
+            Welcome, <span css={capitalizeText}>{props.user.firstName}!</span>
+          </h1>
           <div css={profileInformationBox}>
             <div>
               <div css={labelStyles}>First name</div>
@@ -89,7 +97,7 @@ export default function Profile(props: Props) {
             </div>
             <div>
               <div css={labelStyles}>E-Mail</div>
-              <div css={dataStyles}>{props.user.email}</div>
+              <div css={emailStyles}>{props.user.email}</div>
             </div>
             <div css={buttonSectionStyles}>
               <div>
