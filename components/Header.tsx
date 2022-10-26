@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { User } from '../database/users';
 import {
   darkText,
   lightPurple,
@@ -55,7 +56,11 @@ const navStyles = css`
   }
 `;
 
-export default function Header(props) {
+type Props = {
+  user?: User;
+};
+
+export default function Header(props: Props) {
   return (
     <header>
       <div css={headerStyles}>

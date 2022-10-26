@@ -2,7 +2,7 @@ import { css, Global } from '@emotion/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
-import Layout from '../components/Layout.js';
+import Layout from '../components/Layout';
 import { User } from '../database/users';
 import { darkText } from '../utils/sharedStyles';
 
