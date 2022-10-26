@@ -1,6 +1,9 @@
+import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { createSession } from '../../database/sessions';
 import { createUser, getUserByEmail } from '../../database/users';
+import { createSerializedRegisterSessionTokenCookie } from '../../utils/cookies';
 
 export type RegisterResponseBody =
   | { errors: { message: string }[] }
@@ -38,7 +41,7 @@ export default async function handler(
     // 3. Hash the password
     const passwordHash = await bcrypt.hash(request.body.password, 12);
 
-    // 4. SQL Query to create the record
+    // 4. SQL Query to create the record/user
     const userWithoutPassword = await createUser(
       request.body.firstName,
       request.body.lastName,
@@ -46,7 +49,20 @@ export default async function handler(
       passwordHash,
     );
 
-    response.status(200).json({ user: { email: userWithoutPassword.email } });
+    // 5. Create a session token and serialize a cookie with the token
+    const session = await createSession(
+      userWithoutPassword.id,
+      crypto.randomBytes(80).toString('base64'),
+    );
+
+    const serializedCookie = createSerializedRegisterSessionTokenCookie(
+      session.token,
+    );
+
+    response
+      .status(200)
+      .setHeader('Set-Cookie', serializedCookie)
+      .json({ user: { email: userWithoutPassword.email } });
   } else {
     response.status(401).json({ errors: [{ message: 'Method not allowed' }] });
   }
