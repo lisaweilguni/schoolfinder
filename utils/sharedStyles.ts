@@ -343,3 +343,15 @@ export const mainLayout = css`
 export const higherMarginTopLayout = css`
   margin-top: 60px;
 `;
+
+// Errors
+
+// export const errorMessageStyles = css`
+//   color: white;
+//   background-color: #ed6183;
+//   padding: 5px;
+// `;
+
+export const errorMessageStyles = css`
+  color: #ed6183;
+`;

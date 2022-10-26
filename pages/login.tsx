@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {
+  errorMessageStyles,
   formButton,
   h1Styles,
   higherMarginTopLayout,
@@ -85,15 +86,8 @@ export default function Login() {
               <h1 css={h1Styles}>Sign in</h1>
               {errors.map((error) => {
                 return (
-                  <p
-                    css={css`
-                      background-color: red;
-                      color: white;
-                      padding: 5px;
-                    `}
-                    key={error.message}
-                  >
-                    ERROR: {error.message}
+                  <p css={errorMessageStyles} key={error.message}>
+                    {error.message}
                   </p>
                 );
               })}
