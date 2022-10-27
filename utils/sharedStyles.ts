@@ -37,7 +37,7 @@ export const h1Styles = css`
   font-weight: normal;
   font-size: ${middle};
   color: ${darkText};
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 export const h2Styles = css`

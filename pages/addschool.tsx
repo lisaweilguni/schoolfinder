@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getUserBySessionToken } from '../database/users';
 import {
   formButton,
   h1Styles,
@@ -66,7 +68,7 @@ export default function AddSchool() {
                 <input id="public-private" />
               </div>
               <div css={inputFieldLarge}>
-                <label htmlFor="focus">Choose up to 3 focus areas</label>
+                <label htmlFor="focus">Choose up to 3 categories</label>
                 <input id="focus" />
               </div>
               <Link href="/schools/search">
@@ -78,4 +80,23 @@ export default function AddSchool() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = context.req.cookies.sessionToken;
+
+  const user = token && (await getUserBySessionToken(token));
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: '/login?returnTo=/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

@@ -60,6 +60,11 @@ type Props = {
   user?: User;
 };
 
+function Anchor({ children, ...restProps }: any) {
+  // using a instead of Link since we want to force a full refresh
+  return <a {...restProps}>{children}</a>;
+}
+
 export default function Header(props: Props) {
   return (
     <header>
@@ -88,9 +93,9 @@ export default function Header(props: Props) {
               <Link href="/private-profile">
                 <a css={linkStyles}>My Account</a>
               </Link>
-              <a href="/logout" css={loginButton}>
+              <Anchor href="/logout" css={loginButton}>
                 Logout
-              </a>
+              </Anchor>
             </>
           ) : (
             <>
