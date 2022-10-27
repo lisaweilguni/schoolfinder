@@ -91,7 +91,16 @@ export default function Header(props: Props) {
                 <a css={linkStyles}>About</a>
               </Link>
               <Link href="/private-profile">
-                <a css={linkStyles}>My Account</a>
+                <a css={linkStyles}>
+                  <div>
+                    <Image
+                      src="/images/user.png"
+                      alt="Illustration of a teacher and two students in a classroom"
+                      width="20"
+                      height="20"
+                    />
+                  </div>
+                </a>
               </Link>
               <Anchor href="/logout" css={loginButton}>
                 Logout

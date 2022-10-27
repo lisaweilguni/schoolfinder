@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User>();
 
   const refreshUserProfile = useCallback(async () => {
-    const profileResponse = await fetch('/api/profile');
+    const profileResponse = await fetch('/api/users');
     const profileResponseBody = await profileResponse.json();
 
     if ('errors' in profileResponseBody) {

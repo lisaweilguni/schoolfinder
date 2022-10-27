@@ -39,7 +39,7 @@ export default function Home() {
               Find your path in the jungle of high schools. Major life decisions
               made easier.
             </div>
-            <Link href="/schools/search">
+            <Link href="/schools/">
               <a css={defaultButton}>Search</a>
             </Link>
           </div>

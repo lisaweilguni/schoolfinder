@@ -88,3 +88,18 @@ export async function getUserBySessionToken(token: string) {
 
   return user;
 }
+
+export async function deleteUserByToken(token: string) {
+  if (!token) return undefined;
+
+  const [user] = await sql`
+  DELETE FROM
+    users
+  USING
+    sessions
+  WHERE
+    sessions.token = ${token}
+  `;
+
+  return user;
+}

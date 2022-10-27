@@ -31,12 +31,12 @@ const schoolInfoBoxStyles = css`
   display: flex;
   flex-direction: column;
   background-color: ${beige};
-  width: 30vw;
-  height: 20vh;
+  width: 400px;
+  height: 150px;
   border: 1px solid ${grey};
   border-radius: 5px;
   box-shadow: 3px 3px 4px ${grey};
-  padding: 20px 30px;
+  padding: 40px 30px;
   align-items: left;
   justify-content: center;
   gap: 15px;
