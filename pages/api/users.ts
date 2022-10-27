@@ -44,7 +44,7 @@ export default async function handler(
     const deletedUser = await deleteUserByToken(token);
 
     if (!deletedUser) {
-      return response.status(404).json({ message: 'Not a valid Id' });
+      return response.status(404).json({ message: 'Not a valid user' });
     }
 
     return response.status(200).json(deletedUser);
