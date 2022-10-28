@@ -3,7 +3,13 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Area, getAreas } from '../database/areas';
+import { useState } from 'react';
+import Select from 'react-select';
+import { Area, getAllAreas } from '../database/areas';
+import {
+  getAllSpecializations,
+  Specialization,
+} from '../database/specializations';
 import { getUserBySessionToken } from '../database/users';
 import {
   formButton,
@@ -31,9 +37,25 @@ const imageStyles = css`
 
 type Props = {
   areas: Area[];
+  specializations: Specialization[];
 };
 
 export default function AddSchool(props: Props) {
+  const maxSelectOptions = 4;
+  const [schoolName, setSchoolName] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [street, setStreet] = useState('');
+  const [areaId, setAreaId] = useState('');
+  const [selectedSpecializations, setSelectedSpecializations] =
+    useState<Specialization[]>();
+  // const [isPublic, setIsPublic] = useState(true);
+  const [website, setWebsite] = useState('');
+
+  // Declare handler for specialization multi-select
+  const handleSpecializationSelect = (selectedOption: Specialization[]) => {
+    setSelectedSpecializations(selectedOption);
+  };
+
   return (
     <div>
       <Head>
@@ -56,17 +78,24 @@ export default function AddSchool(props: Props) {
             <form>
               <div css={inputFieldLarge}>
                 <label htmlFor="school-name">Name of the school</label>
-                <input id="school-name" placeholder="HTL Spengergasse" />
+                <input
+                  id="school-name"
+                  placeholder="HTL Spengergasse"
+                  value={schoolName}
+                  onChange={(event) => {
+                    setSchoolName(event.currentTarget.value);
+                  }}
+                />
               </div>
               <div css={inputNameWrapper}>
                 <div css={inputFieldName}>
                   <label htmlFor="area">Area</label>
                   <select
                     id="area"
-                    // value={areaId}
-                    // onChange={(event) => {
-                    //   setAreaId(event.currentTarget.value);
-                    // }}
+                    value={areaId}
+                    onChange={(event) => {
+                      setAreaId(event.currentTarget.value);
+                    }}
                   >
                     <option value="">Select area</option>
                     {props.areas.map((area) => {
@@ -80,27 +109,70 @@ export default function AddSchool(props: Props) {
                 </div>
                 <div css={inputFieldName}>
                   <label htmlFor="postal-code">Postal code</label>
-                  <input id="postal-code" placeholder="1050" />
+                  <input
+                    id="postal-code"
+                    placeholder="1050"
+                    value={postalCode}
+                    onChange={(event) => {
+                      setPostalCode(event.currentTarget.value);
+                    }}
+                  />
                 </div>
               </div>
               <div css={inputFieldLarge}>
                 <label htmlFor="street">Street</label>
-                <input id="street" placeholder="Spengergasse 20" />
+                <input
+                  id="street"
+                  placeholder="Spengergasse 20"
+                  value={street}
+                  onChange={(event) => {
+                    setStreet(event.currentTarget.value);
+                  }}
+                />
               </div>
               <div css={inputFieldLarge}>
-                <label htmlFor="specialisation">
-                  Choose up to 3 specialisations
+                <label htmlFor="specialization">
+                  Choose up to 3 specializations
                 </label>
-                <input id="specialisation" />
+                <Select
+                  onChange={(selectedOption) =>
+                    handleSpecializationSelect(
+                      selectedOption as Specialization[],
+                    )
+                  }
+                  isMulti
+                  options={
+                    selectedSpecializations?.length === maxSelectOptions
+                      ? []
+                      : props.specializations
+                  }
+                  noOptionsMessage={() => {
+                    return selectedSpecializations?.length === maxSelectOptions
+                      ? 'You cannot choose more than 3 specializations'
+                      : 'No options available';
+                  }}
+                  value={selectedSpecializations}
+                  placeholder="Select specializations"
+                />
               </div>
               <div css={inputNameWrapper}>
                 <div css={inputFieldName}>
                   <label htmlFor="public-private">Type of school</label>
-                  <input id="public-private" />
+                  <select id="public-private">
+                    <option value="true">Public</option>
+                    <option value="false">Private</option>
+                  </select>
                 </div>
                 <div css={inputFieldName}>
                   <label htmlFor="website">Website</label>
-                  <input id="website" placeholder="www.spengergasse.at" />
+                  <input
+                    id="website"
+                    placeholder="www.spengergasse.at"
+                    value={website}
+                    onChange={(event) => {
+                      setWebsite(event.currentTarget.value);
+                    }}
+                  />
                 </div>
               </div>
               <Link href="/schools/search">
@@ -127,9 +199,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-  const areas = await getAreas();
+
+  const areas = await getAllAreas();
+
+  const specializationsFromDatabase = await getAllSpecializations();
+
+  // Transform specializations for multi-select element to read it
+  const specializations = specializationsFromDatabase.map((specialization) => {
+    return {
+      value: specialization.id,
+      label: specialization.name,
+    };
+  });
 
   return {
-    props: { areas },
+    props: { areas: areas, specializations: specializations },
   };
 }

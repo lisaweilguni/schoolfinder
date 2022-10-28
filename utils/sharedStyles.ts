@@ -279,10 +279,11 @@ export const inputFieldLarge = css`
   label {
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
   input::placeholder {
     letter-spacing: 1px;
+    padding-left: 5px;
   }
   input:hover {
     transition: 0.2s ease-in-out;
@@ -304,12 +305,13 @@ export const inputFieldSmall = css`
     background-color: ${white};
   }
   label {
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     letter-spacing: 1px;
     text-align: left;
   }
   input::placeholder {
     letter-spacing: 1px;
+    padding-left: 5px;
   }
   input:hover {
     transition: all 300ms ease;
@@ -337,7 +339,7 @@ export const inputFieldName = css`
     background-color: ${white};
   }
   label {
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     letter-spacing: 1px;
     text-align: left;
     text-transform: uppercase;
@@ -345,6 +347,7 @@ export const inputFieldName = css`
   }
   input::placeholder {
     letter-spacing: 1px;
+    padding-left: 5px;
   }
   input:hover {
     transition: all 300ms ease;
@@ -357,10 +360,9 @@ export const inputFieldName = css`
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: ${white};
-
-    option {
-      letter-spacing: 1px;
-    }
+    letter-spacing: 1px;
+    color: ${lightText};
+    padding-left: 5px;
   }
 `;
 

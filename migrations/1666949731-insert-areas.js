@@ -20,7 +20,7 @@ exports.down = async function down(sql) {
   for (const area of areas) {
     await sql`
       DELETE FROM
-        categories
+        areas
       WHERE
         name = ${area.name}
     `;

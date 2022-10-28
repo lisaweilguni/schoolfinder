@@ -5,7 +5,7 @@ export type Area = {
   name: string;
 };
 
-export async function getAreas() {
+export async function getAllAreas() {
   const areas = await sql<Area[]>`
     SELECT
       id,
