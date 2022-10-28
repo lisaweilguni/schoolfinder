@@ -5,9 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getUserByEmail, User } from '../../database/users';
 import {
-  addSchoolButtonSmall,
   beige,
-  deleteAccountButton,
   grey,
   h1Styles,
   lightText,

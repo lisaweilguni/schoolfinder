@@ -41,17 +41,19 @@ type Props = {
 };
 
 export default function AddSchool(props: Props) {
-  const maxSelectOptions = 4;
   const [schoolName, setSchoolName] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [street, setStreet] = useState('');
   const [areaId, setAreaId] = useState('');
   const [selectedSpecializations, setSelectedSpecializations] =
     useState<Specialization[]>();
-  // const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState();
   const [website, setWebsite] = useState('');
 
+  console.log('selectedSpecializations', selectedSpecializations);
+
   // Declare handler for specialization multi-select
+  const maxSelectOptions = 3;
   const handleSpecializationSelect = (selectedOption: Specialization[]) => {
     setSelectedSpecializations(selectedOption);
   };
@@ -130,11 +132,39 @@ export default function AddSchool(props: Props) {
                   }}
                 />
               </div>
+              <div css={inputNameWrapper}>
+                <div css={inputFieldName}>
+                  <label htmlFor="public-private">Type of school</label>
+                  <select
+                    id="public-private"
+                    value={isPublic}
+                    onChange={(event) => {
+                      setIsPublic(JSON.parse(event.currentTarget.value));
+                    }}
+                  >
+                    <option>Select type</option>
+                    <option value="true">Public</option>
+                    <option value="false">Private</option>
+                  </select>
+                </div>
+                <div css={inputFieldName}>
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    placeholder="www.spengergasse.at"
+                    value={website}
+                    onChange={(event) => {
+                      setWebsite(event.currentTarget.value);
+                    }}
+                  />
+                </div>
+              </div>
               <div css={inputFieldLarge}>
                 <label htmlFor="specialization">
                   Choose up to 3 specializations
                 </label>
                 <Select
+                  id="specialization"
                   onChange={(selectedOption) =>
                     handleSpecializationSelect(
                       selectedOption as Specialization[],
@@ -154,26 +184,6 @@ export default function AddSchool(props: Props) {
                   value={selectedSpecializations}
                   placeholder="Select specializations"
                 />
-              </div>
-              <div css={inputNameWrapper}>
-                <div css={inputFieldName}>
-                  <label htmlFor="public-private">Type of school</label>
-                  <select id="public-private">
-                    <option value="true">Public</option>
-                    <option value="false">Private</option>
-                  </select>
-                </div>
-                <div css={inputFieldName}>
-                  <label htmlFor="website">Website</label>
-                  <input
-                    id="website"
-                    placeholder="www.spengergasse.at"
-                    value={website}
-                    onChange={(event) => {
-                      setWebsite(event.currentTarget.value);
-                    }}
-                  />
-                </div>
               </div>
               <Link href="/schools/search">
                 <button css={formButton}>Add school</button>

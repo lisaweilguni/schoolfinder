@@ -282,8 +282,8 @@ export const inputFieldLarge = css`
     margin-bottom: 5px;
   }
   input::placeholder {
-    letter-spacing: 1px;
     padding-left: 5px;
+    font-family: 'Inter', sans-serif;
   }
   input:hover {
     transition: 0.2s ease-in-out;
@@ -310,8 +310,8 @@ export const inputFieldSmall = css`
     text-align: left;
   }
   input::placeholder {
-    letter-spacing: 1px;
     padding-left: 5px;
+    font-family: 'Inter', sans-serif;
   }
   input:hover {
     transition: all 300ms ease;
@@ -322,7 +322,7 @@ export const inputFieldSmall = css`
 export const inputNameWrapper = css`
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 15px;
 `;
 
 export const inputFieldName = css`
@@ -346,8 +346,8 @@ export const inputFieldName = css`
     letter-spacing: 2px;
   }
   input::placeholder {
-    letter-spacing: 1px;
     padding-left: 5px;
+    font-family: 'Inter', sans-serif;
   }
   input:hover {
     transition: all 300ms ease;
@@ -363,6 +363,8 @@ export const inputFieldName = css`
     letter-spacing: 1px;
     color: ${lightText};
     padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+    color: #818181;
   }
 `;
 

@@ -106,7 +106,7 @@ export default function Register(props: Props) {
             />
           </div>
           <div css={inputSectionStyles}>
-            <h1 css={h1Styles}>Create account</h1>
+            <h1 css={h1Styles}>Sign your school up</h1>
             {errors.map((error) => {
               return (
                 <p css={errorMessageStyles} key={error.message}>
