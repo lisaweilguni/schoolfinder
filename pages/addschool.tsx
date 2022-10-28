@@ -3,11 +3,14 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Area, getAreas } from '../database/areas';
 import { getUserBySessionToken } from '../database/users';
 import {
   formButton,
   h1Styles,
   inputFieldLarge,
+  inputFieldName,
+  inputNameWrapper,
   mainLayout,
 } from '../utils/sharedStyles';
 
@@ -26,7 +29,11 @@ const imageStyles = css`
   align-self: center;
 `;
 
-export default function AddSchool() {
+type Props = {
+  areas: Area[];
+};
+
+export default function AddSchool(props: Props) {
   return (
     <div>
       <Head>
@@ -48,28 +55,53 @@ export default function AddSchool() {
             <h1 css={h1Styles}>Add your school</h1>
             <form>
               <div css={inputFieldLarge}>
-                <label htmlFor="school-name">Name</label>
-                <input id="school-name" />
+                <label htmlFor="school-name">Name of the school</label>
+                <input id="school-name" placeholder="HTL Spengergasse" />
               </div>
-              <div css={inputFieldLarge}>
-                <label htmlFor="area">Area</label>
-                <input id="area" />
-              </div>
-              <div css={inputFieldLarge}>
-                <label htmlFor="postal-code">Postal code</label>
-                <input id="postal-code" />
+              <div css={inputNameWrapper}>
+                <div css={inputFieldName}>
+                  <label htmlFor="area">Area</label>
+                  <select
+                    id="area"
+                    // value={areaId}
+                    // onChange={(event) => {
+                    //   setAreaId(event.currentTarget.value);
+                    // }}
+                  >
+                    <option value="">Select area</option>
+                    {props.areas.map((area) => {
+                      return (
+                        <option key={area.id} value={area.id}>
+                          {area.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div css={inputFieldName}>
+                  <label htmlFor="postal-code">Postal code</label>
+                  <input id="postal-code" placeholder="1050" />
+                </div>
               </div>
               <div css={inputFieldLarge}>
                 <label htmlFor="street">Street</label>
-                <input id="street" />
+                <input id="street" placeholder="Spengergasse 20" />
               </div>
               <div css={inputFieldLarge}>
-                <label htmlFor="public-private">Public / private</label>
-                <input id="public-private" />
+                <label htmlFor="specialisation">
+                  Choose up to 3 specialisations
+                </label>
+                <input id="specialisation" />
               </div>
-              <div css={inputFieldLarge}>
-                <label htmlFor="focus">Choose up to 3 categories</label>
-                <input id="focus" />
+              <div css={inputNameWrapper}>
+                <div css={inputFieldName}>
+                  <label htmlFor="public-private">Type of school</label>
+                  <input id="public-private" />
+                </div>
+                <div css={inputFieldName}>
+                  <label htmlFor="website">Website</label>
+                  <input id="website" placeholder="www.spengergasse.at" />
+                </div>
               </div>
               <Link href="/schools/search">
                 <button css={formButton}>Add school</button>
@@ -95,8 +127,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
+  const areas = await getAreas();
 
   return {
-    props: {},
+    props: { areas },
   };
 }

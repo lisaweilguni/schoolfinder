@@ -45,6 +45,7 @@ export const h2Styles = css`
   margin: 0;
   font-size: ${normal};
   font-weight: normal;
+  color: ${lightText};
 `;
 
 // Buttons
@@ -281,7 +282,7 @@ export const inputFieldLarge = css`
     margin-bottom: 4px;
   }
   input::placeholder {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
   }
   input:hover {
     transition: 0.2s ease-in-out;
@@ -308,11 +309,58 @@ export const inputFieldSmall = css`
     text-align: left;
   }
   input::placeholder {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
   }
   input:hover {
     transition: all 300ms ease;
     border: 2px solid ${darkPurple};
+  }
+`;
+
+export const inputNameWrapper = css`
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+`;
+
+export const inputFieldName = css`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  font-size: ${small};
+
+  input {
+    width: 13vw;
+    height: 30px;
+    border: 1px solid ${lightPurple};
+    border-radius: 5px;
+    background-color: ${white};
+  }
+  label {
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  input::placeholder {
+    letter-spacing: 1px;
+  }
+  input:hover {
+    transition: all 300ms ease;
+    border: 2px solid ${darkPurple};
+  }
+
+  select {
+    width: 13vw;
+    height: 30px;
+    border: 1px solid ${lightPurple};
+    border-radius: 5px;
+    background-color: ${white};
+
+    option {
+      letter-spacing: 1px;
+    }
   }
 `;
 

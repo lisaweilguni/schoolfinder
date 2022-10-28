@@ -11,6 +11,8 @@ import {
   formButton,
   h1Styles,
   inputFieldLarge,
+  inputFieldName,
+  inputNameWrapper,
   mainLayout,
   textBelowButtonStyles,
 } from '../utils/sharedStyles';
@@ -113,24 +115,32 @@ export default function Register(props: Props) {
               );
             })}
             <div css={inputFieldLarge}>
-              <label htmlFor="first-name">First name</label>
-              <input
-                id="first-name"
-                value={firstName}
-                onChange={(event) => {
-                  setFirstName(event.currentTarget.value);
-                }}
-              />
+              <label htmlFor="registration-code">
+                School registration code
+              </label>
+              <input id="registration-code" />
             </div>
-            <div css={inputFieldLarge}>
-              <label htmlFor="last-name">Last name</label>
-              <input
-                id="last-name"
-                value={lastName}
-                onChange={(event) => {
-                  setLastName(event.currentTarget.value);
-                }}
-              />
+            <div css={inputNameWrapper}>
+              <div css={inputFieldName}>
+                <label htmlFor="first-name">First name</label>
+                <input
+                  id="first-name"
+                  value={firstName}
+                  onChange={(event) => {
+                    setFirstName(event.currentTarget.value);
+                  }}
+                />
+              </div>
+              <div css={inputFieldName}>
+                <label htmlFor="last-name">Last name</label>
+                <input
+                  id="last-name"
+                  value={lastName}
+                  onChange={(event) => {
+                    setLastName(event.currentTarget.value);
+                  }}
+                />
+              </div>
             </div>
             <div css={inputFieldLarge}>
               <label htmlFor="e-mail">E-mail</label>
