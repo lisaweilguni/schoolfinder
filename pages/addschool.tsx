@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import Select from 'react-select';
 import { Area, getAllAreas } from '../database/areas';
@@ -12,7 +11,10 @@ import {
 } from '../database/specializations';
 import { getUserBySessionToken } from '../database/users';
 import {
+  beige,
+  darkPurple,
   formButton,
+  grey,
   h1Styles,
   inputFieldLarge,
   inputFieldName,
@@ -21,10 +23,17 @@ import {
 } from '../utils/sharedStyles';
 
 const inputSectionStyles = css`
-  max-width: 45%;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  background-color: ${beige};
+  width: 30rem;
+  height: 35rem;
+  border: 1px solid ${grey};
+  border-radius: 5px;
+  box-shadow: 3px 3px 4px ${grey};
+  padding: 40px 40px;
+  justify-items: center;
 
   h1 {
     margin-bottom: 10px;
@@ -34,6 +43,26 @@ const inputSectionStyles = css`
 const imageStyles = css`
   align-self: center;
 `;
+
+const selectStyles = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '27vw',
+    height: '2.8rem',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
 
 type Props = {
   areas: Area[];
@@ -99,7 +128,9 @@ export default function AddSchool(props: Props) {
                       setAreaId(event.currentTarget.value);
                     }}
                   >
-                    <option value="">Select area</option>
+                    <option value="" hidden selected>
+                      Select area
+                    </option>
                     {props.areas.map((area) => {
                       return (
                         <option key={area.id} value={area.id}>
@@ -142,7 +173,9 @@ export default function AddSchool(props: Props) {
                       setIsPublic(JSON.parse(event.currentTarget.value));
                     }}
                   >
-                    <option>Select type</option>
+                    <option hidden selected>
+                      Select type
+                    </option>
                     <option value="true">Public</option>
                     <option value="false">Private</option>
                   </select>
@@ -165,6 +198,7 @@ export default function AddSchool(props: Props) {
                 </label>
                 <Select
                   id="specialization"
+                  styles={selectStyles}
                   onChange={(selectedOption) =>
                     handleSpecializationSelect(
                       selectedOption as Specialization[],
@@ -185,9 +219,7 @@ export default function AddSchool(props: Props) {
                   placeholder="Select specializations"
                 />
               </div>
-              <Link href="/schools/search">
-                <button css={formButton}>Add school</button>
-              </Link>
+              <button css={formButton}>Add school</button>
             </form>
           </div>
         </div>

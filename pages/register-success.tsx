@@ -54,11 +54,11 @@ export default function RegistrationSuccess(props: Props) {
               !
             </h1>
             <div css={subTitleStyles}>
-              You've successfully created your account and everthing's set up to
-              add your school.
+              You've successfully created your account and everything's set up
+              to add your school.
             </div>
             <div css={buttonSectionStyles}>
-              <Link href="/schools/addschool">
+              <Link href="/addschool">
                 <a css={addSchoolButtonSmall}>Add your school</a>
               </Link>
               <Link href="/schools/">

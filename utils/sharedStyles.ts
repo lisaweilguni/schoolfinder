@@ -41,11 +41,12 @@ export const h1Styles = css`
 `;
 
 export const h2Styles = css`
-  font-family: 'Inter', sans-serif;
+  /* font-family: 'Inter', sans-serif; */
   margin: 0;
   font-size: ${normal};
   font-weight: normal;
   color: ${lightText};
+  color: ${darkText};
 `;
 
 // Buttons
@@ -257,7 +258,7 @@ export const categoryBox = css`
   border-radius: 5px;
   border: 1px solid ${lightPurple};
   padding: 8px 0;
-  width: 142px;
+  width: 130px;
   display: inline-block;
 `;
 
@@ -267,13 +268,14 @@ export const inputFieldLarge = css`
   flex-direction: column;
   margin-bottom: 15px;
   font-size: ${small};
+  transition: 0.2s ease-in-out;
 
   input {
     width: 27vw;
     height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
-    background-color: transparent;
+    background-color: ${white};
   }
 
   label {
@@ -286,7 +288,6 @@ export const inputFieldLarge = css`
     font-family: 'Inter', sans-serif;
   }
   input:hover {
-    transition: 0.2s ease-in-out;
     border: 2px solid ${darkPurple};
   }
 `;
@@ -296,6 +297,7 @@ export const inputFieldSmall = css`
   flex-direction: column;
   margin-bottom: 15px;
   font-size: ${small};
+  transition: 0.2s ease-in-out;
 
   input {
     width: 15vw;
@@ -314,7 +316,6 @@ export const inputFieldSmall = css`
     font-family: 'Inter', sans-serif;
   }
   input:hover {
-    transition: all 300ms ease;
     border: 2px solid ${darkPurple};
   }
 `;
@@ -330,6 +331,7 @@ export const inputFieldName = css`
   flex-direction: column;
   margin-bottom: 15px;
   font-size: ${small};
+  transition: 0.2s ease-in-out;
 
   input {
     width: 13vw;
@@ -337,6 +339,7 @@ export const inputFieldName = css`
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: ${white};
+    transition: all 100ms ease;
   }
   label {
     margin-bottom: 5px;
@@ -350,7 +353,6 @@ export const inputFieldName = css`
     font-family: 'Inter', sans-serif;
   }
   input:hover {
-    transition: all 300ms ease;
     border: 2px solid ${darkPurple};
   }
 
@@ -360,11 +362,19 @@ export const inputFieldName = css`
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: ${white};
-    letter-spacing: 1px;
     color: ${lightText};
     padding-left: 5px;
     font-family: 'Inter', sans-serif;
     color: #818181;
+    transition: 0.2s ease-in-out;
+  }
+
+  select:hover {
+    border: 2px solid ${darkPurple};
+  }
+
+  option::selection {
+    color: ${darkText};
   }
 `;
 

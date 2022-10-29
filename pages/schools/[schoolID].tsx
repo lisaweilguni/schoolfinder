@@ -31,7 +31,7 @@ const schoolInfoBoxStyles = css`
   display: flex;
   flex-direction: column;
   background-color: ${beige};
-  width: 400px;
+  width: 410px;
   height: 150px;
   border: 1px solid ${grey};
   border-radius: 5px;
@@ -89,6 +89,7 @@ export default function Home() {
               <div css={categoryStyles}>
                 <div css={categoryBox}>Design</div>
                 <div css={categoryBox}>Tech</div>
+                <div css={categoryBox}>Media</div>
               </div>
               <div css={schoolInfoBoxStyles}>
                 <div css={iconLineStyles}>

@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
-import { GetServerSidePropsContext } from 'next';
+// import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { getValidSessionByToken } from '../database/sessions';
+// import { getValidSessionByToken } from '../database/sessions';
 import {
   errorMessageStyles,
   formButton,
@@ -144,19 +144,19 @@ export default function Login(props: Props) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const token = context.req.cookies.sessionToken;
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const token = context.req.cookies.sessionToken;
 
-  if (token && (await getValidSessionByToken(token))) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: true,
-      },
-    };
-  }
+//   if (token && (await getValidSessionByToken(token))) {
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: true,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-}
+//   return {
+//     props: {},
+//   };
+// }
