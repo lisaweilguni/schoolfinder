@@ -41,12 +41,15 @@ export const h1Styles = css`
 `;
 
 export const h2Styles = css`
-  /* font-family: 'Inter', sans-serif; */
+  font-family: 'Inter', sans-serif;
   margin: 0;
   font-size: ${normal};
   font-weight: normal;
+  font-weight: 600;
   color: ${lightText};
   color: ${darkText};
+  margin-bottom: 0;
+  padding: 0;
 `;
 
 // Buttons
@@ -362,10 +365,10 @@ export const inputFieldName = css`
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: ${white};
-    color: ${lightText};
     padding-left: 5px;
     font-family: 'Inter', sans-serif;
     color: #818181;
+    color: ${darkText};
     transition: 0.2s ease-in-out;
   }
 

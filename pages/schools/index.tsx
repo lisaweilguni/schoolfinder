@@ -63,7 +63,7 @@ const schoolInfoStyles = css`
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 13px;
+  gap: 12px;
 `;
 
 const categorySectionStyles = css`
@@ -114,7 +114,7 @@ export default function Search() {
             </div>
             <div css={schoolInfoStyles}>
               <h3 css={h2Styles}>HTL Spengergasse</h3>
-              <div>Teststraße 36, 1050 Vienna</div>
+              <div>Spengergasse 36, 1050 Vienna</div>
               <div css={categorySectionStyles}>
                 <div css={categoryBox}>Design</div>
                 <div css={categoryBox}>Tech</div>

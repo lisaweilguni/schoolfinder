@@ -47,6 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             margin: 0;
             font-size: 16px;
             min-height: 100vh;
+            font-weight: 300;
           }
         `}
       />

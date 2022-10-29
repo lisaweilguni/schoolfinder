@@ -27,12 +27,12 @@ const inputSectionStyles = css`
   flex-direction: column;
   gap: 5px;
   background-color: ${beige};
-  width: 30rem;
+  width: 31rem;
   height: 35rem;
   border: 1px solid ${grey};
   border-radius: 5px;
   box-shadow: 3px 3px 4px ${grey};
-  padding: 40px 40px;
+  padding: 50px 50px 50px 50px;
   justify-items: center;
 
   h1 {
@@ -96,19 +96,11 @@ export default function AddSchool(props: Props) {
       </Head>
       <div>
         <div css={mainLayout}>
-          <div css={imageStyles}>
-            <Image
-              src="/images/addschool.png"
-              alt="Illustration of a woman next to a bookshelf"
-              width="391.2"
-              height="301.6"
-            />
-          </div>
           <div css={inputSectionStyles}>
             <h1 css={h1Styles}>Add your school</h1>
             <form>
               <div css={inputFieldLarge}>
-                <label htmlFor="school-name">Name of the school</label>
+                <label htmlFor="school-name">School name</label>
                 <input
                   id="school-name"
                   placeholder="HTL Spengergasse"
@@ -221,6 +213,14 @@ export default function AddSchool(props: Props) {
               </div>
               <button css={formButton}>Add school</button>
             </form>
+          </div>
+          <div css={imageStyles}>
+            <Image
+              src="/images/addschool.png"
+              alt="Illustration of a woman next to a bookshelf"
+              width="391.2"
+              height="301.6"
+            />
           </div>
         </div>
       </div>
