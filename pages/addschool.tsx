@@ -93,6 +93,16 @@ export default function AddSchool(props: Props) {
 
   // Declare handler to create school
   async function createSchoolHandler() {
+    // Transform selected specializations back to database structure
+    const specializationsDatabaseStructure = selectedSpecializations?.map(
+      (specialization: any) => {
+        return {
+          id: specialization.value,
+          name: specialization.label,
+        };
+      },
+    );
+
     const schoolResponse = await fetch('/api/users/schools', {
       method: 'POST',
       headers: {
@@ -106,6 +116,9 @@ export default function AddSchool(props: Props) {
         isPublic: Boolean(isPublic),
         website: website,
         userId: props.user.id,
+        specializationIds: specializationsDatabaseStructure?.map(
+          (specialization) => specialization.id,
+        ),
       }),
     });
 

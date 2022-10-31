@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createSchool, School } from '../../../database/schools';
+import { createSchool, FullSchool } from '../../../database/schools';
 import { getValidSessionByToken } from '../../../database/sessions';
 
 export type SchoolResponseBody =
-  | { school: School }
+  | { school: FullSchool }
   | { errors: { message: string }[] };
 
 export default async function handler(
@@ -29,16 +29,25 @@ export default async function handler(
       return;
     }
 
-    const schoolName = request.body?.schoolName;
-    const areaId = request.body?.areaId;
-    const postalCode = request.body?.postalCode;
-    const street = request.body?.street;
-    const website = request.body?.website;
-    const isPublic = request.body?.isPublic;
-    const userId = request.body?.userId;
+    const schoolName = request.body.schoolName;
+    const areaId = request.body.areaId;
+    const postalCode = request.body.postalCode;
+    const street = request.body.street;
+    const website = request.body.website;
+    const isPublic = request.body.isPublic;
+    const userId = request.body.userId;
+    const specializationIds = request.body.specializationIds;
 
     if (
-      !(schoolName && areaId && postalCode && street && website && isPublic)
+      !(
+        schoolName &&
+        areaId &&
+        postalCode &&
+        street &&
+        website &&
+        isPublic &&
+        specializationIds
+      )
     ) {
       return response
         .status(400)
@@ -54,6 +63,7 @@ export default async function handler(
       website,
       isPublic,
       userId,
+      specializationIds,
     );
 
     // response with the newly created school

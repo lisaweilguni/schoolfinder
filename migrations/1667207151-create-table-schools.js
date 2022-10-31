@@ -3,7 +3,7 @@ exports.up = async function up(sql) {
     CREATE TABLE schools (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
      	name varchar(100),
-      area_id INT REFERENCES areas (id) ON DELETE CASCADE NOT NULL,
+      area_id INT REFERENCES areas (id) ON DELETE CASCADE ,
 			postal_code varchar(4),
 			street varchar(300),
       website varchar(300),
