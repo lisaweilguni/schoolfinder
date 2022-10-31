@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { deleteUserByToken, getUserBySessionToken } from '../../database/users';
+import {
+  deleteUserByToken,
+  getUserBySessionToken,
+} from '../../../database/users';
 
 export default async function handler(
   request: NextApiRequest,
