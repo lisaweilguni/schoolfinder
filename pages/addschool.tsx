@@ -80,6 +80,7 @@ export default function AddSchool(props: Props) {
   const [website, setWebsite] = useState('');
 
   console.log('selectedSpecializations', selectedSpecializations);
+  console.log('areaId', areaId);
 
   // Declare handler for specialization multi-select
   const maxSelectOptions = 3;
