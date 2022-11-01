@@ -1,7 +1,16 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  FullSchool,
+  getSchoolBasicById,
+  getSchoolById,
+  getSchoolWithSpecializationsById,
+  SchoolWithSpecializations,
+} from '../../database/schools';
+import { parseIntFromContextQuery } from '../../utils/contextQuery';
 import {
   beige,
   categoryBox,
@@ -49,7 +58,15 @@ const iconLineStyles = css`
   gap: 10px;
 `;
 
-export default function Home() {
+type Props =
+  | {
+      school: SchoolWithSpecializations;
+    }
+  | {
+      error: string;
+    };
+
+export default function SingleSchool(props: Props) {
   return (
     <div>
       <Head>
@@ -126,4 +143,38 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<Props>> {
+  // Retrieve the school ID from the URL
+  const schoolId = parseIntFromContextQuery(context.query.schoolId);
+
+  if (typeof schoolId === 'undefined') {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        error: 'School not found',
+      },
+    };
+  }
+
+  const foundSchool = await getSchoolWithSpecializationsById(schoolId);
+  console.log('foundSchool', foundSchool);
+
+  if (typeof foundSchool === 'undefined') {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        error: 'School not found',
+      },
+    };
+  }
+
+  return {
+    props: {
+      school: foundSchool,
+    },
+  };
 }

@@ -1,7 +1,12 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  getAllSchools,
+  SchoolWithAreaNameAndSpecializations,
+} from '../../database/schools';
 import {
   beige,
   categoryBox,
@@ -77,7 +82,11 @@ const buttonSectionStyles = css`
   align-items: end;
 `;
 
-export default function Search() {
+type Props = {
+  schools: SchoolWithAreaNameAndSpecializations[];
+};
+
+export default function Search(props: Props) {
   return (
     <div>
       <Head>
@@ -102,32 +111,50 @@ export default function Search() {
             </button>
           </div>
         </div>
-        <div css={schoolPreviewBoxStyles}>
-          <div css={schoolPreviewLeftStyles}>
-            <div>
-              <Image
-                src="/images/search.png"
-                alt="Illustration of a girl standing on a huge book with a graduation hat"
-                width="147.6"
-                height="104.85"
-              />
-            </div>
-            <div css={schoolInfoStyles}>
-              <h3 css={h2Styles}>HTL Spengergasse</h3>
-              <div>Spengergasse 36, 1050 Vienna</div>
-              <div css={categorySectionStyles}>
-                <div css={categoryBox}>Design</div>
-                <div css={categoryBox}>Tech</div>
+        {props.schools.map((school) => {
+          return (
+            <div css={schoolPreviewBoxStyles} key={`school-${school.id}`}>
+              <div css={schoolPreviewLeftStyles}>
+                <div>
+                  <Image
+                    src="/images/search.png"
+                    alt="Illustration of a girl standing on a huge book with a graduation hat"
+                    width="147.6"
+                    height="104.85"
+                  />
+                </div>
+                <div css={schoolInfoStyles}>
+                  <h3 css={h2Styles}>{school.name}</h3>
+                  <div>
+                    {school.street}, {school.postalCode} {school.areaName}
+                  </div>
+                  <div css={categorySectionStyles}>
+                    <div css={categoryBox}>Design</div>
+                    <div css={categoryBox}>Tech</div>
+                  </div>
+                </div>
+              </div>
+              <div css={buttonSectionStyles}>
+                <Link href={`/schools/${school.id}`}>
+                  <a css={secondaryButton}>Learn more</a>
+                </Link>
               </div>
             </div>
-          </div>
-          <div css={buttonSectionStyles}>
-            <Link href="/schools/search">
-              <a css={secondaryButton}>Learn more</a>
-            </Link>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(): Promise<
+  GetServerSidePropsResult<Props>
+> {
+  const schools = await getAllSchools();
+
+  return {
+    props: {
+      schools: schools,
+    },
+  };
 }
