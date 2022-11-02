@@ -3,13 +3,18 @@ import { GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import Select from 'react-select';
+import { getAllAreas } from '../../database/areas';
 import {
   getAllSchools,
   SchoolWithAreaNameAndSpecializations,
 } from '../../database/schools';
+import { getAllSpecializations } from '../../database/specializations';
 import {
   beige,
   categoryBox,
+  darkPurple,
   defaultButton,
   grey,
   h1Styles,
@@ -34,13 +39,14 @@ const filterBoxStyles = css`
   flex-direction: row;
   justify-content: space-between;
   background-color: ${beige};
-  width: 55vw;
+  width: 60vw;
   height: 18vh;
   border: 1px solid ${grey};
   border-radius: 5px;
   box-shadow: 3px 3px 4px ${grey};
   padding: 15px 50px;
   align-items: center;
+  text-align: left;
 `;
 
 const schoolPreviewBoxStyles = css`
@@ -82,11 +88,80 @@ const buttonSectionStyles = css`
   align-items: end;
 `;
 
+const selectStylesSearchLarge = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '25vw',
+    height: '45px',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+    fontSize: '14px',
+    fontFamily: 'Inter',
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+const selectStylesSearchSmall = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '12vw',
+    height: '45px',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+    fontSize: '14px',
+    fontFamily: 'Inter',
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+type SelectType = {
+  label: string;
+  value: number;
+};
+
 type Props = {
   schools: SchoolWithAreaNameAndSpecializations[];
+  areas: SelectType[];
+  specializations: SelectType[];
 };
 
 export default function Search(props: Props) {
+  const [selectedArea, setSelectedArea] = useState<SelectType>();
+  const [selectedSpecializations, setSelectedSpecializations] =
+    useState<SelectType[]>();
+
+  console.log('areas', selectedArea);
+  console.log('interests', selectedSpecializations);
+
+  // Declare handler for specialization multi-select
+  const maxSelectOptions = 3;
+  const handleSpecializationSelect = (selectedOption: SelectType[]) => {
+    setSelectedSpecializations(selectedOption);
+  };
+
+  // Declare handler for area select
+  const handleAreaSelect = (selectedOption: SelectType) => {
+    setSelectedArea(selectedOption);
+  };
+
   return (
     <div>
       <Head>
@@ -98,12 +173,40 @@ export default function Search(props: Props) {
         <h1 css={h1Styles}>Find the right school for you.</h1>
         <div css={filterBoxStyles}>
           <div css={inputFieldSmall}>
-            <label htmlFor="location">Your location</label>
-            <input id="location" />
+            <label htmlFor="area">Your location</label>
+            <Select
+              id="area"
+              styles={selectStylesSearchSmall}
+              onChange={(selectedOption) =>
+                handleAreaSelect(selectedOption as SelectType)
+              }
+              options={props.areas}
+              value={selectedArea}
+              placeholder="Select area"
+            />
           </div>
           <div css={inputFieldSmall}>
-            <label htmlFor="interests">Your interests</label>
-            <input id="interests" />
+            <label htmlFor="specialization">Your interests</label>
+            <Select
+              id="specialization"
+              styles={selectStylesSearchLarge}
+              onChange={(selectedOption) =>
+                handleSpecializationSelect(selectedOption as SelectType[])
+              }
+              isMulti
+              options={
+                selectedSpecializations?.length === maxSelectOptions
+                  ? []
+                  : props.specializations
+              }
+              noOptionsMessage={() => {
+                return selectedSpecializations?.length === maxSelectOptions
+                  ? 'You cannot choose more than 3 specializations'
+                  : 'No options available';
+              }}
+              value={selectedSpecializations}
+              placeholder="Select interests"
+            />
           </div>
           <div>
             <button css={defaultButton}>
@@ -118,7 +221,7 @@ export default function Search(props: Props) {
                 <div>
                   <Image
                     src="/images/search.png"
-                    alt="Illustration of a girl standing on a huge book with a graduation hat"
+                    alt="Illustration of a girl standing on a gigantic book with a graduation hat"
                     width="147.6"
                     height="104.85"
                   />
@@ -150,11 +253,31 @@ export default function Search(props: Props) {
 export async function getServerSideProps(): Promise<
   GetServerSidePropsResult<Props>
 > {
+  const areasFromDatabase = await getAllAreas();
+  const specializationsFromDatabase = await getAllSpecializations();
   const schools = await getAllSchools();
+
+  // Transform specializations for multi-select element to read it
+  const specializations = specializationsFromDatabase.map((specialization) => {
+    return {
+      value: specialization.id,
+      label: specialization.name,
+    };
+  });
+
+  // Transform areas for multi-select element to read it
+  const areas = areasFromDatabase.map((area) => {
+    return {
+      value: area.id,
+      label: area.name,
+    };
+  });
 
   return {
     props: {
       schools: schools,
+      areas: areas,
+      specializations: specializations,
     },
   };
 }

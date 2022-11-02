@@ -86,8 +86,8 @@ export default function SingleSchool(props: Props) {
           <title>School not found</title>
           <meta name="description" content="School not found" />
         </Head>
-        <h1>{props.error}</h1>
-        Sorry, try the <Link href="/search">search page</Link>
+        <h1 css={h1Styles}>{props.error}</h1>
+        Sorry, try the <Link href="/schools">search page</Link> instead.
       </div>
     );
   }
@@ -105,7 +105,7 @@ export default function SingleSchool(props: Props) {
             {' '}
             <Image
               src="/images/back.png"
-              alt="Illustration of a teacher and two students in a classroom"
+              alt="Back arrow"
               width="10"
               height="10"
             />{' '}
@@ -195,9 +195,8 @@ export async function getServerSideProps(
   }
 
   const foundSchool = await getSchoolWithSpecializationsById(schoolId);
-  console.log('foundSchool', foundSchool);
 
-  if (typeof foundSchool === 'undefined') {
+  if (foundSchool.length === 0) {
     context.res.statusCode = 404;
     return {
       props: {

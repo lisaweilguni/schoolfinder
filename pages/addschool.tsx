@@ -13,7 +13,6 @@ import {
 import { getUserBySessionToken, User } from '../database/users';
 import {
   beige,
-  darkPurple,
   errorMessageStyles,
   formButton,
   grey,
@@ -22,6 +21,7 @@ import {
   inputFieldName,
   inputNameWrapper,
   mainLayout,
+  selectStyles,
 } from '../utils/sharedStyles';
 import { SchoolResponseBody } from './api/users/schools';
 
@@ -46,26 +46,6 @@ const inputSectionStyles = css`
 const imageStyles = css`
   align-self: center;
 `;
-
-const selectStyles = {
-  option: (provided: any) => ({
-    ...provided,
-  }),
-  control: (provided: any) => ({
-    ...provided,
-    width: '27vw',
-    height: '2.8rem',
-    border: `1px solid ${darkPurple}`,
-    borderRadius: '5px',
-    backgroundColor: '#FFFFFF',
-  }),
-  singleValue: (provided: any, state: any) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-
-    return { ...provided, opacity, transition };
-  },
-};
 
 type Props = {
   areas: Area[];
@@ -131,7 +111,7 @@ export default function AddSchool(props: Props) {
       return console.log(schoolResponseBody.errors);
     }
 
-    // Redirect user to registration successful page
+    // Redirect user to private page
     await router.push(`/private-profile`);
   }
 
@@ -299,7 +279,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   const areas = await getAllAreas();
-
   const specializationsFromDatabase = await getAllSpecializations();
 
   // Transform specializations for multi-select element to read it
@@ -311,6 +290,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   return {
-    props: { areas: areas, specializations: specializations, user: user },
+    props: {
+      areas: areas,
+      specializations: specializations,
+      user: user,
+    },
   };
 }

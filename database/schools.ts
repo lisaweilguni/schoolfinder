@@ -138,6 +138,7 @@ export async function getSchoolWithSpecializationsById(schoolId: number) {
 export async function getAllSchools() {
   const schools = await sql<SchoolWithAreaNameAndSpecializations[]>`
     SELECT
+     schools.id,
      schools.name,
      schools.area_id,
      areas.name as area_name,
@@ -153,10 +154,8 @@ export async function getAllSchools() {
      specializations,
      schools_specializations
     WHERE
-     schools.area_id = areas.id
-    AND
-     specializations.id = schools_specializations.specialization_id
-    AND
+     schools.area_id = areas.id AND
+     specializations.id = schools_specializations.specialization_id AND
      schools.id = schools_specializations.school_id
   `;
   return schools;

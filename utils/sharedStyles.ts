@@ -321,6 +321,26 @@ export const inputFieldSmall = css`
   input:hover {
     border: 2px solid ${darkPurple};
   }
+  select {
+    width: 13vw;
+    height: 35px;
+    border: 1px solid ${lightPurple};
+    border-radius: 5px;
+    background-color: ${white};
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+    color: #818181;
+    color: ${darkText};
+    transition: 0.2s ease-in-out;
+  }
+
+  select:hover {
+    border: 2px solid ${darkPurple};
+  }
+
+  option::selection {
+    color: ${darkText};
+  }
 `;
 
 export const inputNameWrapper = css`
@@ -421,3 +441,25 @@ export const errorMessageStyles = css`
 export const capitalizeText = css`
   text-transform: capitalize;
 `;
+
+// Select styles
+
+export const selectStyles = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '27vw',
+    height: '2.8rem',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
