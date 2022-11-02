@@ -1,15 +1,23 @@
-export function getAnimalWithFoods(animalWithFoods) {
-  const animal = {
-    animalId: animalWithFoods[0].animalId,
-    animalFirstName: animalWithFoods[0].animalFirstName,
-    animalType: animalWithFoods[0].animalType,
-    animalAccessory: animalWithFoods[0].animalAccessory,
-    foods: animalWithFoods.map((animalWithFood) => {
-      return {
-        name: animalWithFood.foodName,
-        type: animalWithFood.foodType,
-      };
-    }),
+export function getSchoolWithAreaNameAndSpecializations(
+  schoolWithSpecializations,
+) {
+  const school = {
+    schoolId: schoolWithSpecializations[0].schoolId,
+    schoolName: schoolWithSpecializations[0].schoolName,
+    areaId: schoolWithSpecializations[0].areaId,
+    areaName: schoolWithSpecializations[0].areaName,
+    postalCode: schoolWithSpecializations[0].postalCode,
+    street: schoolWithSpecializations[0].street,
+    website: schoolWithSpecializations[0].website,
+    isPublic: schoolWithSpecializations[0].isPublic,
+    specializations: schoolWithSpecializations.map(
+      (schoolWithSpecialization) => {
+        return {
+          specializationId: schoolWithSpecialization.specializationId,
+          specializationName: schoolWithSpecialization.specializationName,
+        };
+      },
+    ),
   };
-  return animal;
+  return school;
 }

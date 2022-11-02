@@ -113,7 +113,7 @@ export default function Search(props: Props) {
         </div>
         {props.schools.map((school) => {
           return (
-            <div css={schoolPreviewBoxStyles} key={`school-${school.id}`}>
+            <div css={schoolPreviewBoxStyles} key={`school-${school.schoolId}`}>
               <div css={schoolPreviewLeftStyles}>
                 <div>
                   <Image
@@ -124,7 +124,7 @@ export default function Search(props: Props) {
                   />
                 </div>
                 <div css={schoolInfoStyles}>
-                  <h3 css={h2Styles}>{school.name}</h3>
+                  <h3 css={h2Styles}>{school.schoolName}</h3>
                   <div>
                     {school.street}, {school.postalCode} {school.areaName}
                   </div>
@@ -135,7 +135,7 @@ export default function Search(props: Props) {
                 </div>
               </div>
               <div css={buttonSectionStyles}>
-                <Link href={`/schools/${school.id}`}>
+                <Link href={`/schools/${school.schoolId}`}>
                   <a css={secondaryButton}>Learn more</a>
                 </Link>
               </div>

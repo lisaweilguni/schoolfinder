@@ -3,14 +3,9 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  FullSchool,
-  getSchoolBasicById,
-  getSchoolById,
-  getSchoolWithSpecializationsById,
-  SchoolWithSpecializations,
-} from '../../database/schools';
+import { getSchoolWithSpecializationsById } from '../../database/schools';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
+import { getSchoolWithAreaNameAndSpecializations } from '../../utils/dataStructure';
 import {
   beige,
   categoryBox,
@@ -58,15 +53,45 @@ const iconLineStyles = css`
   gap: 10px;
 `;
 
+export type SpecializationTransformed = {
+  specializationId: number;
+  specializationName: string;
+};
+
+export type SchoolWithAreaNameAndSpecializationsTransformed = {
+  schoolId: number;
+  schoolName: string;
+  areaId: number;
+  areaName: string;
+  postalCode: string;
+  street: string;
+  website: string;
+  isPublic: boolean;
+  specializations: SpecializationTransformed[];
+};
+
 type Props =
   | {
-      school: SchoolWithSpecializations;
+      school: SchoolWithAreaNameAndSpecializationsTransformed;
     }
   | {
       error: string;
     };
 
 export default function SingleSchool(props: Props) {
+  if ('error' in props) {
+    return (
+      <div>
+        <Head>
+          <title>School not found</title>
+          <meta name="description" content="School not found" />
+        </Head>
+        <h1>{props.error}</h1>
+        Sorry, try the <Link href="/search">search page</Link>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Head>
@@ -102,12 +127,20 @@ export default function SingleSchool(props: Props) {
           </div>
           <div>
             <div css={schoolInfoSectionStyles}>
-              <h1 css={h1Styles}>HTL Spengergasse</h1>
+              <h1 css={h1Styles}>{props.school.schoolName}</h1>
               <div css={categoryStyles}>
-                <div css={categoryBox}>Design</div>
-                <div css={categoryBox}>Tech</div>
-                <div css={categoryBox}>Media</div>
+                {props.school.specializations.map((specialization) => {
+                  return (
+                    <div
+                      key={specialization.specializationId}
+                      css={categoryBox}
+                    >
+                      {specialization.specializationName}
+                    </div>
+                  );
+                })}
               </div>
+
               <div css={schoolInfoBoxStyles}>
                 <div css={iconLineStyles}>
                   <Image
@@ -116,7 +149,8 @@ export default function SingleSchool(props: Props) {
                     width="20"
                     height="20"
                   />
-                  Spengergasse 20, 1050 Wien
+                  {props.school.street}, {props.school.postalCode}{' '}
+                  {props.school.areaName}
                 </div>
                 <div css={iconLineStyles}>
                   <Image
@@ -125,7 +159,7 @@ export default function SingleSchool(props: Props) {
                     width="20"
                     height="20"
                   />
-                  www.spengergasse.at
+                  {props.school.website}
                 </div>
                 <div css={iconLineStyles}>
                   <Image
@@ -134,7 +168,7 @@ export default function SingleSchool(props: Props) {
                     width="20"
                     height="20"
                   />
-                  public
+                  {props.school.isPublic ? 'public' : 'private'}
                 </div>
               </div>
             </div>
@@ -174,7 +208,7 @@ export async function getServerSideProps(
 
   return {
     props: {
-      school: foundSchool,
+      school: getSchoolWithAreaNameAndSpecializations(foundSchool),
     },
   };
 }

@@ -25,21 +25,10 @@ export type FullSchool = {
 };
 
 export type SchoolWithAreaNameAndSpecializations = {
-  id: number;
-  name: string;
+  schoolId: number;
+  schoolName: string;
   areaId: number;
-  postalCode: string;
-  street: string;
-  website: string;
-  isPublic: boolean;
   areaName: string;
-  specializationId: number;
-  specializationName: string;
-};
-
-export type SchoolWithSpecializations = {
-  id: number;
-  name: string;
   postalCode: string;
   street: string;
   website: string;
@@ -116,49 +105,31 @@ export async function getSchoolById(id: number) {
   return school;
 }
 
-// export async function getSchoolWithSpecializationsById(schoolId: number) {
-//   const schoolWithSpecializations = await sql<SchoolWithSpecializations[]>`
-//     SELECT
-//       schools.id AS school_id,
-//       schools.name AS school_name,
-//       schools.postal_code AS school_postal_code,
-//       schools.street AS school_street,
-//       schools.website AS school_website,
-//       schools.is_public as school_is_public,
-//       specializations.id AS specialization_id,
-//       specializations.name AS specialization_name
-//     FROM
-//       schools
-//     INNER JOIN
-//       schools_specializations ON schools.id = schools_specializations.school_id
-//     INNER JOIN
-//       specializations ON schools_specializations.specialization_id = specializations.id
-//     WHERE
-//       schools.id = ${schoolId}
-//   `;
-
-//   return schoolWithSpecializations;
-// }
-
 export async function getSchoolWithSpecializationsById(schoolId: number) {
-  const schoolWithSpecializations = await sql<SchoolWithSpecializations[]>`
+  const schoolWithSpecializations = await sql<
+    SchoolWithAreaNameAndSpecializations[]
+  >`
     SELECT
       schools.id AS school_id,
       schools.name AS school_name,
-      schools.postal_code AS school_postal_code,
-      schools.street AS school_street,
-      schools.website AS school_website,
-      schools.is_public as school_is_public,
+      schools.area_id AS area_id,
+      areas.name as area_name,
+      schools.postal_code,
+      schools.street,
+      schools.website,
+      schools.is_public,
       specializations.id AS specialization_id,
       specializations.name AS specialization_name
     FROM
       schools,
       specializations,
-      schools_specializations
+      schools_specializations,
+      areas
     WHERE
       ${schoolId} = schools_specializations.school_id AND
       specializations.id = schools_specializations.specialization_id AND
-      ${schoolId} = schools.id
+      schools.id = ${schoolId} AND
+      schools.area_id = areas.id
   `;
 
   return schoolWithSpecializations;
@@ -190,3 +161,27 @@ export async function getAllSchools() {
   `;
   return schools;
 }
+
+// export async function getSchoolWithSpecializationsById(schoolId: number) {
+//   const schoolWithSpecializations = await sql<SchoolWithSpecializations[]>`
+//     SELECT
+//       schools.id AS school_id,
+//       schools.name AS school_name,
+//       schools.postal_code AS school_postal_code,
+//       schools.street AS school_street,
+//       schools.website AS school_website,
+//       schools.is_public as school_is_public,
+//       specializations.id AS specialization_id,
+//       specializations.name AS specialization_name
+//     FROM
+//       schools
+//     INNER JOIN
+//       schools_specializations ON schools.id = schools_specializations.school_id
+//     INNER JOIN
+//       specializations ON schools_specializations.specialization_id = specializations.id
+//     WHERE
+//       schools.id = ${schoolId}
+//   `;
+
+//   return schoolWithSpecializations;
+// }
