@@ -8,6 +8,7 @@ import Select from 'react-select';
 import { getAllAreas } from '../../database/areas';
 import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
+import { transformDataForSelect } from '../../utils/dataStructure';
 import {
   beige,
   categoryBox,
@@ -166,6 +167,9 @@ export default function Search(props: Props) {
   const [selectedSpecializations, setSelectedSpecializations] =
     useState<SelectType[]>();
 
+  console.log('selectedSpecializations', selectedSpecializations);
+  console.log('matchingSchools', matchingSchools);
+
   // Load all schools into state on first render and every time props.schools changes
   useEffect(() => {
     setAllSchools(props.schools);
@@ -321,20 +325,20 @@ export async function getServerSideProps(): Promise<
   // Merge duplicates
   const schools = [
     ...schoolsTransformed
-      .reduce((r, o) => {
-        const record = r.get(o.schoolId) || {};
-        r.set(o.schoolId, {
-          schoolId: o.schoolId,
-          schoolName: o.schoolName,
-          areaId: o.areaId,
-          areaName: o.areaName,
-          postalCode: o.postalCode,
-          street: o.street,
-          website: o.website,
-          isPublic: o.isPublic,
+      .reduce((r, school) => {
+        const record = r.get(school.schoolId) || {};
+        r.set(school.schoolId, {
+          schoolId: school.schoolId,
+          schoolName: school.schoolName,
+          areaId: school.areaId,
+          areaName: school.areaName,
+          postalCode: school.postalCode,
+          street: school.street,
+          website: school.website,
+          isPublic: school.isPublic,
           specializations: [
             ...(record.specializations || []),
-            ...o.specializations.filter(
+            ...school.specializations.filter(
               (object) => Object.keys(object).length !== 0,
             ),
           ],
@@ -344,27 +348,11 @@ export async function getServerSideProps(): Promise<
       .values(),
   ];
 
-  // Transform specializations for multi-select element to read it
-  const specializations = specializationsFromDatabase.map((specialization) => {
-    return {
-      value: specialization.id,
-      label: specialization.name,
-    };
-  });
-
-  // Transform areas for multi-select element to read it
-  const areas = areasFromDatabase.map((area) => {
-    return {
-      value: area.id,
-      label: area.name,
-    };
-  });
-
   return {
     props: {
       schools: schools,
-      areas: areas,
-      specializations: specializations,
+      areas: transformDataForSelect(areasFromDatabase),
+      specializations: transformDataForSelect(specializationsFromDatabase),
     },
   };
 }

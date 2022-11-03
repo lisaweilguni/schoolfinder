@@ -21,3 +21,13 @@ export function getSchoolWithAreaNameAndSpecializations(
   };
   return school;
 }
+
+export function transformDataForSelect(specializationsFromDatabase) {
+  const specializations = specializationsFromDatabase.map((specialization) => {
+    return {
+      value: specialization.id,
+      label: specialization.name,
+    };
+  });
+  return specializations;
+}

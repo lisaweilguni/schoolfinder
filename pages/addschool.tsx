@@ -11,6 +11,7 @@ import {
   Specialization,
 } from '../database/specializations';
 import { getUserBySessionToken, User } from '../database/users';
+import { transformDataForSelect } from '../utils/dataStructure';
 import {
   beige,
   errorMessageStyles,
@@ -281,18 +282,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const areas = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
 
-  // Transform specializations for multi-select element to read it
-  const specializations = specializationsFromDatabase.map((specialization) => {
-    return {
-      value: specialization.id,
-      label: specialization.name,
-    };
-  });
-
   return {
     props: {
       areas: areas,
-      specializations: specializations,
+      specializations: transformDataForSelect(specializationsFromDatabase),
       user: user,
     },
   };
