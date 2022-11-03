@@ -3,10 +3,13 @@ import { GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { getAllAreas } from '../../database/areas';
-import { getAllSchools } from '../../database/schools';
+import {
+  getAllSchools,
+  SchoolWithAreaNameAndSpecializations,
+} from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
 import {
   beige,
@@ -129,7 +132,7 @@ const selectStylesSearchSmall = {
   },
 };
 
-type SelectType = {
+export type SelectType = {
   label: string;
   value: number;
 };
@@ -158,12 +161,21 @@ type Props = {
 };
 
 export default function Search(props: Props) {
+  const [matchingSchools, setMatchingSchools] =
+    useState<SchoolWithAreaNameAndSpecializationsTransformed[]>();
   const [selectedArea, setSelectedArea] = useState<SelectType>();
   const [selectedSpecializations, setSelectedSpecializations] =
     useState<SelectType[]>();
 
   console.log('areas', selectedArea);
   console.log('interests', selectedSpecializations);
+
+  // Get cookies and set state on first render
+  useEffect(() => {
+    setMatchingSchools(props.schools);
+  }, [props.schools]);
+
+  console.log(props.schools);
 
   // Declare handler for specialization multi-select
   const maxSelectOptions = 3;
@@ -228,45 +240,50 @@ export default function Search(props: Props) {
             </button>
           </div>
         </div>
-        {props.schools.map((school) => {
-          return (
-            <div css={schoolPreviewBoxStyles} key={`school-${school.schoolId}`}>
-              <div css={schoolPreviewLeftStyles}>
-                <div>
-                  <Image
-                    src="/images/search.png"
-                    alt="Illustration of a girl standing on a gigantic book with a graduation hat"
-                    width="147.6"
-                    height="104.85"
-                  />
-                </div>
-                <div css={schoolInfoStyles}>
-                  <h3 css={h2Styles}>{school.schoolName}</h3>
+        {matchingSchools
+          ?.filter((school) => school.areaName === selectedArea?.label)
+          .map((school) => {
+            return (
+              <div
+                css={schoolPreviewBoxStyles}
+                key={`school-${school.schoolId}`}
+              >
+                <div css={schoolPreviewLeftStyles}>
                   <div>
-                    {school.street}, {school.postalCode} {school.areaName}
+                    <Image
+                      src="/images/search.png"
+                      alt="Illustration of a girl standing on a gigantic book with a graduation hat"
+                      width="147.6"
+                      height="104.85"
+                    />
                   </div>
-                  <div css={categorySectionStyles}>
-                    {school.specializations.map((specialization) => {
-                      return (
-                        <div
-                          key={specialization.specializationId}
-                          css={categoryBox}
-                        >
-                          {specialization.specializationName}
-                        </div>
-                      );
-                    })}
+                  <div css={schoolInfoStyles}>
+                    <h3 css={h2Styles}>{school.schoolName}</h3>
+                    <div>
+                      {school.street}, {school.postalCode} {school.areaName}
+                    </div>
+                    <div css={categorySectionStyles}>
+                      {school.specializations.map((specialization) => {
+                        return (
+                          <div
+                            key={specialization.specializationId}
+                            css={categoryBox}
+                          >
+                            {specialization.specializationName}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
+                <div css={buttonSectionStyles}>
+                  <Link href={`/schools/${school.schoolId}`}>
+                    <a css={secondaryButton}>Learn more</a>
+                  </Link>
+                </div>
               </div>
-              <div css={buttonSectionStyles}>
-                <Link href={`/schools/${school.schoolId}`}>
-                  <a css={secondaryButton}>Learn more</a>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

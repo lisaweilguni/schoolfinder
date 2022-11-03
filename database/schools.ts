@@ -135,25 +135,6 @@ export async function getSchoolWithSpecializationsById(schoolId: number) {
   return schoolWithSpecializations;
 }
 
-export async function getMatchingSchools(areaId: number) {
-  const matchingSchools = await sql<SchoolWithAreaNameAndSpecializations[]>`
-    SELECT
-      schools.id AS school_id,
-      schools.name AS school_name,
-      schools.area_id AS area_id,
-      schools.postal_code,
-      schools.street,
-      schools.website,
-      schools.is_public
-    FROM
-      schools
-    WHERE
-      schools.area_id = ${areaId}
-  `;
-
-  return matchingSchools;
-}
-
 export async function getAllSchools() {
   const schools = await sql<SchoolWithAreaNameAndSpecializations[]>`
     SELECT
@@ -180,26 +161,21 @@ export async function getAllSchools() {
   return schools;
 }
 
-// export async function getSchoolWithSpecializationsById(schoolId: number) {
-//   const schoolWithSpecializations = await sql<SchoolWithSpecializations[]>`
-//     SELECT
-//       schools.id AS school_id,
-//       schools.name AS school_name,
-//       schools.postal_code AS school_postal_code,
-//       schools.street AS school_street,
-//       schools.website AS school_website,
-//       schools.is_public as school_is_public,
-//       specializations.id AS specialization_id,
-//       specializations.name AS specialization_name
-//     FROM
-//       schools
-//     INNER JOIN
-//       schools_specializations ON schools.id = schools_specializations.school_id
-//     INNER JOIN
-//       specializations ON schools_specializations.specialization_id = specializations.id
-//     WHERE
-//       schools.id = ${schoolId}
-//   `;
+export async function getMatchingSchools(areaId: number) {
+  const matchingSchools = await sql<SchoolWithAreaNameAndSpecializations[]>`
+    SELECT
+      schools.id AS school_id,
+      schools.name AS school_name,
+      schools.area_id AS area_id,
+      schools.postal_code,
+      schools.street,
+      schools.website,
+      schools.is_public
+    FROM
+      schools
+    WHERE
+      schools.area_id = ${areaId}
+  `;
 
-//   return schoolWithSpecializations;
-// }
+  return matchingSchools;
+}
