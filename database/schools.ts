@@ -157,8 +157,8 @@ export async function getMatchingSchools(areaId: number) {
 export async function getAllSchools() {
   const schools = await sql<SchoolWithAreaNameAndSpecializations[]>`
     SELECT
-     schools.id,
-     schools.name,
+     schools.id AS school_id,
+     schools.name AS school_name,
      schools.area_id,
      areas.name as area_name,
      schools.postal_code,

@@ -6,10 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Select from 'react-select';
 import { getAllAreas } from '../../database/areas';
-import {
-  getAllSchools,
-  SchoolWithAreaNameAndSpecializations,
-} from '../../database/schools';
+import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
 import {
   beige,
@@ -249,8 +246,16 @@ export default function Search(props: Props) {
                     {school.street}, {school.postalCode} {school.areaName}
                   </div>
                   <div css={categorySectionStyles}>
-                    <div css={categoryBox}>Design</div>
-                    <div css={categoryBox}>Tech</div>
+                    {school.specializations.map((specialization) => {
+                      return (
+                        <div
+                          key={specialization.specializationId}
+                          css={categoryBox}
+                        >
+                          {specialization.specializationName}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -273,13 +278,12 @@ export async function getServerSideProps(): Promise<
   const areasFromDatabase = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
   const schoolsFromDatabase = await getAllSchools();
-  console.log('schoolsFromDatabase', schoolsFromDatabase);
 
   // Transform data
-  const schools = schoolsFromDatabase.map((school) => {
+  const schoolsTransformed = schoolsFromDatabase.map((school) => {
     return {
-      schoolId: school.id,
-      schoolName: school.name,
+      schoolId: school.schoolId,
+      schoolName: school.schoolName,
       areaId: school.areaId,
       areaName: school.areaName,
       postalCode: school.postalCode,
@@ -296,8 +300,8 @@ export async function getServerSideProps(): Promise<
   });
 
   // Merge duplicates
-  const result = [
-    ...schools
+  const schools = [
+    ...schoolsTransformed
       .reduce((r, o) => {
         const record = r.get(o.schoolId) || {};
         r.set(o.schoolId, {
@@ -311,15 +315,15 @@ export async function getServerSideProps(): Promise<
           isPublic: o.isPublic,
           specializations: [
             ...(record.specializations || []),
-            ...o.specializations.filter((o) => Object.keys(o).length !== 0),
+            ...o.specializations.filter(
+              (object) => Object.keys(object).length !== 0,
+            ),
           ],
         });
         return r;
       }, new Map())
       .values(),
   ];
-
-  // console.log(result);
 
   // Transform specializations for multi-select element to read it
   const specializations = specializationsFromDatabase.map((specialization) => {
@@ -339,7 +343,7 @@ export async function getServerSideProps(): Promise<
 
   return {
     props: {
-      schools: result,
+      schools: schools,
       areas: areas,
       specializations: specializations,
     },

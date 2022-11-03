@@ -14,6 +14,7 @@ import {
   loginButton,
   mainLayout,
 } from '../../utils/sharedStyles';
+import { SchoolWithAreaNameAndSpecializationsTransformed } from './';
 
 const contentLayout = css`
   margin-top: 3rem;
@@ -52,23 +53,6 @@ const iconLineStyles = css`
   flex-direction: row;
   gap: 10px;
 `;
-
-export type SpecializationTransformed = {
-  specializationId: number;
-  specializationName: string;
-};
-
-export type SchoolWithAreaNameAndSpecializationsTransformed = {
-  schoolId: number;
-  schoolName: string;
-  areaId: number;
-  areaName: string;
-  postalCode: string;
-  street: string;
-  website: string;
-  isPublic: boolean;
-  specializations: SpecializationTransformed[];
-};
 
 type Props =
   | {
