@@ -1,9 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createSchool, FullSchool } from '../../../database/schools';
+import {
+  createSchool,
+  SchoolWithSpecializations,
+} from '../../../database/schools';
 import { getValidSessionByToken } from '../../../database/sessions';
 
 export type SchoolResponseBody =
-  | { school: FullSchool }
+  | { school: SchoolWithSpecializations }
   | { errors: { message: string }[] };
 
 export default async function handler(

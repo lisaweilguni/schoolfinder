@@ -62,7 +62,7 @@ export default function RegistrationSuccess(props: Props) {
                 <a css={addSchoolButtonSmall}>Add your school</a>
               </Link>
               <Link href="/schools/">
-                <a css={deleteAccountButton}>View all schools</a>
+                <a css={deleteAccountButton}>Search schools</a>
               </Link>
             </div>
           </div>

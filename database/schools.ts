@@ -12,7 +12,7 @@ export type School = {
   userId: number;
 };
 
-export type FullSchool = {
+export type SchoolWithSpecializations = {
   id: number;
   name: string;
   areaId: number;
@@ -89,8 +89,11 @@ export async function createSchool(
   `;
 
   // Returning school including matching specializations
-  const fullSchool = { ...school!, specializations: [...specializations] };
-  return fullSchool;
+  const schoolWithSpecializations = {
+    ...school!,
+    specializations: [...specializations],
+  };
+  return schoolWithSpecializations;
 }
 
 export async function getSchoolById(id: number) {

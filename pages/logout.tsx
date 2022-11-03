@@ -33,8 +33,8 @@ export default function Logout() {
           <Image
             src="/images/logout.png"
             alt="Illustration of a woman sitting by window with coffee and a laptop"
-            width="435.6"
-            height="400.8"
+            width="348.48"
+            height="320.64"
           />
         </div>
       </div>
