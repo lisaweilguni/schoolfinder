@@ -137,8 +137,25 @@ type SelectType = {
   value: number;
 };
 
+export type SpecializationTransformed = {
+  specializationId: number;
+  specializationName: string;
+};
+
+export type SchoolWithAreaNameAndSpecializationsTransformed = {
+  schoolId: number;
+  schoolName: string;
+  areaId: number;
+  areaName: string;
+  postalCode: string;
+  street: string;
+  website: string;
+  isPublic: boolean;
+  specializations: SpecializationTransformed[];
+};
+
 type Props = {
-  schools: SchoolWithAreaNameAndSpecializations[];
+  schools: SchoolWithAreaNameAndSpecializationsTransformed[];
   areas: SelectType[];
   specializations: SelectType[];
 };
@@ -201,7 +218,7 @@ export default function Search(props: Props) {
               }
               noOptionsMessage={() => {
                 return selectedSpecializations?.length === maxSelectOptions
-                  ? 'You cannot choose more than 3 specializations'
+                  ? 'You cannot choose more than 3 interests'
                   : 'No options available';
               }}
               value={selectedSpecializations}
@@ -255,7 +272,54 @@ export async function getServerSideProps(): Promise<
 > {
   const areasFromDatabase = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
-  const schools = await getAllSchools();
+  const schoolsFromDatabase = await getAllSchools();
+  console.log('schoolsFromDatabase', schoolsFromDatabase);
+
+  // Transform data
+  const schools = schoolsFromDatabase.map((school) => {
+    return {
+      schoolId: school.id,
+      schoolName: school.name,
+      areaId: school.areaId,
+      areaName: school.areaName,
+      postalCode: school.postalCode,
+      street: school.street,
+      website: school.website,
+      isPublic: school.isPublic,
+      specializations: [
+        {
+          specializationId: school.specializationId,
+          specializationName: school.specializationName,
+        },
+      ],
+    };
+  });
+
+  // Merge duplicates
+  const result = [
+    ...schools
+      .reduce((r, o) => {
+        const record = r.get(o.schoolId) || {};
+        r.set(o.schoolId, {
+          schoolId: o.schoolId,
+          schoolName: o.schoolName,
+          areaId: o.areaId,
+          areaName: o.areaName,
+          postalCode: o.postalCode,
+          street: o.street,
+          website: o.website,
+          isPublic: o.isPublic,
+          specializations: [
+            ...(record.specializations || []),
+            ...o.specializations.filter((o) => Object.keys(o).length !== 0),
+          ],
+        });
+        return r;
+      }, new Map())
+      .values(),
+  ];
+
+  // console.log(result);
 
   // Transform specializations for multi-select element to read it
   const specializations = specializationsFromDatabase.map((specialization) => {
@@ -275,7 +339,7 @@ export async function getServerSideProps(): Promise<
 
   return {
     props: {
-      schools: schools,
+      schools: result,
       areas: areas,
       specializations: specializations,
     },
