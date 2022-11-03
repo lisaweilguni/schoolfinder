@@ -6,10 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { getAllAreas } from '../../database/areas';
-import {
-  getAllSchools,
-  SchoolWithAreaNameAndSpecializations,
-} from '../../database/schools';
+import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
 import {
   beige,
@@ -161,21 +158,18 @@ type Props = {
 };
 
 export default function Search(props: Props) {
+  const [allSchools, setAllSchools] =
+    useState<SchoolWithAreaNameAndSpecializationsTransformed[]>();
   const [matchingSchools, setMatchingSchools] =
     useState<SchoolWithAreaNameAndSpecializationsTransformed[]>();
   const [selectedArea, setSelectedArea] = useState<SelectType>();
   const [selectedSpecializations, setSelectedSpecializations] =
     useState<SelectType[]>();
 
-  console.log('areas', selectedArea);
-  console.log('interests', selectedSpecializations);
-
-  // Get cookies and set state on first render
+  // Load all schools into state on first render and every time props.schools changes
   useEffect(() => {
-    setMatchingSchools(props.schools);
+    setAllSchools(props.schools);
   }, [props.schools]);
-
-  console.log(props.schools);
 
   // Declare handler for specialization multi-select
   const maxSelectOptions = 3;
@@ -187,6 +181,14 @@ export default function Search(props: Props) {
   const handleAreaSelect = (selectedOption: SelectType) => {
     setSelectedArea(selectedOption);
   };
+
+  // Declare handler for search button
+  function searchHandler() {
+    const filteredSchools = allSchools?.filter(
+      (school) => school.areaName === selectedArea?.label,
+    );
+    setMatchingSchools(filteredSchools);
+  }
 
   return (
     <div>
@@ -235,55 +237,55 @@ export default function Search(props: Props) {
             />
           </div>
           <div>
-            <button css={defaultButton}>
+            <button
+              css={defaultButton}
+              onClick={() => {
+                searchHandler();
+              }}
+            >
               <span>Search</span>
             </button>
           </div>
         </div>
-        {matchingSchools
-          ?.filter((school) => school.areaName === selectedArea?.label)
-          .map((school) => {
-            return (
-              <div
-                css={schoolPreviewBoxStyles}
-                key={`school-${school.schoolId}`}
-              >
-                <div css={schoolPreviewLeftStyles}>
-                  <div>
-                    <Image
-                      src="/images/search.png"
-                      alt="Illustration of a girl standing on a gigantic book with a graduation hat"
-                      width="147.6"
-                      height="104.85"
-                    />
-                  </div>
-                  <div css={schoolInfoStyles}>
-                    <h3 css={h2Styles}>{school.schoolName}</h3>
-                    <div>
-                      {school.street}, {school.postalCode} {school.areaName}
-                    </div>
-                    <div css={categorySectionStyles}>
-                      {school.specializations.map((specialization) => {
-                        return (
-                          <div
-                            key={specialization.specializationId}
-                            css={categoryBox}
-                          >
-                            {specialization.specializationName}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+        {matchingSchools?.map((school) => {
+          return (
+            <div css={schoolPreviewBoxStyles} key={`school-${school.schoolId}`}>
+              <div css={schoolPreviewLeftStyles}>
+                <div>
+                  <Image
+                    src="/images/search.png"
+                    alt="Illustration of a girl standing on a gigantic book with a graduation hat"
+                    width="147.6"
+                    height="104.85"
+                  />
                 </div>
-                <div css={buttonSectionStyles}>
-                  <Link href={`/schools/${school.schoolId}`}>
-                    <a css={secondaryButton}>Learn more</a>
-                  </Link>
+                <div css={schoolInfoStyles}>
+                  <h3 css={h2Styles}>{school.schoolName}</h3>
+                  <div>
+                    {school.street}, {school.postalCode} {school.areaName}
+                  </div>
+                  <div css={categorySectionStyles}>
+                    {school.specializations.map((specialization) => {
+                      return (
+                        <div
+                          key={specialization.specializationId}
+                          css={categoryBox}
+                        >
+                          {specialization.specializationName}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            );
-          })}
+              <div css={buttonSectionStyles}>
+                <Link href={`/schools/${school.schoolId}`}>
+                  <a css={secondaryButton}>Learn more</a>
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
