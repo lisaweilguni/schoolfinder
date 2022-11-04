@@ -238,7 +238,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const foundSchool = await getSchoolWithSpecializationsById(6);
+  const foundSchool = await getSchoolWithSpecializationsById(1);
 
   return {
     props: {
