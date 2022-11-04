@@ -188,10 +188,26 @@ export default function Search(props: Props) {
 
   // Declare handler for search button
   function searchHandler() {
-    const filteredSchools = allSchools?.filter(
-      (school) => school.areaName === selectedArea?.label,
-    );
-    setMatchingSchools(filteredSchools);
+    if (selectedArea) {
+      const filteredSchools = allSchools?.filter(
+        (school) => school.areaName === selectedArea.label,
+      );
+      setMatchingSchools(filteredSchools);
+    }
+    if (selectedArea && selectedSpecializations) {
+      const filteredSchools = allSchools?.filter(
+        (school) =>
+          school.areaName === selectedArea.label &&
+          school.specializations.find(
+            (specialization) =>
+              specialization.specializationName ===
+                selectedSpecializations[0]?.label ||
+              selectedSpecializations[1]?.label ||
+              selectedSpecializations[2]?.label,
+          ),
+      );
+      setMatchingSchools(filteredSchools);
+    }
   }
 
   return (
