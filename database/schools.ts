@@ -164,21 +164,33 @@ export async function getAllSchools() {
   return schools;
 }
 
-export async function getMatchingSchools(areaId: number) {
-  const matchingSchools = await sql<SchoolWithAreaNameAndSpecializations[]>`
+// Get school by user ID
+export async function getSchoolByUserId(userId: number) {
+  const school = await sql<School[]>`
     SELECT
-      schools.id AS school_id,
-      schools.name AS school_name,
-      schools.area_id AS area_id,
-      schools.postal_code,
-      schools.street,
-      schools.website,
-      schools.is_public
+     users.id AS user_id,
+     schools.id AS school_id,
+     schools.name AS school_name,
+     schools.area_id,
+     areas.name as area_name,
+     schools.postal_code,
+     schools.street,
+     schools.website,
+     schools.is_public,
+     specializations.id as specialization_id,
+     specializations.name as specialization_name
     FROM
-      schools
+     users,
+     schools,
+     areas,
+     specializations,
+     schools_specializations
     WHERE
-      schools.area_id = ${areaId}
+     users.id = ${userId} AND
+     schools.user_id = ${userId} AND
+     schools.area_id = areas.id AND
+     specializations.id = schools_specializations.specialization_id AND
+     schools.id = schools_specializations.school_id
   `;
-
-  return matchingSchools;
+  return school;
 }

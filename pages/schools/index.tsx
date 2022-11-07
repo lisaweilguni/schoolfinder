@@ -248,7 +248,7 @@ export default function Search(props: Props) {
         {allSchools
           ?.filter((school) => {
             let filter = true;
-            // Check if selected area name matches area filter
+            // Check if selected area name matches the school area
             if (areaFilter && school.areaName !== areaFilter.label) {
               filter = false;
             }

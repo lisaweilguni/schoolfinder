@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getSchoolWithSpecializationsById } from '../database/schools';
+import { getSchoolByUserId } from '../database/schools';
 import { getUserBySessionToken, User } from '../database/users';
 import { getSchoolWithAreaNameAndSpecializations } from '../utils/dataStructure';
 import {
@@ -238,7 +238,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const foundSchool = await getSchoolWithSpecializationsById(1);
+  const foundSchool = await getSchoolByUserId(user.id);
+  console.log(foundSchool);
 
   return {
     props: {

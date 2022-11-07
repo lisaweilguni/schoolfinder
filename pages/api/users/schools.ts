@@ -32,14 +32,14 @@ export default async function handler(
       return;
     }
 
-    const schoolName = request.body.schoolName;
-    const areaId = request.body.areaId;
-    const postalCode = request.body.postalCode;
-    const street = request.body.street;
-    const website = request.body.website;
-    const isPublic = request.body.isPublic;
-    const userId = request.body.userId;
-    const specializationIds = request.body.specializationIds;
+    const schoolName = request.body?.schoolName;
+    const areaId = request.body?.areaId;
+    const postalCode = request.body?.postalCode;
+    const street = request.body?.street;
+    const website = request.body?.website;
+    const isPublic = request.body?.isPublic;
+    const userId = request.body?.userId;
+    const specializationIds = request.body?.specializationIds;
 
     if (
       !(
