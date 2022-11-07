@@ -54,20 +54,46 @@ export default async function handler(
     const userId = request.body?.userId;
     const specializationIds = request.body?.specializationIds;
 
-    if (
-      !(
-        schoolName &&
-        areaId &&
-        postalCode &&
-        street &&
-        website &&
-        isPublic &&
-        specializationIds
-      )
-    ) {
+    if (!schoolName) {
       return response
         .status(400)
-        .json({ errors: [{ message: 'All fields must be filled out' }] });
+        .json({ errors: [{ message: 'Please provide the school name.' }] });
+    }
+
+    if (!areaId) {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'Please select an area.' }] });
+    }
+
+    if (!postalCode) {
+      return response.status(400).json({
+        errors: [{ message: 'Please provide the postal code' }],
+      });
+    }
+
+    if (!street) {
+      return response.status(400).json({
+        errors: [{ message: 'Please provide the street and house number.' }],
+      });
+    }
+
+    if (isPublic === '') {
+      return response.status(400).json({
+        errors: [{ message: 'Please select the type of school.' }],
+      });
+    }
+
+    if (!website) {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'Please provide your website.' }] });
+    }
+
+    if (!specializationIds) {
+      return response.status(400).json({
+        errors: [{ message: 'Please select at least one specialization.' }],
+      });
     }
 
     // Create new school using util database function
@@ -77,7 +103,7 @@ export default async function handler(
       postalCode,
       street,
       website,
-      isPublic,
+      Boolean(isPublic),
       userId,
       specializationIds,
     );
@@ -103,20 +129,46 @@ export default async function handler(
     const userId = request.body?.userId;
     const specializationIds = request.body?.specializationIds;
 
-    if (
-      !(
-        schoolName &&
-        areaId &&
-        postalCode &&
-        street &&
-        website &&
-        isPublic &&
-        specializationIds
-      )
-    ) {
+    if (!schoolName) {
       return response
         .status(400)
-        .json({ errors: [{ message: 'All fields must be filled out' }] });
+        .json({ errors: [{ message: 'Please provide the school name.' }] });
+    }
+
+    if (!areaId) {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'Please select an area.' }] });
+    }
+
+    if (!postalCode) {
+      return response.status(400).json({
+        errors: [{ message: 'Please provide the postal code' }],
+      });
+    }
+
+    if (!street) {
+      return response.status(400).json({
+        errors: [{ message: 'Please provide the street and house number.' }],
+      });
+    }
+
+    if (isPublic === '') {
+      return response.status(400).json({
+        errors: [{ message: 'Please select the type of school.' }],
+      });
+    }
+
+    if (!website) {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'Please provide your website.' }] });
+    }
+
+    if (!specializationIds) {
+      return response.status(400).json({
+        errors: [{ message: 'Please select at least one specialization.' }],
+      });
     }
 
     // Create new school using util database function
@@ -126,7 +178,7 @@ export default async function handler(
       postalCode,
       street,
       website,
-      isPublic,
+      Boolean(isPublic),
       userId,
       specializationIds,
     );

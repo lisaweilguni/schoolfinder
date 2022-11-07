@@ -94,7 +94,7 @@ export default function AddSchool(props: Props) {
         postalCode: postalCode,
         street: street,
         areaId: Number(areaId),
-        isPublic: Boolean(isPublic),
+        isPublic: isPublic,
         website: website,
         userId: props.user.id,
         specializationIds: specializationsDatabaseStructure?.map(

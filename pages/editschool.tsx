@@ -67,7 +67,9 @@ export default function EditSchool(props: Props) {
   const [areaId, setAreaId] = useState(Number(props.school?.areaId));
   const [selectedSpecializations, setSelectedSpecializations] =
     useState<Specialization[]>();
-  const [isPublic, setIsPublic] = useState();
+  const [isPublic, setIsPublic] = useState(
+    JSON.stringify(props.school?.isPublic),
+  );
   const [website, setWebsite] = useState(props.school?.website);
   const [errors, setErrors] = useState<{ message: string }[]>([]);
   const router = useRouter();
@@ -100,7 +102,7 @@ export default function EditSchool(props: Props) {
         postalCode: postalCode,
         street: street,
         areaId: Number(areaId),
-        isPublic: Boolean(isPublic),
+        isPublic: isPublic,
         website: website,
         userId: props.user.id,
         specializationIds: specializationsDatabaseStructure?.map(
@@ -203,7 +205,7 @@ export default function EditSchool(props: Props) {
                   id="public-private"
                   value={isPublic}
                   onChange={(event) => {
-                    setIsPublic(JSON.parse(event.currentTarget.value));
+                    setIsPublic(event.currentTarget.value);
                   }}
                 >
                   <option hidden>Select type</option>
