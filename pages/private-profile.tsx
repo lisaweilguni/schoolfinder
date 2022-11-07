@@ -4,11 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import {
-  getSchoolByUserId,
-  School,
-  SchoolWithAreaNameAndSpecializations,
-} from '../database/schools';
+import { getSchoolByUserId } from '../database/schools';
 import { getUserBySessionToken, User } from '../database/users';
 import { getSchoolWithAreaNameAndSpecializations } from '../utils/dataStructure';
 import {
@@ -25,7 +21,6 @@ import {
   small,
   white,
 } from '../utils/sharedStyles';
-import { SchoolResponseBody } from './api/users/schools';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './schools';
 
 const profileInformationBox = css`
@@ -78,6 +73,25 @@ const schoolPreviewBoxStyles = css`
   font-size: ${small};
   margin-top: 60px;
   position: relative;
+`;
+
+const addSchoolStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${white};
+  width: 45vw;
+  height: 48vh;
+  border: 1px solid ${grey};
+  border-radius: 5px;
+  box-shadow: 3px 3px 4px ${grey};
+  padding: 20px 30px;
+  font-size: ${small};
+  margin-top: 60px;
+  position: relative;
+  gap: 20px;
+  cursor: pointer;
 `;
 
 const schoolPreviewLeftStyles = css`
@@ -134,7 +148,7 @@ export default function Profile(props: Props) {
 
   // Handler for delete school
   async function deleteSchool(userId: number) {
-    const response = await fetch(`/api/users/schools`, {
+    await fetch(`/api/users/schools`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +158,6 @@ export default function Profile(props: Props) {
       }),
     });
 
-    // const deletedSchool = (await response.json()) as School;
     setSchool('');
   }
 
@@ -248,9 +261,24 @@ export default function Profile(props: Props) {
             </div>
           </div>
         ) : (
-          <div css={schoolPreviewLeftStyles}>
-            You haven't added your school yet.
-          </div>
+          <Link href="/addschool">
+            <div css={addSchoolStyles}>
+              <div>Add your school</div>
+              {/* <div>
+              <Link href="/addschool">
+                <a css={addSchoolButtonSmall}>Add school</a>
+              </Link>
+            </div> */}
+              <div>
+                <Image
+                  src="/images/addschoolicon.png"
+                  alt="Edit icon"
+                  width="60"
+                  height="60"
+                />
+              </div>
+            </div>
+          </Link>
         )}
       </div>
     </div>
