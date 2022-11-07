@@ -174,7 +174,7 @@ export default async function handler(
     // Create new school using util database function
     const updatedSchool = await updateSchool(
       schoolName,
-      areaId,
+      Number(areaId),
       postalCode,
       street,
       website,
