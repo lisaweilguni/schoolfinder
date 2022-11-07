@@ -1,3 +1,4 @@
+import Select from 'react-select/dist/declarations/src/Select';
 import { sql } from './connect';
 import { Specialization } from './specializations';
 
@@ -25,6 +26,19 @@ export type SchoolWithSpecializations = {
 };
 
 export type SchoolWithAreaNameAndSpecializations = {
+  schoolId: number;
+  schoolName: string;
+  areaId: number;
+  areaName: string;
+  postalCode: string;
+  street: string;
+  website: string;
+  isPublic: boolean;
+  specializationId: number;
+  specializationName: string;
+};
+
+export type SchoolWithAreaNameAndSpecializationsAndUserId = {
   schoolId: number;
   schoolName: string;
   areaId: number;
@@ -166,9 +180,8 @@ export async function getAllSchools() {
 
 // Get school by user ID
 export async function getSchoolByUserId(userId: number) {
-  const school = await sql<School[]>`
+  const school = await sql<SchoolWithAreaNameAndSpecializations[]>`
     SELECT
-     users.id AS user_id,
      schools.id AS school_id,
      schools.name AS school_name,
      schools.area_id,
@@ -191,6 +204,17 @@ export async function getSchoolByUserId(userId: number) {
      schools.area_id = areas.id AND
      specializations.id = schools_specializations.specialization_id AND
      schools.id = schools_specializations.school_id
+  `;
+  return school;
+}
+
+export async function deleteSchoolByUserId(userId: number) {
+  const [school] = await sql<School[]>`
+    DELETE FROM
+      schools
+    WHERE
+      schools.user_id = ${userId}
+    RETURNING *
   `;
   return school;
 }

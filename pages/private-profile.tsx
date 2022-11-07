@@ -3,7 +3,12 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getSchoolByUserId } from '../database/schools';
+import { useEffect, useState } from 'react';
+import {
+  getSchoolByUserId,
+  School,
+  SchoolWithAreaNameAndSpecializations,
+} from '../database/schools';
 import { getUserBySessionToken, User } from '../database/users';
 import { getSchoolWithAreaNameAndSpecializations } from '../utils/dataStructure';
 import {
@@ -20,6 +25,7 @@ import {
   small,
   white,
 } from '../utils/sharedStyles';
+import { SchoolResponseBody } from './api/users/schools';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './schools';
 
 const profileInformationBox = css`
@@ -112,21 +118,34 @@ const deleteStyles = css`
 `;
 
 type Props = {
-  school: SchoolWithAreaNameAndSpecializationsTransformed;
-  user?: User;
+  school?: SchoolWithAreaNameAndSpecializationsTransformed;
+  user: User;
 };
 
 export default function Profile(props: Props) {
-  if (!props.user) {
-    return (
-      <>
-        <Head>
-          <title>User not found</title>
-          <meta name="description" content="User not found" />
-        </Head>
-        <h1 css={h1Styles}>404 - User not found</h1>
-      </>
-    );
+  const [school, setSchool] = useState<
+    SchoolWithAreaNameAndSpecializationsTransformed | ''
+  >();
+
+  // Load all schools into state on first render and every time props.schools changes
+  useEffect(() => {
+    setSchool(props.school);
+  }, [props.school]);
+
+  // Handler for delete school
+  async function deleteSchool(userId: number) {
+    const response = await fetch(`/api/users/schools`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    });
+
+    // const deletedSchool = (await response.json()) as School;
+    setSchool('');
   }
 
   return (
@@ -156,69 +175,83 @@ export default function Profile(props: Props) {
               <div css={emailStyles}>{props.user.email}</div>
             </div>
             <div css={buttonSectionStyles}>
-              <div>
-                <Link href="/addschool">
-                  <a css={addSchoolButtonSmall}>Add school</a>
-                </Link>
-              </div>
+              {school ? (
+                ''
+              ) : (
+                <div>
+                  <Link href="/addschool">
+                    <a css={addSchoolButtonSmall}>Add school</a>
+                  </Link>
+                </div>
+              )}
               <div>
                 <button css={deleteAccountButton}>Delete account</button>
               </div>
             </div>
           </div>
         </div>
-        <div css={schoolPreviewBoxStyles}>
-          <button css={editStyles}>
-            <div>
-              <Image
-                src="/images/edit.png"
-                alt="Edit icon"
-                width="20"
-                height="20"
-              />
-            </div>
-          </button>
-          <button css={deleteStyles}>
-            <div>
-              <Image
-                src="/images/delete.png"
-                alt="Delete icon"
-                width="20"
-                height="20"
-              />
-            </div>
-          </button>
-          <div css={schoolPreviewLeftStyles}>
-            <div>
-              <Image
-                src="/images/search.png"
-                alt="Illustration of a girl standing on a gigantic book with a graduation hat"
-                width="147.6"
-                height="104.85"
-              />
-            </div>
-            <div css={schoolInfoStyles}>
-              <h3 css={h2Styles}>{props.school.schoolName}</h3>
+        {school ? (
+          <div css={schoolPreviewBoxStyles}>
+            <button css={editStyles}>
               <div>
-                {props.school.street}, {props.school.postalCode}{' '}
-                {props.school.areaName}
+                <Image
+                  src="/images/edit.png"
+                  alt="Edit icon"
+                  width="20"
+                  height="20"
+                />
               </div>
-              <div>{props.school.website}</div>
-              <div css={categorySectionStyles}>
-                {props.school.specializations.map((specialization) => {
-                  return (
-                    <div
-                      key={specialization.specializationId}
-                      css={categoryBox}
-                    >
-                      {specialization.specializationName}
-                    </div>
-                  );
-                })}
+            </button>
+            <button
+              css={deleteStyles}
+              onClick={async () => {
+                await deleteSchool(props.user.id);
+              }}
+            >
+              <div>
+                <Image
+                  src="/images/delete.png"
+                  alt="Delete icon"
+                  width="20"
+                  height="20"
+                />
+              </div>
+            </button>
+            <div css={schoolPreviewLeftStyles}>
+              <div>
+                <Image
+                  src="/images/search.png"
+                  alt="Illustration of a girl standing on a gigantic book with a graduation hat"
+                  width="147.6"
+                  height="104.85"
+                />
+              </div>
+              <div css={schoolInfoStyles}>
+                <h3 css={h2Styles}>{school.schoolName}</h3>
+                <div>
+                  {school.street}, {school.postalCode} {school.areaName}
+                </div>
+                <div>{school.website}</div>
+                <div css={categorySectionStyles}>
+                  {school.specializations.map((specialization) => {
+                    return (
+                      <div
+                        key={specialization.specializationId}
+                        css={categoryBox}
+                      >
+                        {specialization.specializationName}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div css={schoolPreviewLeftStyles}>
+            You haven't added your school yet.
+          </div>
+        )}
       </div>
     </div>
   );
@@ -239,7 +272,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   const foundSchool = await getSchoolByUserId(user.id);
-  console.log(foundSchool);
+  if (!foundSchool.length) {
+    return {
+      props: {
+        user: user,
+      },
+    };
+  }
 
   return {
     props: {
