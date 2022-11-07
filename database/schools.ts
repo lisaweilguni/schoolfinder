@@ -1,4 +1,3 @@
-import Select from 'react-select/dist/declarations/src/Select';
 import { sql } from './connect';
 import { Specialization } from './specializations';
 
@@ -206,6 +205,74 @@ export async function getSchoolByUserId(userId: number) {
      schools.id = schools_specializations.school_id
   `;
   return school;
+}
+
+export async function updateSchool(
+  name: string,
+  areaId: number,
+  postalCode: string,
+  street: string,
+  website: string,
+  isPublic: boolean,
+  userId: number,
+  specializationIds: number[],
+) {
+  const [school] = await sql<School[]>`
+    UPDATE
+      schools
+    SET
+      name = ${name},
+      area_id = ${areaId},
+      postal_code = ${postalCode},
+      street = ${street},
+      website = ${website},
+      is_public = ${isPublic},
+      user_id = ${userId}
+    WHERE
+      schools.user_id = ${userId}
+    RETURNING *
+  `;
+
+  // Delete original specializations
+  await sql<{ schoolId: number; specializationId: number }[]>`
+    DELETE FROM
+      schools_specializations
+    WHERE
+      schools_specializations.school_id = ${school!.id}
+    RETURNING *
+  `;
+
+  // Insert new specializations
+  specializationIds.forEach(async (specializationId) => {
+    await sql`
+    INSERT INTO schools_specializations
+     (school_id, specialization_id)
+    VALUES
+     (${school!.id}, ${specializationId})
+  `;
+  });
+
+  // Joint query to retrieve the matching specializations
+  const specializations = await sql<Specialization[]>`
+  SELECT
+    specializations.id,
+    specializations.name
+  FROM
+    schools,
+    specializations,
+    schools_specializations
+  WHERE
+    ${school!.id} = schools_specializations.school_id AND
+    specializations.id = schools_specializations.specialization_id AND
+    ${school!.id} = schools.id
+  `;
+
+  // Returning school including matching specializations
+  const schoolWithSpecializations = {
+    ...school!,
+    specializations: [...specializations],
+  };
+  return schoolWithSpecializations;
 }
 
 export async function deleteSchoolByUserId(userId: number) {

@@ -243,14 +243,16 @@ export default function Profile(props: Props) {
         {school ? (
           <div css={schoolPreviewBoxStyles}>
             <button css={editStyles}>
-              <div>
-                <Image
-                  src="/images/edit.png"
-                  alt="Edit icon"
-                  width="20"
-                  height="20"
-                />
-              </div>
+              <Link href="/editschool">
+                <div>
+                  <Image
+                    src="/images/edit.png"
+                    alt="Edit icon"
+                    width="20"
+                    height="20"
+                  />
+                </div>
+              </Link>
             </button>
             <button
               css={deleteStyles}

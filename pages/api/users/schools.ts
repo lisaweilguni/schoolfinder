@@ -5,6 +5,7 @@ import {
   getSchoolByUserId,
   School,
   SchoolWithSpecializations,
+  updateSchool,
 } from '../../../database/schools';
 import { getValidSessionByToken } from '../../../database/sessions';
 
@@ -85,6 +86,55 @@ export default async function handler(
     return response.status(200).json({ school: newSchool });
   }
 
+  if (request.method === 'PUT') {
+    if (!request.cookies.sessionToken) {
+      response
+        .status(400)
+        .json({ errors: [{ message: 'No session token passed' }] });
+      return;
+    }
+
+    const schoolName = request.body?.schoolName;
+    const areaId = request.body?.areaId;
+    const postalCode = request.body?.postalCode;
+    const street = request.body?.street;
+    const website = request.body?.website;
+    const isPublic = request.body?.isPublic;
+    const userId = request.body?.userId;
+    const specializationIds = request.body?.specializationIds;
+
+    if (
+      !(
+        schoolName &&
+        areaId &&
+        postalCode &&
+        street &&
+        website &&
+        isPublic &&
+        specializationIds
+      )
+    ) {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'All fields must be filled out' }] });
+    }
+
+    // Create new school using util database function
+    const updatedSchool = await updateSchool(
+      schoolName,
+      areaId,
+      postalCode,
+      street,
+      website,
+      isPublic,
+      userId,
+      specializationIds,
+    );
+
+    // response with updated school
+    return response.status(200).json({ school: updatedSchool });
+  }
+
   if (request.method === 'DELETE') {
     if (!request.cookies.sessionToken) {
       response
@@ -94,7 +144,6 @@ export default async function handler(
     }
 
     const deletedSchool = await deleteSchoolByUserId(request.body.userId);
-    console.log(deletedSchool);
 
     if (!deletedSchool) {
       return response
