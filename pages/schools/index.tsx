@@ -161,11 +161,15 @@ type Props = {
 export default function Search(props: Props) {
   const [allSchools, setAllSchools] =
     useState<SchoolWithAreaNameAndSpecializationsTransformed[]>();
-  const [matchingSchools, setMatchingSchools] =
-    useState<SchoolWithAreaNameAndSpecializationsTransformed[]>();
   const [selectedArea, setSelectedArea] = useState<SelectType>();
-  const [selectedSpecializations, setSelectedSpecializations] =
-    useState<SelectType[]>();
+  const [selectedSpecializations, setSelectedSpecializations] = useState<
+    SelectType[]
+  >([]);
+  const [areaFilter, setAreaFilter] = useState<SelectType>();
+  const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
+
+  console.log('selectedSpecializations', selectedSpecializations);
+  console.log('allSchools', allSchools);
 
   // Load all schools into state on first render and every time props.schools changes
   useEffect(() => {
@@ -182,30 +186,6 @@ export default function Search(props: Props) {
   const handleAreaSelect = (selectedOption: SelectType) => {
     setSelectedArea(selectedOption);
   };
-
-  // Declare handler for search button
-  function searchHandler() {
-    if (selectedArea) {
-      const filteredSchools = allSchools?.filter(
-        (school) => school.areaName === selectedArea.label,
-      );
-      setMatchingSchools(filteredSchools);
-    }
-    if (selectedArea && selectedSpecializations) {
-      const filteredSchools = allSchools?.filter(
-        (school) =>
-          school.areaName === selectedArea.label &&
-          school.specializations.find(
-            (specialization) =>
-              specialization.specializationName ===
-                selectedSpecializations[0]?.label ||
-              selectedSpecializations[1]?.label ||
-              selectedSpecializations[2]?.label,
-          ),
-      );
-      setMatchingSchools(filteredSchools);
-    }
-  }
 
   return (
     <div>
@@ -240,12 +220,12 @@ export default function Search(props: Props) {
               }
               isMulti
               options={
-                selectedSpecializations?.length === maxSelectOptions
+                selectedSpecializations.length === maxSelectOptions
                   ? []
                   : props.specializations
               }
               noOptionsMessage={() => {
-                return selectedSpecializations?.length === maxSelectOptions
+                return selectedSpecializations.length === maxSelectOptions
                   ? 'You cannot choose more than 3 interests'
                   : 'No options available';
               }}
@@ -257,52 +237,77 @@ export default function Search(props: Props) {
             <button
               css={defaultButton}
               onClick={() => {
-                searchHandler();
+                setAreaFilter(selectedArea);
+                setInterestsFilter(selectedSpecializations);
               }}
             >
               <span>Search</span>
             </button>
           </div>
         </div>
-        {matchingSchools?.map((school) => {
-          return (
-            <div css={schoolPreviewBoxStyles} key={`school-${school.schoolId}`}>
-              <div css={schoolPreviewLeftStyles}>
-                <div>
-                  <Image
-                    src="/images/search.png"
-                    alt="Illustration of a girl standing on a gigantic book with a graduation hat"
-                    width="147.6"
-                    height="104.85"
-                  />
-                </div>
-                <div css={schoolInfoStyles}>
-                  <h3 css={h2Styles}>{school.schoolName}</h3>
+        {allSchools
+          ?.filter((school) => {
+            let filter = true;
+            // Check if selected area name matches area filter
+            if (areaFilter && school.areaName !== areaFilter.label) {
+              filter = false;
+            }
+            // Check if one of the selected interests matches one of the current schools specializations
+            if (
+              interestsFilter.length &&
+              !interestsFilter.some((interest) =>
+                school.specializations.some(
+                  (specialization) =>
+                    specialization.specializationName === interest.label,
+                ),
+              )
+            ) {
+              filter = false;
+            }
+            return filter;
+          })
+          .map((school) => {
+            return (
+              <div
+                css={schoolPreviewBoxStyles}
+                key={`school-${school.schoolId}`}
+              >
+                <div css={schoolPreviewLeftStyles}>
                   <div>
-                    {school.street}, {school.postalCode} {school.areaName}
+                    <Image
+                      src="/images/search.png"
+                      alt="Illustration of a girl standing on a gigantic book with a graduation hat"
+                      width="147.6"
+                      height="104.85"
+                    />
                   </div>
-                  <div css={categorySectionStyles}>
-                    {school.specializations.map((specialization) => {
-                      return (
-                        <div
-                          key={specialization.specializationId}
-                          css={categoryBox}
-                        >
-                          {specialization.specializationName}
-                        </div>
-                      );
-                    })}
+                  <div css={schoolInfoStyles}>
+                    <h3 css={h2Styles}>{school.schoolName}</h3>
+                    <div>
+                      {school.street}, {school.postalCode} {school.areaName}
+                    </div>
+                    <div css={categorySectionStyles}>
+                      {school.specializations.map((specialization) => {
+                        return (
+                          <div
+                            key={specialization.specializationId}
+                            css={categoryBox}
+                          >
+                            {specialization.specializationName}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
+                <div css={buttonSectionStyles}>
+                  <Link href={`/schools/${school.schoolId}`}>
+                    <a css={secondaryButton}>Learn more</a>
+                  </Link>
+                </div>
               </div>
-              <div css={buttonSectionStyles}>
-                <Link href={`/schools/${school.schoolId}`}>
-                  <a css={secondaryButton}>Learn more</a>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );
