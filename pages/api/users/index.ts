@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getValidSessionByToken } from '../../../database/sessions';
-import { getUserBySessionToken } from '../../../database/users';
+import {
+  deleteUserByUserId,
+  getUserBySessionToken,
+} from '../../../database/users';
 
 export default async function handler(
   request: NextApiRequest,
@@ -31,27 +34,29 @@ export default async function handler(
 
     // return the user from the session token
     response.status(200).json({ user: user });
-  } else {
-    response.status(405).json({ errors: [{ message: 'method not allowed' }] });
   }
+
+  if (request.method === 'DELETE') {
+    if (!request.cookies.sessionToken) {
+      response
+        .status(400)
+        .json({ errors: [{ message: 'No session token passed' }] });
+      return;
+    }
+
+    const deletedSchool = await deleteUserByUserId(request.body.userId);
+    console.log(deletedSchool);
+
+    if (!deletedSchool) {
+      return response
+        .status(404)
+        .json({ errors: [{ message: 'No school found' }] });
+    }
+
+    return response.status(200).json({ school: deletedSchool });
+  }
+
+  return response
+    .status(400)
+    .json({ errors: [{ message: 'Method not allowed' }] });
 }
-
-// if (request.method === 'DELETE') {
-//   // 1. Get the cookie from the request
-//   const token = request.cookies.sessionToken;
-
-//   if (!token) {
-//     response
-//       .status(400)
-//       .json({ errors: [{ message: 'No session token passed.' }] });
-//     return;
-//   }
-
-//   const deletedUser = await deleteUserByToken(token);
-
-//   if (!deletedUser) {
-//     return response.status(404).json({ message: 'Not a valid user' });
-//   }
-
-//   return response.status(200).json(deletedUser);
-// }

@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getSchoolByUserId } from '../database/schools';
 import { getUserBySessionToken, User } from '../database/users';
@@ -134,20 +135,26 @@ const deleteStyles = css`
 type Props = {
   school?: SchoolWithAreaNameAndSpecializationsTransformed;
   user: User;
+  refreshUserProfile: () => Promise<void>;
 };
 
 export default function Profile(props: Props) {
   const [school, setSchool] = useState<
     SchoolWithAreaNameAndSpecializationsTransformed | ''
   >();
+  const router = useRouter();
 
   // Load all schools into state on first render and every time props.schools changes
   useEffect(() => {
     setSchool(props.school);
   }, [props.school]);
 
-  // Handler for delete school
+  // Delete school handler
   async function deleteSchool(userId: number) {
+    if (!window.confirm(`Do you really want to delete this school?`)) {
+      return;
+    }
+
     await fetch(`/api/users/schools`, {
       method: 'DELETE',
       headers: {
@@ -159,6 +166,29 @@ export default function Profile(props: Props) {
     });
 
     setSchool('');
+  }
+
+  // Delete account handler
+  async function deleteAccount(userId: number) {
+    if (!window.confirm(`Do you really want to delete your account?`)) {
+      return;
+    }
+
+    await fetch(`/api/users`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    });
+
+    // refresh the user on state
+    await props.refreshUserProfile();
+
+    // Redirect user to private page
+    await router.push(`/`);
   }
 
   return (
@@ -198,7 +228,14 @@ export default function Profile(props: Props) {
                 </div>
               )}
               <div>
-                <button css={deleteAccountButton}>Delete account</button>
+                <button
+                  css={deleteAccountButton}
+                  onClick={async () => {
+                    await deleteAccount(props.user.id);
+                  }}
+                >
+                  Delete account
+                </button>
               </div>
             </div>
           </div>
@@ -264,11 +301,6 @@ export default function Profile(props: Props) {
           <Link href="/addschool">
             <div css={addSchoolStyles}>
               <div>Add your school</div>
-              {/* <div>
-              <Link href="/addschool">
-                <a css={addSchoolButtonSmall}>Add school</a>
-              </Link>
-            </div> */}
               <div>
                 <Image
                   src="/images/addschoolicon.png"

@@ -89,16 +89,15 @@ export async function getUserBySessionToken(token: string) {
   return user;
 }
 
-export async function deleteUserByToken(token: string) {
-  if (!token) return undefined;
+export async function deleteUserByUserId(userId: number) {
+  if (!userId) return undefined;
 
-  const [user] = await sql`
+  const [user] = await sql<User[]>`
   DELETE FROM
     users
-  USING
-    sessions
   WHERE
-    sessions.token = ${token}
+    users.id = ${userId}
+  RETURNING *
   `;
 
   return user;
