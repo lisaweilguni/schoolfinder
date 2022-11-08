@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Schoolfinder</title>
+        <title>Home | Schoolfinder</title>
         <meta name="description" content="Welcome to schoolfinder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

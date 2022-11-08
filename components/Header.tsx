@@ -35,6 +35,16 @@ const linkStyles = css`
     color: ${darkText};
     transition: 0.2s ease-in-out;
   }
+
+  :hover::after {
+    content: '';
+    width: 30%;
+    height: 2px;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+    background: white;
+  }
 `;
 
 const logoStyles = css`

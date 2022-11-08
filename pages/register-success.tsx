@@ -42,7 +42,7 @@ export default function RegistrationSuccess(props: Props) {
   return (
     <div>
       <Head>
-        <title>Registration successful</title>
+        <title>Registration successful | Schoolfinder</title>
         <meta name="description" content="Registration successful" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

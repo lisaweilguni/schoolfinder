@@ -79,7 +79,7 @@ export default function SingleSchool(props: Props) {
   return (
     <div>
       <Head>
-        <title>School Details</title>
+        <title>School Details | Schoolfinder</title>
         <meta name="description" content="More information about the school" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -21,7 +21,7 @@ export default function Logout() {
   return (
     <div>
       <Head>
-        <title>Logout</title>
+        <title>Logout | Schoolfinder</title>
         <meta name="description" content="You've logged out" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

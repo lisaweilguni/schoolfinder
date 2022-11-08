@@ -91,7 +91,7 @@ export default function Register(props: Props) {
   return (
     <div>
       <Head>
-        <title>Sign up</title>
+        <title>Sign up | Schoolfinder</title>
         <meta name="description" content="Sign up page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

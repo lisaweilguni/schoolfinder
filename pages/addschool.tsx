@@ -119,7 +119,7 @@ export default function AddSchool(props: Props) {
   return (
     <div>
       <Head>
-        <title>Add your school</title>
+        <title>Add your school | Schoolfinder</title>
         <meta name="description" content="Add your school" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

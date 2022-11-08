@@ -194,7 +194,7 @@ export default function Profile(props: Props) {
   return (
     <div>
       <Head>
-        <title>My Account</title>
+        <title>My Account | Schoolfinder</title>
         <meta name="description" content="My Account" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

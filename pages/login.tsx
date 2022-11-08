@@ -77,7 +77,7 @@ export default function Login(props: Props) {
   return (
     <div>
       <Head>
-        <title>Login</title>
+        <title>Login | Schoolfinder</title>
         <meta name="description" content="Login page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

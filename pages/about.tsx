@@ -6,7 +6,7 @@ export default function About() {
   return (
     <div>
       <Head>
-        <title>About</title>
+        <title>About | Schoolfinder</title>
         <meta name="description" content="Information about schoolfinder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

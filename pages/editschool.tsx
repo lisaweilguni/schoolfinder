@@ -127,7 +127,7 @@ export default function EditSchool(props: Props) {
   return (
     <div>
       <Head>
-        <title>Edit your school</title>
+        <title>Edit your school | Schoolfinder</title>
         <meta name="description" content="Edit your school" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

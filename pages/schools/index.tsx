@@ -190,7 +190,7 @@ export default function Search(props: Props) {
   return (
     <div>
       <Head>
-        <title>Search</title>
+        <title>Search | Schoolfinder</title>
         <meta name="description" content="Search for schools here" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
