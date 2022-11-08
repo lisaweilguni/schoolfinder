@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { User } from '../database/users';
 import {
   darkText,
@@ -9,6 +10,7 @@ import {
   small,
   white,
 } from '../utils/sharedStyles';
+import BurgerMenu from './BurgerMenu';
 
 const headerStyles = css`
   display: flex;
@@ -22,6 +24,7 @@ const headerStyles = css`
   padding-right: 12vw;
   height: 80px;
   font-size: ${small};
+  align-items: center;
 `;
 
 const linkStyles = css`
@@ -53,16 +56,46 @@ const logoStyles = css`
   align-self: center;
 `;
 
-const navStyles = css`
-  display: flex;
-  flex-direction: row;
-  gap: 70px;
-  align-items: center;
-  margin: 20px 10px;
-  padding: 10px;
+const navStyles = (open: boolean) => css`
+  ul {
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 0;
+    gap: 40px;
 
-  > a + a {
-    margin-left: 13px;
+    @media (max-width: 1125px) {
+      flex-flow: column nowrap;
+      position: fixed;
+      top: 0px;
+      right: 0;
+      height: 100vh;
+      width: 30vw;
+      margin-top: 0;
+      background-color: ${lightPurple};
+      padding-top: 5rem;
+      transform: ${open ? 'translateX(0)' : 'translateX(100%)'};
+      transition: ${open && 'transform 0.2s ease-in-out'};
+    }
+
+    @media only screen and (max-width: 600px) {
+      flex-flow: column nowrap;
+      position: fixed;
+      top: 0px;
+      right: 0;
+      height: 100vh;
+      width: 100vw;
+      margin-top: 0;
+      background-color: ${lightPurple};
+      padding-top: 5rem;
+      transform: ${open ? 'translateX(0)' : 'translateX(100%)'};
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+
+  li {
+    padding: 12px 24px;
   }
 `;
 
@@ -76,6 +109,8 @@ function Anchor({ children, ...restProps }: any) {
 }
 
 export default function Header(props: Props) {
+  const [open, setOpen] = useState(false);
+
   return (
     <header>
       <div css={headerStyles}>
@@ -91,54 +126,86 @@ export default function Header(props: Props) {
             </a>
           </Link>
         </div>
-        <nav css={navStyles}>
-          {props.user ? (
-            <>
-              <Link href="/schools/">
-                <a css={linkStyles}>Search</a>
-              </Link>
-              <Link href="/about">
-                <a css={linkStyles}>About</a>
-              </Link>
-              <Link href="/private-profile">
-                <a css={linkStyles}>
-                  <div>
-                    <Image
-                      src="/images/user.png"
-                      alt="Illustration of a teacher and two students in a classroom"
-                      width="20"
-                      height="20"
-                    />
-                  </div>
-                </a>
-              </Link>
-              <Anchor href="/logout" css={loginButton}>
-                Logout
-              </Anchor>
-            </>
-          ) : (
-            <>
-              <Link href="/schools/">
-                <a css={linkStyles}>Search</a>
-              </Link>
-              <Link href="/about">
-                <a css={linkStyles}>About</a>
-              </Link>
-              <Link href="/login">
-                <a css={linkStyles}>
-                  <div>
-                    <Image
-                      src="/images/user.png"
-                      alt="Illustration of a teacher and two students in a classroom"
-                      width="20"
-                      height="20"
-                    />
-                  </div>
-                </a>
-              </Link>
-            </>
-          )}
-        </nav>
+        {props.user ? (
+          <nav css={navStyles(open)}>
+            <ul>
+              <li>
+                <div>
+                  <Link href="/schools/">
+                    <a css={linkStyles}>Search</a>
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <Link href="/about">
+                    <a css={linkStyles}>About</a>
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <Link href="/private-profile">
+                    <a css={linkStyles}>
+                      <div>
+                        <Image
+                          src="/images/user.png"
+                          alt="Profile icon"
+                          width="20"
+                          height="20"
+                        />
+                      </div>
+                    </a>
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <Anchor href="/logout" css={loginButton}>
+                    Logout
+                  </Anchor>
+                </div>
+              </li>
+            </ul>
+            <BurgerMenu open={open} setOpen={setOpen} />
+          </nav>
+        ) : (
+          <nav css={navStyles(open)}>
+            <ul>
+              <li>
+                <div>
+                  <Link href="/schools/">
+                    <a css={linkStyles}>Search</a>
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <Link href="/about">
+                    <a css={linkStyles}>About</a>
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <Link href="/private-profile">
+                    <a css={linkStyles}>
+                      <div>
+                        <Image
+                          src="/images/user.png"
+                          alt="Profile icon"
+                          width="20"
+                          height="20"
+                        />
+                      </div>
+                    </a>
+                  </Link>
+                </div>
+              </li>
+            </ul>
+            <BurgerMenu open={open} setOpen={setOpen} />
+          </nav>
+        )}
       </div>
     </header>
   );
