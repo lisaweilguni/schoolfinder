@@ -29,6 +29,10 @@ export const titleStyles = css`
   margin: 0;
   font-weight: normal;
   font-size: ${big};
+
+  @media (max-width: 1023px) {
+    font-size: ${middle};
+  }
 `;
 
 export const h1Styles = css`
@@ -38,6 +42,10 @@ export const h1Styles = css`
   font-size: ${middle};
   color: ${darkText};
   margin-bottom: 10px;
+
+  @media (max-width: 600px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const h2Styles = css`
@@ -50,6 +58,14 @@ export const h2Styles = css`
   color: ${darkText};
   margin-bottom: 0;
   padding: 0;
+
+  @media (max-width: 1023px) {
+    font-size: ${normal};
+  }
+
+  @media (max-width: 600px) {
+    font-size: ${normal};
+  }
 `;
 
 // Buttons
@@ -424,6 +440,15 @@ export const mainLayout = css`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const higherMarginTopLayout = css`
@@ -455,6 +480,54 @@ export const selectStyles = {
     border: `1px solid ${darkPurple}`,
     borderRadius: '5px',
     backgroundColor: '#FFFFFF',
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+export const selectStylesSearchLarge = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '360px',
+    height: '45px',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+    fontSize: '14px',
+    fontFamily: 'Inter',
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+export const selectStylesSearchSmall = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '170px',
+    height: '45px',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+    fontSize: '14px',
+    fontFamily: 'Inter',
+    '@media only screen and (max-width: 800px)': {
+      ...provided['@media only screen and (max-width: 800px)'],
+      width: '360px',
+    },
   }),
   singleValue: (provided: any, state: any) => {
     const opacity = state.isDisabled ? 0.5 : 1;

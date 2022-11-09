@@ -7,6 +7,7 @@ import {
   higherMarginTopLayout,
   lightText,
   mainLayout,
+  small,
   titleStyles,
 } from '../utils/sharedStyles';
 
@@ -14,6 +15,15 @@ const titleSectionStyles = css`
   max-width: 45%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1023px) {
+    gap: 10px;
+    max-width: 90%;
+  }
+
+  @media (max-width: 600px) {
+    align-items: center;
+  }
 `;
 
 const subTitleStyles = css`
@@ -21,6 +31,18 @@ const subTitleStyles = css`
   max-width: 70%;
   line-height: 35px;
   margin-bottom: 20px;
+
+  @media (max-width: 1023px) {
+    font-size: ${small};
+  }
+
+  @media (max-width: 600px) {
+    font-size: ${small};
+    line-height: 30px;
+    max-width: 90%;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export default function Home() {

@@ -6,6 +6,10 @@ import Header from './Header';
 
 const mainStyles = css`
   padding: 22vh 12vw;
+
+  @media (max-width: 600px) {
+    padding: 10vh 5vw;
+  }
 `;
 
 type Props = {

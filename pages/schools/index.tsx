@@ -12,13 +12,14 @@ import { transformDataForSelect } from '../../utils/dataStructure';
 import {
   beige,
   categoryBox,
-  darkPurple,
   defaultButton,
   grey,
   h1Styles,
   h2Styles,
   inputFieldSmall,
-  secondaryButton,
+  normal,
+  selectStylesSearchLarge,
+  selectStylesSearchSmall,
   small,
   white,
 } from '../../utils/sharedStyles';
@@ -30,6 +31,11 @@ const searchPageLayoutStyles = css`
   text-align: center;
   align-items: center;
   gap: 30px;
+
+  @media (max-width: 800px) {
+    padding: 60px 70px;
+    gap: 0px;
+  }
 `;
 
 const filterBoxStyles = css`
@@ -37,7 +43,7 @@ const filterBoxStyles = css`
   flex-direction: row;
   justify-content: space-between;
   background-color: ${beige};
-  width: 60vw;
+  width: 865px;
   height: 18vh;
   border: 1px solid ${grey};
   border-radius: 5px;
@@ -45,6 +51,16 @@ const filterBoxStyles = css`
   padding: 15px 50px;
   align-items: center;
   text-align: left;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 90px;
+    gap: 5px;
+  }
 `;
 
 const schoolPreviewBoxStyles = css`
@@ -52,13 +68,29 @@ const schoolPreviewBoxStyles = css`
   flex-direction: row;
   justify-content: space-between;
   background-color: ${white};
-  width: 70vw;
+  width: 700px;
   height: 22vh;
   border: 1px solid ${grey};
   border-radius: 5px;
   box-shadow: 3px 3px 4px ${grey};
   padding: 20px 50px;
   font-size: ${small};
+  cursor: pointer;
+
+  @media (max-width: 800px) {
+    width: 300px;
+    height: 22vh;
+    flex-direction: column nowrap;
+    padding: 60px 70px;
+    gap: 10px;
+    background-color: ${beige};
+    border: 1px solid ${grey};
+    border-radius: 5px;
+    box-shadow: 3px 3px 4px ${grey};
+    margin-top: 30px;
+    height: 35vh;
+    font-size: ${normal};
+  }
 `;
 
 const schoolPreviewLeftStyles = css`
@@ -66,6 +98,10 @@ const schoolPreviewLeftStyles = css`
   flex-direction: row;
   gap: 30px;
   align-items: center;
+
+  @media (max-width: 800px) {
+    align-items: center;
+  }
 `;
 
 const schoolInfoStyles = css`
@@ -73,62 +109,32 @@ const schoolInfoStyles = css`
   flex-direction: column;
   text-align: left;
   gap: 12px;
+
+  @media (max-width: 800px) {
+    text-align: center;
+    align-items: center;
+  }
 `;
 
 const categorySectionStyles = css`
   display: flex;
   flex-direction: row;
   gap: 10px;
+
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 `;
 
-const buttonSectionStyles = css`
-  display: flex;
-  align-items: end;
+const imageStyles = css`
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
-
-const selectStylesSearchLarge = {
-  option: (provided: any) => ({
-    ...provided,
-  }),
-  control: (provided: any) => ({
-    ...provided,
-    width: '25vw',
-    height: '45px',
-    border: `1px solid ${darkPurple}`,
-    borderRadius: '5px',
-    backgroundColor: '#FFFFFF',
-    fontSize: '14px',
-    fontFamily: 'Inter',
-  }),
-  singleValue: (provided: any, state: any) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-
-    return { ...provided, opacity, transition };
-  },
-};
-
-const selectStylesSearchSmall = {
-  option: (provided: any) => ({
-    ...provided,
-  }),
-  control: (provided: any) => ({
-    ...provided,
-    width: '12vw',
-    height: '45px',
-    border: `1px solid ${darkPurple}`,
-    borderRadius: '5px',
-    backgroundColor: '#FFFFFF',
-    fontSize: '14px',
-    fontFamily: 'Inter',
-  }),
-  singleValue: (provided: any, state: any) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-
-    return { ...provided, opacity, transition };
-  },
-};
 
 export type SelectType = {
   label: string;
@@ -272,39 +278,36 @@ export default function Search(props: Props) {
                 css={schoolPreviewBoxStyles}
                 key={`school-${school.schoolId}`}
               >
-                <div css={schoolPreviewLeftStyles}>
-                  <div>
-                    <Image
-                      src="/images/search.png"
-                      alt="Illustration of a girl standing on a gigantic book with a graduation hat"
-                      width="147.6"
-                      height="104.85"
-                    />
-                  </div>
-                  <div css={schoolInfoStyles}>
-                    <h3 css={h2Styles}>{school.schoolName}</h3>
-                    <div>
-                      {school.street}, {school.postalCode} {school.areaName}
+                <Link href={`/schools/${school.schoolId}`}>
+                  <div css={schoolPreviewLeftStyles}>
+                    <div css={imageStyles}>
+                      <Image
+                        src="/images/search.png"
+                        alt="Illustration of a girl standing on a gigantic book with a graduation hat"
+                        width="147.6"
+                        height="104.85"
+                      />
                     </div>
-                    <div css={categorySectionStyles}>
-                      {school.specializations.map((specialization) => {
-                        return (
-                          <div
-                            key={specialization.specializationId}
-                            css={categoryBox}
-                          >
-                            {specialization.specializationName}
-                          </div>
-                        );
-                      })}
+                    <div css={schoolInfoStyles}>
+                      <h3 css={h2Styles}>{school.schoolName}</h3>
+                      <div>
+                        {school.street}, {school.postalCode} {school.areaName}
+                      </div>
+                      <div css={categorySectionStyles}>
+                        {school.specializations.map((specialization) => {
+                          return (
+                            <div
+                              key={specialization.specializationId}
+                              css={categoryBox}
+                            >
+                              {specialization.specializationName}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div css={buttonSectionStyles}>
-                  <Link href={`/schools/${school.schoolId}`}>
-                    <a css={secondaryButton}>Learn more</a>
-                  </Link>
-                </div>
+                </Link>
               </div>
             );
           })}

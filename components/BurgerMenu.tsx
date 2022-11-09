@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-const burgerStyle = (open: boolean) => css`
+const burgerIconStyles = (open: boolean) => css`
   width: 2rem;
   height: 2rem;
   position: fixed;
@@ -13,7 +13,7 @@ const burgerStyle = (open: boolean) => css`
   margin-right: 20px;
   cursor: pointer;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1023px) {
     display: flex;
     justify-content: space-around;
     flex-flow: column nowrap;
@@ -46,7 +46,7 @@ type Props = {
 export default function BurgerMenu(props: Props) {
   return (
     <div
-      css={burgerStyle(props.open)}
+      css={burgerIconStyles(props.open)}
       onClick={() => props.setOpen(!props.open)}
       onKeyDown={() => props.setOpen(!props.open)}
       role="button"

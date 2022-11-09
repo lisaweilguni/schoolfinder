@@ -65,7 +65,7 @@ const navStyles = (open: boolean) => css`
     padding: 0;
     gap: 40px;
 
-    @media (max-width: 1000px) {
+    @media (max-width: 1023px) {
       flex-flow: column nowrap;
       position: fixed;
       top: 0px;
@@ -109,7 +109,7 @@ function Anchor({ children, ...restProps }: any) {
 }
 
 export default function Header(props: Props) {
-  const [open, setOpen] = useState(false);
+  const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
 
   return (
     <header>
@@ -127,7 +127,7 @@ export default function Header(props: Props) {
           </Link>
         </div>
         {props.user ? (
-          <nav css={navStyles(open)}>
+          <nav css={navStyles(burgerMenuOpen)}>
             <ul>
               <li>
                 <div>
@@ -167,10 +167,10 @@ export default function Header(props: Props) {
                 </div>
               </li>
             </ul>
-            <BurgerMenu open={open} setOpen={setOpen} />
+            <BurgerMenu open={burgerMenuOpen} setOpen={setBurgerMenuOpen} />
           </nav>
         ) : (
-          <nav css={navStyles(open)}>
+          <nav css={navStyles(burgerMenuOpen)}>
             <ul>
               <li>
                 <div>
@@ -203,7 +203,7 @@ export default function Header(props: Props) {
                 </div>
               </li>
             </ul>
-            <BurgerMenu open={open} setOpen={setOpen} />
+            <BurgerMenu open={burgerMenuOpen} setOpen={setBurgerMenuOpen} />
           </nav>
         )}
       </div>
