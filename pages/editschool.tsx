@@ -290,8 +290,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const areas = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
 
-  const foundSchool = await getSchoolByUserId(user.id);
-  if (!foundSchool.length) {
+  const foundSchool = await getSchoolByUserId(user.id, token);
+  if (!foundSchool?.length) {
     return {
       props: {
         user: user,

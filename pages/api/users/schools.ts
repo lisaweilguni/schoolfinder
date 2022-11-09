@@ -37,8 +37,11 @@ export default async function handler(
     }
 
     // Check if this user has already created a school
-    const schoolByUserId = await getSchoolByUserId(request.body.userId);
-    if (schoolByUserId.length) {
+    const schoolByUserId = await getSchoolByUserId(
+      request.body.userId,
+      request.cookies.sessionToken,
+    );
+    if (schoolByUserId?.length) {
       response
         .status(400)
         .json({ errors: [{ message: "You've already added your school." }] });
@@ -54,7 +57,7 @@ export default async function handler(
     const userId = request.body?.userId;
     const specializationIds = request.body?.specializationIds;
 
-    if (!schoolName) {
+    if (!schoolName && typeof schoolName !== 'string') {
       return response
         .status(400)
         .json({ errors: [{ message: 'Please provide the school name.' }] });
@@ -94,6 +97,12 @@ export default async function handler(
       return response.status(400).json({
         errors: [{ message: 'Please select at least one specialization.' }],
       });
+    }
+
+    if (typeof areaId !== 'number') {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'Please select a valid area.' }] });
     }
 
     // Create new school using util database function
@@ -195,7 +204,10 @@ export default async function handler(
       return;
     }
 
-    const deletedSchool = await deleteSchoolByUserId(request.body.userId);
+    const deletedSchool = await deleteSchoolByUserId(
+      request.body.userId,
+      request.cookies.sessionToken,
+    );
 
     if (!deletedSchool) {
       return response

@@ -37,10 +37,14 @@ export default async function handler(
   }
 
   if (request.method === 'DELETE') {
-    if (!request.cookies.sessionToken) {
+    const session =
+      request.cookies.sessionToken &&
+      (await getValidSessionByToken(request.cookies.sessionToken));
+
+    if (!session) {
       response
         .status(400)
-        .json({ errors: [{ message: 'No session token passed' }] });
+        .json({ errors: [{ message: 'No valid session token passed' }] });
       return;
     }
 

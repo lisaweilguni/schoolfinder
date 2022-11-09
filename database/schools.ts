@@ -178,7 +178,8 @@ export async function getAllSchools() {
 }
 
 // Get school by user ID
-export async function getSchoolByUserId(userId: number) {
+export async function getSchoolByUserId(userId: number, token: string) {
+  if (!token) return undefined;
   const school = await sql<SchoolWithAreaNameAndSpecializations[]>`
     SELECT
      schools.id AS school_id,
@@ -275,7 +276,8 @@ export async function updateSchool(
   return schoolWithSpecializations;
 }
 
-export async function deleteSchoolByUserId(userId: number) {
+export async function deleteSchoolByUserId(userId: number, token: string) {
+  if (!token) return undefined;
   const [school] = await sql<School[]>`
     DELETE FROM
       schools
