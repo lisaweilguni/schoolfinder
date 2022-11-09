@@ -65,7 +65,7 @@ const navStyles = (open: boolean) => css`
     padding: 0;
     gap: 40px;
 
-    @media (max-width: 1125px) {
+    @media (max-width: 1000px) {
       flex-flow: column nowrap;
       position: fixed;
       top: 0px;

@@ -13,7 +13,7 @@ const burgerStyle = (open: boolean) => css`
   margin-right: 20px;
   cursor: pointer;
 
-  @media (max-width: 1125px) {
+  @media (max-width: 1000px) {
     display: flex;
     justify-content: space-around;
     flex-flow: column nowrap;
