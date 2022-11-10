@@ -17,7 +17,6 @@ import {
   h2Styles,
   inputFieldSmall,
   normal,
-  selectStylesSearchLarge,
   selectStylesSearchSmall,
   small,
   white,
@@ -35,7 +34,7 @@ const searchPageLayoutStyles = css`
     padding: 60px 10px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -63,7 +62,9 @@ const filterBoxStyles = css`
     border: none;
     box-shadow: none;
     margin-bottom: 90px;
-    gap: 5px;
+    gap: 10px;
+    padding: 5px 5px;
+    width: 90vw;
   }
 `;
 
@@ -83,10 +84,10 @@ const schoolPreviewBoxStyles = css`
 
   @media (max-width: 800px) {
     width: 300px;
-    height: 22vh;
+    height: 300px;
     flex-direction: column nowrap;
-    padding: 60px 70px;
-    gap: 10px;
+    padding: 60px 50px;
+    gap: 15px;
     background-color: ${beige};
     border: 1px solid ${grey};
     border-radius: 5px;
@@ -117,6 +118,7 @@ const schoolInfoStyles = css`
   @media (max-width: 800px) {
     text-align: center;
     align-items: center;
+    gap: 15px;
   }
 `;
 
@@ -127,7 +129,7 @@ const categorySectionStyles = css`
 
   @media (max-width: 800px) {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -262,7 +264,7 @@ export default function Search(props: Props) {
             <div>
               <Select
                 instanceId="specialization"
-                styles={selectStylesSearchLarge}
+                styles={selectStylesSearchSmall}
                 onChange={(selectedOption) =>
                   handleSpecializationSelect(selectedOption as SelectType[])
                 }

@@ -45,6 +45,7 @@ export const h1Styles = css`
 
   @media (max-width: 600px) {
     margin-bottom: 0;
+    padding: 0px 20px;
   }
 `;
 
@@ -611,7 +612,7 @@ export const selectStylesSearchSmall = {
     fontFamily: 'Inter',
     '@media only screen and (max-width: 800px)': {
       ...provided['@media only screen and (max-width: 800px)'],
-      width: '360px',
+      width: '300px',
     },
   }),
   singleValue: (provided: any, state: any) => {
