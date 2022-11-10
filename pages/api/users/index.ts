@@ -33,7 +33,7 @@ export default async function handler(
     }
 
     // return the user from the session token
-    response.status(200).json({ user: user });
+    return response.status(200).json({ user: user });
   }
 
   if (request.method === 'DELETE') {
@@ -49,7 +49,6 @@ export default async function handler(
     }
 
     const deletedSchool = await deleteUserByUserId(request.body.userId);
-    console.log(deletedSchool);
 
     if (!deletedSchool) {
       return response

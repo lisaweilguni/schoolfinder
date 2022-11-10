@@ -68,7 +68,7 @@ const schoolPreviewBoxStyles = css`
   flex-direction: row;
   justify-content: space-between;
   background-color: ${white};
-  width: 700px;
+  width: 750px;
   height: 22vh;
   border: 1px solid ${grey};
   border-radius: 5px;
@@ -174,13 +174,10 @@ export default function Search(props: Props) {
   const [areaFilter, setAreaFilter] = useState<SelectType>();
   const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
 
-  console.log('selectedSpecializations', selectedSpecializations);
-  console.log('allSchools', allSchools);
-
   // Load all schools into state on first render and every time props.schools changes
   useEffect(() => {
     setAllSchools(props.schools);
-  }, [props.schools]);
+  }, [props.schools, allSchools]);
 
   // Declare handler for specialization multi-select
   const maxSelectOptions = 3;
@@ -192,6 +189,28 @@ export default function Search(props: Props) {
   const handleAreaSelect = (selectedOption: SelectType) => {
     setSelectedArea(selectedOption);
   };
+
+  // School count
+  const count = allSchools?.filter((school) => {
+    let filter = true;
+    // Check if selected area name matches the school area
+    if (areaFilter && school.areaName !== areaFilter.label) {
+      filter = false;
+    }
+    // Check if one of the selected interests matches one of the current schools specializations
+    if (
+      interestsFilter.length &&
+      !interestsFilter.some((interest) =>
+        school.specializations.some(
+          (specialization) =>
+            specialization.specializationName === interest.label,
+        ),
+      )
+    ) {
+      filter = false;
+    }
+    return filter;
+  }).length;
 
   return (
     <div>
@@ -250,6 +269,11 @@ export default function Search(props: Props) {
               <span>Search</span>
             </button>
           </div>
+        </div>
+        <div>
+          {count && count > 1
+            ? `${count} schools found`
+            : `${count} school found`}
         </div>
         {allSchools
           ?.filter((school) => {
