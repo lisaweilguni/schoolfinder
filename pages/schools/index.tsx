@@ -17,6 +17,7 @@ import {
   h2Styles,
   inputFieldSmall,
   normal,
+  selectStylesSearchLarge,
   selectStylesSearchSmall,
   small,
   white,
@@ -144,6 +145,7 @@ const imageStyles = css`
 
 const countStyles = css`
   font-size: ${small};
+  margin-top: 10px;
 `;
 
 const iconStyles = css`
@@ -264,7 +266,7 @@ export default function Search(props: Props) {
             <div>
               <Select
                 instanceId="specialization"
-                styles={selectStylesSearchSmall}
+                styles={selectStylesSearchLarge}
                 onChange={(selectedOption) =>
                   handleSpecializationSelect(selectedOption as SelectType[])
                 }

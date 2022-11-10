@@ -588,6 +588,10 @@ export const selectStylesSearchLarge = {
     backgroundColor: '#FFFFFF',
     fontSize: '14px',
     fontFamily: 'Inter',
+    '@media only screen and (max-width: 800px)': {
+      ...provided['@media only screen and (max-width: 800px)'],
+      width: '300px',
+    },
   }),
   singleValue: (provided: any, state: any) => {
     const opacity = state.isDisabled ? 0.5 : 1;
