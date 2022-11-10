@@ -27,10 +27,20 @@ const inputSectionStyles = css`
   h1 {
     margin-bottom: 10px;
   }
+
+  @media (max-width: 800px) {
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const imageStyles = css`
   align-self: center;
+
+  @media (max-width: 600px) {
+    width: 50vw;
+    margin-top: 60px;
+  }
 `;
 
 type Props = {
@@ -115,9 +125,7 @@ export default function Register(props: Props) {
               );
             })}
             <div css={inputFieldLarge}>
-              <label htmlFor="registration-code">
-                School registration code
-              </label>
+              <label htmlFor="registration-code">Registration code</label>
               <input id="registration-code" />
             </div>
             <div css={inputNameWrapper}>

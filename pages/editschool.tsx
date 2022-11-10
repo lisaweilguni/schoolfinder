@@ -17,10 +17,9 @@ import {
   transformDataForSelect,
 } from '../utils/dataStructure';
 import {
-  beige,
+  addEditBoxStyles,
   errorMessageStyles,
   formButton,
-  grey,
   h1Styles,
   inputFieldLarge,
   inputFieldName,
@@ -31,26 +30,12 @@ import {
 import { SchoolResponseBody } from './api/users/schools';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './schools';
 
-const inputSectionStyles = css`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  background-color: ${beige};
-  width: 31rem;
-  height: 40rem;
-  border: 1px solid ${grey};
-  border-radius: 5px;
-  box-shadow: 3px 3px 4px ${grey};
-  padding: 50px 50px 50px 50px;
-  justify-items: center;
-
-  h1 {
-    margin-bottom: 10px;
-  }
-`;
-
 const imageStyles = css`
   align-self: center;
+
+  @media (max-width: 1023px) {
+    display: none;
+  }
 `;
 
 type Props = {
@@ -133,7 +118,7 @@ export default function EditSchool(props: Props) {
       </Head>
       <div>
         <div css={mainLayout}>
-          <div css={inputSectionStyles}>
+          <div css={addEditBoxStyles}>
             <h1 css={h1Styles}>Edit your school</h1>
             {errors.map((error) => {
               return (

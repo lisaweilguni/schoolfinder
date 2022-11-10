@@ -13,10 +13,9 @@ import {
 import { getUserBySessionToken, User } from '../database/users';
 import { transformDataForSelect } from '../utils/dataStructure';
 import {
-  beige,
+  addEditBoxStyles,
   errorMessageStyles,
   formButton,
-  grey,
   h1Styles,
   inputFieldLarge,
   inputFieldName,
@@ -26,33 +25,19 @@ import {
 } from '../utils/sharedStyles';
 import { SchoolResponseBody } from './api/users/schools';
 
-const inputSectionStyles = css`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  background-color: ${beige};
-  width: 31rem;
-  height: 40rem;
-  border: 1px solid ${grey};
-  border-radius: 5px;
-  box-shadow: 3px 3px 4px ${grey};
-  padding: 50px 50px 50px 50px;
-  justify-items: center;
-
-  h1 {
-    margin-bottom: 10px;
-  }
-`;
-
-const imageStyles = css`
-  align-self: center;
-`;
-
 type Props = {
   areas: Area[];
   user: User;
   specializations: Specialization[];
 };
+
+const imageStyles = css`
+  align-self: center;
+
+  @media (max-width: 1023px) {
+    display: none;
+  }
+`;
 
 export default function AddSchool(props: Props) {
   const [schoolName, setSchoolName] = useState('');
@@ -125,7 +110,7 @@ export default function AddSchool(props: Props) {
       </Head>
       <div>
         <div css={mainLayout}>
-          <div css={inputSectionStyles}>
+          <div css={addEditBoxStyles}>
             <h1 css={h1Styles}>Add your school</h1>
             {errors.map((error) => {
               return (
@@ -221,26 +206,30 @@ export default function AddSchool(props: Props) {
               <label htmlFor="specialization">
                 Choose up to 3 specializations
               </label>
-              <Select
-                id="specialization"
-                styles={selectStyles}
-                onChange={(selectedOption) =>
-                  handleSpecializationSelect(selectedOption as Specialization[])
-                }
-                isMulti
-                options={
-                  selectedSpecializations?.length === maxSelectOptions
-                    ? []
-                    : props.specializations
-                }
-                noOptionsMessage={() => {
-                  return selectedSpecializations?.length === maxSelectOptions
-                    ? 'You cannot choose more than 3 specializations'
-                    : 'No options available';
-                }}
-                value={selectedSpecializations}
-                placeholder="Select specializations"
-              />
+              <div>
+                <Select
+                  id="specialization"
+                  styles={selectStyles}
+                  onChange={(selectedOption) =>
+                    handleSpecializationSelect(
+                      selectedOption as Specialization[],
+                    )
+                  }
+                  isMulti
+                  options={
+                    selectedSpecializations?.length === maxSelectOptions
+                      ? []
+                      : props.specializations
+                  }
+                  noOptionsMessage={() => {
+                    return selectedSpecializations?.length === maxSelectOptions
+                      ? 'You cannot choose more than 3 specializations'
+                      : 'No options available';
+                  }}
+                  value={selectedSpecializations}
+                  placeholder="Select specializations"
+                />
+              </div>
             </div>
             <button
               css={formButton}

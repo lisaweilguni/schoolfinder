@@ -33,8 +33,13 @@ const searchPageLayoutStyles = css`
   gap: 30px;
 
   @media (max-width: 800px) {
-    padding: 60px 70px;
-    gap: 0px;
+    padding: 60px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
   }
 `;
 

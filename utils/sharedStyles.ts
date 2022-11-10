@@ -180,7 +180,7 @@ export const formButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   padding: 10px 0;
-  width: 27vw;
+  width: 389px;
   transition: 0.2s ease-in-out;
   font-size: ${normal};
   margin-top: 0.9rem;
@@ -200,6 +200,10 @@ export const formButton = css`
     background-color: ${grey};
     opacity: 50%;
     border: 1px solid #efefef;
+  }
+
+  @media (max-width: 600px) {
+    width: 200px;
   }
 `;
 
@@ -290,11 +294,16 @@ export const inputFieldLarge = css`
   transition: 0.2s ease-in-out;
 
   input {
-    width: 27vw;
+    width: 390px;
     height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: ${white};
+
+    @media (max-width: 600px) {
+      width: 200px;
+      height: 40px;
+    }
   }
 
   label {
@@ -308,6 +317,10 @@ export const inputFieldLarge = css`
   }
   input:hover {
     border: 2px solid ${darkPurple};
+  }
+
+  @media (max-width: 600px) {
+    align-items: center;
   }
 `;
 
@@ -363,6 +376,13 @@ export const inputNameWrapper = css`
   display: flex;
   flex-direction: row;
   gap: 15px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
 `;
 
 export const inputFieldName = css`
@@ -373,12 +393,17 @@ export const inputFieldName = css`
   transition: 0.2s ease-in-out;
 
   input {
-    width: 13vw;
+    width: 187px;
     height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
     background-color: ${white};
     transition: all 100ms ease;
+
+    @media (max-width: 600px) {
+      width: 200px;
+      height: 40px;
+    }
   }
   label {
     margin-bottom: 5px;
@@ -386,6 +411,9 @@ export const inputFieldName = css`
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 2px;
+    @media (max-width: 600px) {
+      text-align: center;
+    }
   }
   input::placeholder {
     padding-left: 5px;
@@ -396,7 +424,7 @@ export const inputFieldName = css`
   }
 
   select {
-    width: 13vw;
+    width: 187px;
     height: 30px;
     border: 1px solid ${lightPurple};
     border-radius: 5px;
@@ -406,6 +434,11 @@ export const inputFieldName = css`
     color: #818181;
     color: ${darkText};
     transition: 0.2s ease-in-out;
+
+    @media (max-width: 600px) {
+      width: 200px;
+      height: 40px;
+    }
   }
 
   select:hover {
@@ -433,6 +466,15 @@ export const textBelowButtonStyles = css`
   a:hover {
     color: ${orange};
   }
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    width: 80vw;
+  }
 `;
 
 // Layout
@@ -455,6 +497,40 @@ export const higherMarginTopLayout = css`
   margin-top: 60px;
 `;
 
+export const addEditBoxStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: ${beige};
+  width: 31rem;
+  height: 40rem;
+  border: 1px solid ${grey};
+  border-radius: 5px;
+  box-shadow: 3px 3px 4px ${grey};
+  padding: 50px 50px 50px 50px;
+  justify-items: center;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 1023px) {
+    max-width: 90vw;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 20px 20px;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 90vw;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 20px 20px;
+    margin-top: 20px;
+  }
+`;
+
 // Errors
 
 export const errorMessageStyles = css`
@@ -475,11 +551,21 @@ export const selectStyles = {
   }),
   control: (provided: any) => ({
     ...provided,
-    width: '27vw',
+    width: '389px',
     height: '2.8rem',
     border: `1px solid ${darkPurple}`,
     borderRadius: '5px',
     backgroundColor: '#FFFFFF',
+    alignSelf: 'center',
+    '@media only screen and (max-width: 1023px)': {
+      ...provided['@media only screen and (max-width: 1023px)'],
+      width: '389px',
+    },
+    '@media only screen and (max-width: 600px)': {
+      ...provided['@media only screen and (max-width: 600px)'],
+      width: '200px',
+      height: '100px',
+    },
   }),
   singleValue: (provided: any, state: any) => {
     const opacity = state.isDisabled ? 0.5 : 1;

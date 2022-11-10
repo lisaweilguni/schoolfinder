@@ -28,6 +28,11 @@ const inputSectionStyles = css`
   h1 {
     margin-bottom: 10px;
   }
+
+  @media (max-width: 800px) {
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 type Props = {

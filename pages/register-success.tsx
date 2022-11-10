@@ -19,6 +19,13 @@ const titleSectionStyles = css`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 800px) {
+    max-width: 90%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const subTitleStyles = css`
@@ -32,6 +39,10 @@ const buttonSectionStyles = css`
   display: flex;
   flex-direction: row;
   gap: 20px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 type Props = {
