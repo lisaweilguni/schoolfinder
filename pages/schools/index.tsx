@@ -3,7 +3,7 @@ import { GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { getAllAreas } from '../../database/areas';
 import { getAllSchools } from '../../database/schools';
@@ -141,6 +141,19 @@ const imageStyles = css`
   }
 `;
 
+const countStyles = css`
+  font-size: ${small};
+`;
+
+const iconStyles = css`
+  align-items: center;
+  margin-top: 40px;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
 export type SelectType = {
   label: string;
   value: number;
@@ -167,16 +180,20 @@ type Props = {
   schools: SchoolWithAreaNameAndSpecializationsTransformed[];
   areas: SelectType[];
   specializations: SelectType[];
+  setAreaFilter: Dispatch<SetStateAction<SelectType>>;
+  areaFilter: SelectType;
 };
 
 export default function Search(props: Props) {
   const [allSchools, setAllSchools] =
     useState<SchoolWithAreaNameAndSpecializationsTransformed[]>();
-  const [selectedArea, setSelectedArea] = useState<SelectType>();
+  const [selectedArea, setSelectedArea] = useState<SelectType>(
+    props.areaFilter,
+  );
   const [selectedSpecializations, setSelectedSpecializations] = useState<
     SelectType[]
   >([]);
-  const [areaFilter, setAreaFilter] = useState<SelectType>();
+  // const [areaFilter, setAreaFilter] = useState<SelectType>();
   const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
 
   // Load all schools into state on first render and every time props.schools changes
@@ -199,7 +216,7 @@ export default function Search(props: Props) {
   const count = allSchools?.filter((school) => {
     let filter = true;
     // Check if selected area name matches the school area
-    if (areaFilter && school.areaName !== areaFilter.label) {
+    if (props.areaFilter && school.areaName !== props.areaFilter.label) {
       filter = false;
     }
     // Check if one of the selected interests matches one of the current schools specializations
@@ -267,7 +284,7 @@ export default function Search(props: Props) {
             <button
               css={defaultButton}
               onClick={() => {
-                setAreaFilter(selectedArea);
+                props.setAreaFilter(selectedArea);
                 setInterestsFilter(selectedSpecializations);
               }}
             >
@@ -275,16 +292,19 @@ export default function Search(props: Props) {
             </button>
           </div>
         </div>
-        <div>
-          {count && count > 1
-            ? `${count} schools found`
-            : `${count} school found`}
+        <div css={countStyles}>
+          {count && count === 1
+            ? `${count} school found`
+            : `${count} schools found`}
         </div>
         {allSchools
           ?.filter((school) => {
             let filter = true;
             // Check if selected area name matches the school area
-            if (areaFilter && school.areaName !== areaFilter.label) {
+            if (
+              props.areaFilter &&
+              school.areaName !== props.areaFilter.label
+            ) {
               filter = false;
             }
             // Check if one of the selected interests matches one of the current schools specializations
@@ -337,6 +357,18 @@ export default function Search(props: Props) {
                     </div>
                   </div>
                 </Link>
+                <div css={iconStyles}>
+                  <div>
+                    <Link href={`/schools/${school.schoolId}`}>
+                      <Image
+                        src="/images/next.png"
+                        alt="Arrow"
+                        width="20"
+                        height="20"
+                      />
+                    </Link>
+                  </div>
+                </div>
               </div>
             );
           })}

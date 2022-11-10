@@ -556,7 +556,6 @@ export const selectStyles = {
     border: `1px solid ${darkPurple}`,
     borderRadius: '5px',
     backgroundColor: '#FFFFFF',
-    alignSelf: 'center',
     '@media only screen and (max-width: 1023px)': {
       ...provided['@media only screen and (max-width: 1023px)'],
       width: '389px',
@@ -614,6 +613,28 @@ export const selectStylesSearchSmall = {
       ...provided['@media only screen and (max-width: 800px)'],
       width: '360px',
     },
+  }),
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+export const selectStylesHome = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    width: '170px',
+    height: '45px',
+    border: `1px solid ${darkPurple}`,
+    borderRadius: '5px',
+    backgroundColor: '#FFFFFF',
+    fontSize: '14px',
+    fontFamily: 'Inter',
   }),
   singleValue: (provided: any, state: any) => {
     const opacity = state.isDisabled ? 0.5 : 1;

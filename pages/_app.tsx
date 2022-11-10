@@ -5,9 +5,11 @@ import { useCallback, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { User } from '../database/users';
 import { darkText } from '../utils/sharedStyles';
+import { SelectType } from './schools';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User>();
+  const [areaFilter, setAreaFilter] = useState<SelectType>();
 
   const refreshUserProfile = useCallback(async () => {
     const profileResponse = await fetch('/api/users');
@@ -52,7 +54,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
       />
       <Layout user={user}>
-        <Component {...pageProps} refreshUserProfile={refreshUserProfile} />
+        <Component
+          {...pageProps}
+          refreshUserProfile={refreshUserProfile}
+          areaFilter={areaFilter}
+          setAreaFilter={setAreaFilter}
+        />
       </Layout>
     </>
   );
