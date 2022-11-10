@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -8,18 +7,13 @@ import Select from 'react-select';
 import { getAllAreas } from '../database/areas';
 import { transformDataForSelect } from '../utils/dataStructure';
 import {
-  darkBlue,
-  darkPurple,
-  grey,
+  defaultButton,
   higherMarginTopLayout,
-  inputFieldSmall,
-  lightPurple,
   lightText,
   mainLayout,
   selectStylesHome,
   small,
   titleStyles,
-  white,
 } from '../utils/sharedStyles';
 import { SelectType } from './schools';
 
@@ -61,41 +55,11 @@ const inputSectionStyles = css`
   display: flex;
   flex-direction: row;
   gap: 20px;
+  align-items: center;
 
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 10px;
-  }
-`;
-
-export const searchButton = css`
-  display: inline-block;
-  background-color: ${lightPurple};
-  color: ${white};
-  text-transform: uppercase;
-  text-align: center;
-  border-radius: 5px;
-  border: 1px solid ${darkPurple};
-  letter-spacing: 2px;
-  cursor: pointer;
-  width: 162px;
-  padding: 12px 0;
-  transition: 0.2s ease-in-out;
-  font-size: ${small};
-  font-family: 'Inter', sans-serif;
-
-  :hover {
-    background-color: ${darkPurple};
-  }
-
-  :active {
-    background-color: ${darkBlue};
-  }
-
-  :disabled {
-    background-color: ${grey};
-    opacity: 50%;
-    border: 1px solid #efefef;
   }
 `;
 
@@ -129,9 +93,9 @@ export default function Home(props: Props) {
               made easier.
             </div>
             <div css={inputSectionStyles}>
-              <div css={inputFieldSmall}>
+              <div>
                 <Select
-                  id="area"
+                  instanceId="specialization"
                   styles={selectStylesHome}
                   onChange={(selectedOption) =>
                     handleAreaSelect(selectedOption as SelectType)
@@ -143,7 +107,7 @@ export default function Home(props: Props) {
               </div>
               <div>
                 <button
-                  css={searchButton}
+                  css={defaultButton}
                   onClick={async () => {
                     props.setAreaFilter(selectedArea);
                     await router.push(`/schools`);
@@ -168,9 +132,7 @@ export default function Home(props: Props) {
   );
 }
 
-export async function getServerSideProps(): Promise<
-  GetServerSidePropsResult<Props>
-> {
+export async function getServerSideProps() {
   const areasFromDatabase = await getAllAreas();
 
   return {

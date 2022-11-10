@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -73,7 +72,7 @@ const schoolPreviewBoxStyles = css`
   flex-direction: row;
   justify-content: space-between;
   background-color: ${white};
-  width: 750px;
+  width: 800px;
   height: 22vh;
   border: 1px solid ${grey};
   border-radius: 5px;
@@ -193,7 +192,6 @@ export default function Search(props: Props) {
   const [selectedSpecializations, setSelectedSpecializations] = useState<
     SelectType[]
   >([]);
-  // const [areaFilter, setAreaFilter] = useState<SelectType>();
   const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
 
   // Load all schools into state on first render and every time props.schools changes
@@ -246,39 +244,43 @@ export default function Search(props: Props) {
         <div css={filterBoxStyles}>
           <div css={inputFieldSmall}>
             <label htmlFor="area">Your location</label>
-            <Select
-              id="area"
-              styles={selectStylesSearchSmall}
-              onChange={(selectedOption) =>
-                handleAreaSelect(selectedOption as SelectType)
-              }
-              options={props.areas}
-              value={selectedArea}
-              placeholder="Select area"
-            />
+            <div>
+              <Select
+                instanceId="area"
+                styles={selectStylesSearchSmall}
+                onChange={(selectedOption) =>
+                  handleAreaSelect(selectedOption as SelectType)
+                }
+                options={props.areas}
+                value={selectedArea}
+                placeholder="Select area"
+              />
+            </div>
           </div>
           <div css={inputFieldSmall}>
             <label htmlFor="specialization">Your interests</label>
-            <Select
-              id="specialization"
-              styles={selectStylesSearchLarge}
-              onChange={(selectedOption) =>
-                handleSpecializationSelect(selectedOption as SelectType[])
-              }
-              isMulti
-              options={
-                selectedSpecializations.length === maxSelectOptions
-                  ? []
-                  : props.specializations
-              }
-              noOptionsMessage={() => {
-                return selectedSpecializations.length === maxSelectOptions
-                  ? 'You cannot choose more than 3 interests'
-                  : 'No options available';
-              }}
-              value={selectedSpecializations}
-              placeholder="Select interests"
-            />
+            <div>
+              <Select
+                instanceId="specialization"
+                styles={selectStylesSearchLarge}
+                onChange={(selectedOption) =>
+                  handleSpecializationSelect(selectedOption as SelectType[])
+                }
+                isMulti
+                options={
+                  selectedSpecializations.length === maxSelectOptions
+                    ? []
+                    : props.specializations
+                }
+                noOptionsMessage={() => {
+                  return selectedSpecializations.length === maxSelectOptions
+                    ? 'You cannot choose more than 3 interests'
+                    : 'No options available';
+                }}
+                value={selectedSpecializations}
+                placeholder="Select interests"
+              />
+            </div>
           </div>
           <div>
             <button
@@ -377,9 +379,7 @@ export default function Search(props: Props) {
   );
 }
 
-export async function getServerSideProps(): Promise<
-  GetServerSidePropsResult<Props>
-> {
+export async function getServerSideProps() {
   const areasFromDatabase = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
   const schoolsFromDatabase = await getAllSchools();

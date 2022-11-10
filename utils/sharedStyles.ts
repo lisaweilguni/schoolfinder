@@ -629,7 +629,7 @@ export const selectStylesHome = {
   control: (provided: any) => ({
     ...provided,
     width: '170px',
-    height: '45px',
+    height: '40px',
     border: `1px solid ${darkPurple}`,
     borderRadius: '5px',
     backgroundColor: '#FFFFFF',
