@@ -150,7 +150,7 @@ const countStyles = css`
 
 const iconStyles = css`
   align-items: center;
-  margin-top: 40px;
+  margin-top: 45px;
 
   @media (max-width: 800px) {
     display: none;

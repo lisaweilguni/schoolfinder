@@ -44,7 +44,7 @@ export const h1Styles = css`
   margin-bottom: 10px;
 
   @media (max-width: 600px) {
-    margin-bottom: 0;
+    margin-bottom: 10px;
     padding: 0px 20px;
   }
 `;
@@ -484,13 +484,14 @@ export const mainLayout = css`
   flex-direction: row;
   justify-content: space-around;
 
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     display: flex;
     flex-direction: column;
     gap: 40px;
     text-align: center;
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
   }
 `;
 

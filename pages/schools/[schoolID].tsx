@@ -11,10 +11,16 @@ import {
   categoryBox,
   grey,
   h1Styles,
-  loginButton,
   mainLayout,
 } from '../../utils/sharedStyles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './';
+
+const backButtonSectionStyles = css`
+  @media (max-width: 600px) {
+    margin-top: 40px;
+    margin-left: 20px;
+  }
+`;
 
 const contentLayout = css`
   margin-top: 3rem;
@@ -24,12 +30,19 @@ const schoolInfoSectionStyles = css`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const categoryStyles = css`
   display: flex;
   flex-direction: row;
   gap: 10px;
+  @media (max-width: 600px) {
+    flex-direction: row wrap;
+  }
 `;
 
 const schoolInfoBoxStyles = css`
@@ -46,12 +59,28 @@ const schoolInfoBoxStyles = css`
   justify-content: center;
   gap: 15px;
   margin-top: 15px;
+
+  @media (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const iconLineStyles = css`
   display: flex;
   flex-direction: row;
   gap: 10px;
+  object-fit: contain;
+  aspect-ratio: 1 / 1;
+
+  @media (max-width: 600px) {
+    flex-direction: row wrap;
+    text-align: left;
+  }
+`;
+
+const iconStyles = css`
+  object-fit: contain;
+  aspect-ratio: 1 / 1;
 `;
 
 type Props =
@@ -83,17 +112,15 @@ export default function SingleSchool(props: Props) {
         <meta name="description" content="More information about the school" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div css={backButtonSectionStyles}>
         <Link href="/schools/">
-          <a css={loginButton}>
-            {' '}
+          <a>
             <Image
-              src="/images/back.png"
+              src="/images/previous.png"
               alt="Back arrow"
-              width="10"
-              height="10"
+              width="20"
+              height="20"
             />{' '}
-            <span>Back to all</span>
           </a>
         </Link>
       </div>
@@ -132,6 +159,7 @@ export default function SingleSchool(props: Props) {
                     alt="Location icon"
                     width="20"
                     height="20"
+                    css={iconStyles}
                   />
                   {props.school.street}, {props.school.postalCode}{' '}
                   {props.school.areaName}

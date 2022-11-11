@@ -74,6 +74,19 @@ const schoolPreviewBoxStyles = css`
   font-size: ${small};
   margin-top: 60px;
   position: relative;
+  @media (max-width: 1023px) {
+    margin-left: 20px;
+    padding: 20px 40px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px 20px;
+    flex-direction: column;
+    width: 300px;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 0;
+  }
 `;
 
 const addSchoolStyles = css`
@@ -83,7 +96,7 @@ const addSchoolStyles = css`
   align-items: center;
   background-color: ${white};
   width: 45vw;
-  height: 48vh;
+  height: 340px;
   border: 1px solid ${grey};
   border-radius: 5px;
   box-shadow: 3px 3px 4px ${grey};
@@ -93,6 +106,22 @@ const addSchoolStyles = css`
   position: relative;
   gap: 20px;
   cursor: pointer;
+
+  @media (max-width: 1023px) {
+    height: 340px;
+    margin-left: 20px;
+    padding: 20px 40px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px 20px;
+    flex-direction: column;
+    width: 300px;
+    height: 200px;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 0;
+  }
 `;
 
 const schoolPreviewLeftStyles = css`
@@ -113,6 +142,11 @@ const categorySectionStyles = css`
   display: flex;
   flex-direction: row;
   gap: 10px;
+
+  @media (max-width: 600px) {
+    flex-direction: row wrap;
+    width: 260px;
+  }
 `;
 
 const editStyles = css`
@@ -121,6 +155,11 @@ const editStyles = css`
   cursor: pointer;
   position: absolute;
   right: 20px;
+
+  @media (max-width: 600px) {
+    right: 10px;
+    top: 10px;
+  }
 `;
 
 const deleteStyles = css`
@@ -130,6 +169,17 @@ const deleteStyles = css`
   position: absolute;
   right: 20px;
   top: 60px;
+
+  @media (max-width: 600px) {
+    right: 10px;
+    top: 50px;
+  }
+`;
+
+const imageStyles = css`
+  @media (max-width: 1023px) {
+    display: none;
+  }
 `;
 
 type Props = {
@@ -270,7 +320,7 @@ export default function Profile(props: Props) {
               </div>
             </button>
             <div css={schoolPreviewLeftStyles}>
-              <div>
+              <div css={imageStyles}>
                 <Image
                   src="/images/search.png"
                   alt="Illustration of a girl standing on a gigantic book with a graduation hat"
