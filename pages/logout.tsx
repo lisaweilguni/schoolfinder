@@ -15,6 +15,10 @@ const titleSectionStyles = css`
   > h1 {
     margin-bottom: 20px;
   }
+
+  @media (max-width: 600px) {
+    margin-top: 50px;
+  }
 `;
 
 export default function Logout() {

@@ -85,7 +85,7 @@ const schoolPreviewBoxStyles = css`
 
   @media (max-width: 800px) {
     width: 300px;
-    height: 300px;
+    height: 290px;
     flex-direction: column nowrap;
     padding: 60px 50px;
     gap: 15px;
@@ -94,7 +94,6 @@ const schoolPreviewBoxStyles = css`
     border-radius: 5px;
     box-shadow: 3px 3px 4px ${grey};
     margin-top: 30px;
-    height: 35vh;
     font-size: ${normal};
   }
 `;

@@ -162,17 +162,31 @@ const editStyles = css`
   }
 `;
 
+const viewStyles = css`
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 55px;
+
+  @media (max-width: 600px) {
+    right: 10px;
+    top: 50px;
+  }
+`;
+
 const deleteStyles = css`
   border: none;
   background: transparent;
   cursor: pointer;
   position: absolute;
   right: 20px;
-  top: 60px;
+  top: 90px;
 
   @media (max-width: 600px) {
     right: 10px;
-    top: 50px;
+    top: 90px;
   }
 `;
 
@@ -297,6 +311,18 @@ export default function Profile(props: Props) {
                 <div>
                   <Image
                     src="/images/edit.png"
+                    alt="Edit icon"
+                    width="20"
+                    height="20"
+                  />
+                </div>
+              </Link>
+            </button>
+            <button css={viewStyles}>
+              <Link href={`/schools/${props.school?.schoolId}`}>
+                <div>
+                  <Image
+                    src="/images/open_dark.png"
                     alt="Edit icon"
                     width="20"
                     height="20"
