@@ -36,17 +36,17 @@ export default async function handler(
       return;
     }
 
-    // // Check if this user has already created a school
-    // const schoolByUserId = await getSchoolByUserId(
-    //   request.body.userId,
-    //   request.cookies.sessionToken,
-    // );
-    // if (schoolByUserId?.length) {
-    //   response
-    //     .status(400)
-    //     .json({ errors: [{ message: "You've already added your school." }] });
-    //   return;
-    // }
+    // Check if this user has already created a school
+    const schoolByUserId = await getSchoolByUserId(
+      request.body.userId,
+      request.cookies.sessionToken,
+    );
+    if (schoolByUserId?.length) {
+      response
+        .status(400)
+        .json({ errors: [{ message: "You've already added your school." }] });
+      return;
+    }
 
     const schoolName = request.body?.schoolName;
     const areaId = request.body?.areaId;

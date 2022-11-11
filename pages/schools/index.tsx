@@ -7,7 +7,11 @@ import Select from 'react-select';
 import { getAllAreas } from '../../database/areas';
 import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
-import { transformDataForSelect } from '../../utils/dataStructure';
+import {
+  mergeDuplicateSchools,
+  transformDataForSelect,
+  transformMultipleSchools,
+} from '../../utils/dataStructure';
 import {
   beige,
   categoryBox,
@@ -387,51 +391,9 @@ export async function getServerSideProps() {
   const specializationsFromDatabase = await getAllSpecializations();
   const schoolsFromDatabase = await getAllSchools();
 
-  // Transform data
-  const schoolsTransformed = schoolsFromDatabase.map((school) => {
-    return {
-      schoolId: school.schoolId,
-      schoolName: school.schoolName,
-      areaId: school.areaId,
-      areaName: school.areaName,
-      postalCode: school.postalCode,
-      street: school.street,
-      website: school.website,
-      isPublic: school.isPublic,
-      specializations: [
-        {
-          specializationId: school.specializationId,
-          specializationName: school.specializationName,
-        },
-      ],
-    };
-  });
-
-  // Merge duplicates
-  const schools = [
-    ...schoolsTransformed
-      .reduce((r, school) => {
-        const record = r.get(school.schoolId) || {};
-        r.set(school.schoolId, {
-          schoolId: school.schoolId,
-          schoolName: school.schoolName,
-          areaId: school.areaId,
-          areaName: school.areaName,
-          postalCode: school.postalCode,
-          street: school.street,
-          website: school.website,
-          isPublic: school.isPublic,
-          specializations: [
-            ...(record.specializations || []),
-            ...school.specializations.filter(
-              (object) => Object.keys(object).length !== 0,
-            ),
-          ],
-        });
-        return r;
-      }, new Map())
-      .values(),
-  ];
+  // Transform data and merge duplicates with utils data structure functions
+  const schoolsTransformed = transformMultipleSchools(schoolsFromDatabase);
+  const schools = mergeDuplicateSchools(schoolsTransformed);
 
   return {
     props: {
