@@ -51,6 +51,21 @@ function MyApp({ Component, pageProps }: AppProps) {
             min-height: 100vh;
             font-weight: 300;
           }
+
+          .map-container {
+            width: 100%;
+            height: 100vh;
+          }
+
+          .map-container-single-school {
+            width: 500px;
+            height: 400px;
+
+            @media (max-width: 600px) {
+              width: 100vw;
+              height: 300px;
+            }
+          }
         `}
       />
       <Layout user={user}>

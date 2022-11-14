@@ -1,8 +1,11 @@
 import { css } from '@emotion/react';
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMemo } from 'react';
+import Geocode from 'react-geocode';
 import { getSchoolWithSpecializationsById } from '../../database/schools';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
 import { getSchoolWithAreaNameAndSpecializations } from '../../utils/dataStructure';
@@ -92,6 +95,13 @@ type Props =
     };
 
 export default function SingleSchool(props: Props) {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  });
+  const center = useMemo(() => ({ lat: 48.210033, lng: 16.363449 }), []);
+
+  if (!isLoaded) return <div>Loading...</div>;
+
   if ('error' in props) {
     return (
       <div>
@@ -127,14 +137,19 @@ export default function SingleSchool(props: Props) {
       <div css={contentLayout}>
         <div css={mainLayout}>
           <div>
-            <div>
-              <Image
+            {/* <Image
                 src="/images/profile.png"
                 alt="Illustration of a teacher and two students in a classroom"
                 width="436.4"
                 height="286.8"
-              />
-            </div>
+              /> */}
+            <GoogleMap
+              mapContainerClassName="map-container-single-school"
+              zoom={12}
+              center={center}
+            >
+              <MarkerF position={center} />
+            </GoogleMap>
           </div>
           <div>
             <div css={schoolInfoSectionStyles}>
@@ -207,6 +222,8 @@ export async function getServerSideProps(
   }
 
   const foundSchool = await getSchoolWithSpecializationsById(schoolId);
+  const schoolTransformed =
+    getSchoolWithAreaNameAndSpecializations(foundSchool);
 
   if (foundSchool.length === 0) {
     context.res.statusCode = 404;
@@ -216,6 +233,19 @@ export async function getServerSideProps(
       },
     };
   }
+
+  // Get latitude & longitude from address.
+  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+  const schoolWithLatLng = Geocode.fromAddress(schoolTransformed.street).then(
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng);
+    },
+    (error) => {
+      console.error(error);
+    },
+  );
+  console.log(typeof schoolWithLatLng);
 
   return {
     props: {
