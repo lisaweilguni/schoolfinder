@@ -69,6 +69,27 @@ export const h2Styles = css`
   }
 `;
 
+// Layout
+export const mainLayout = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  @media (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+  }
+`;
+
+export const higherMarginTopLayout = css`
+  margin-top: 60px;
+`;
+
 // Buttons
 export const defaultButton = css`
   display: inline-block;
@@ -476,27 +497,6 @@ export const textBelowButtonStyles = css`
     flex-direction: column;
     width: 80vw;
   }
-`;
-
-// Layout
-export const mainLayout = css`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-  @media (max-width: 700px) {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-  }
-`;
-
-export const higherMarginTopLayout = css`
-  margin-top: 60px;
 `;
 
 export const addEditBoxStyles = css`
