@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import { getAllAreas } from '../../database/areas';
-import { getAllSchools } from '../../database/schools';
+import { getAllSchools, getAllSchoolsWithLimit } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
 import {
   mergeDuplicateSchools,
@@ -209,7 +209,7 @@ export default function Search(props: Props) {
   const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load all schools into state on first render and every time props.schools changes
+  // Load all schools on first render and every time props.schools changes
   useEffect(() => {
     setAllSchools(props.schools);
     setIsLoading(false);

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import Geocode from 'react-geocode';
-import Lottie from 'react-lottie';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import { getSchoolWithSpecializationsById } from '../../database/schools';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
@@ -113,8 +112,9 @@ export default function SingleSchool(props: Props) {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
   const [address, setAddress] = useState(
-    `${props.school.street} ${props.school.postalCode}`,
+    `${props.school.street} ${props.school.postalCode} ${props.school.areaName}`,
   );
+  console.log(address);
   const [coordinates, setCoordinates] = useState({
     lat: 48.210033,
     lng: 16.363449,
@@ -139,18 +139,6 @@ export default function SingleSchool(props: Props) {
     );
   }, [findLatAndLng, address]);
 
-  // Set coordinates for center and marker of map
-  const center = { lat: coordinates.lat, lng: coordinates.lng };
-
-  // Show loading if map is not loaded yet
-  if (!isLoaded) {
-    return (
-      <div>
-        <LoadingAnimation />
-      </div>
-    );
-  }
-
   // Show error if school not found
   if ('error' in props) {
     return (
@@ -161,6 +149,18 @@ export default function SingleSchool(props: Props) {
         </Head>
         <h1 css={h1Styles}>{props.error}</h1>
         Sorry, try the <Link href="/schools">search page</Link> instead.
+      </div>
+    );
+  }
+
+  // Set coordinates for center and marker of map
+  const center = { lat: coordinates.lat, lng: coordinates.lng };
+
+  // Show loading if map is not loaded yet
+  if (!isLoaded) {
+    return (
+      <div>
+        <LoadingAnimation />
       </div>
     );
   }

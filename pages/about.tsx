@@ -121,8 +121,8 @@ export default function About() {
             <Image
               src="/images/profile.png"
               alt="Illustration of a teacher and two students in a classroom"
-              width="147.6"
-              height="104.85"
+              width="163.65"
+              height="107.55"
             />
           </div>
           <div css={textStyles}>

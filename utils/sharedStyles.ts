@@ -534,7 +534,6 @@ export const addEditBoxStyles = css`
 `;
 
 // Errors
-
 export const errorMessageStyles = css`
   color: #ed6183;
 `;

@@ -177,6 +177,33 @@ export async function getAllSchools() {
   return schools;
 }
 
+export async function getAllSchoolsWithLimit(limit: number) {
+  const schools = await sql<SchoolWithAreaNameAndSpecializations[]>`
+    SELECT
+     schools.id AS school_id,
+     schools.name AS school_name,
+     schools.area_id,
+     areas.name as area_name,
+     schools.postal_code,
+     schools.street,
+     schools.website,
+     schools.is_public,
+     specializations.id as specialization_id,
+     specializations.name as specialization_name
+    FROM
+     schools,
+     areas,
+     specializations,
+     schools_specializations
+    WHERE
+     schools.area_id = areas.id AND
+     specializations.id = schools_specializations.specialization_id AND
+     schools.id = schools_specializations.school_id
+    LIMIT ${limit}
+  `;
+  return schools;
+}
+
 // Get school by user ID
 export async function getSchoolByUserId(userId: number, token: string) {
   if (!token) return undefined;
