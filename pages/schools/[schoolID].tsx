@@ -11,16 +11,26 @@ import LoadingAnimation from '../../components/LoadingAnimation';
 import { getSchoolWithSpecializationsById } from '../../database/schools';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
 import { getSchoolWithAreaNameAndSpecializations } from '../../utils/dataStructure';
-import {
-  beige,
-  categoryBox,
-  grey,
-  h1Styles,
-  mainLayout,
-} from '../../utils/sharedStyles';
+import { beige, categoryBox, grey, h1Styles } from '../../utils/sharedStyles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './';
 
 Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+
+export const singleSchoolPageLayout = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  @media (max-width: 1023px) {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 40px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+  }
+`;
 
 const backButtonSectionStyles = css`
   @media (max-width: 600px) {
@@ -175,7 +185,7 @@ export default function SingleSchool(props: Props) {
         </Link>
       </div>
       <div css={contentLayout}>
-        <div css={mainLayout}>
+        <div css={singleSchoolPageLayout}>
           <div>
             {/* <Image
                 src="/images/profile.png"
