@@ -13,11 +13,16 @@ import {
   small,
 } from '../utils/sharedStyles';
 
+const titleStyle = css`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
 const contentBoxStyles = css`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 500px;
+  max-width: 510px;
   height: 440px;
   border: 1px solid;
   border: 1px solid ${grey};
@@ -26,6 +31,16 @@ const contentBoxStyles = css`
   text-align: center;
   padding: 0 80px;
   margin-top: 20px;
+
+  @media (max-width: 1023px) {
+    padding: 0 60px;
+    gap: 10px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 0 20px;
+    margin-top: 0px;
+  }
 `;
 
 const tagBox = css`
@@ -49,6 +64,12 @@ const headingStyles = css`
   margin: 0;
   font-weight: 400;
   line-height: 2.5rem;
+
+  @media (max-width: 1023px) {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    padding: 0px 20px;
+  }
 `;
 
 const textStyles = css`
@@ -68,8 +89,9 @@ export default function About() {
         <meta name="description" content="Information about schoolfinder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <h1 css={h1Styles}>About</h1>
+      <div css={titleStyle}>
+        <h1 css={h1Styles}>About</h1>
+      </div>
       <div css={mainLayout}>
         <div css={contentBoxStyles}>
           <div css={tagBox}>for students</div>

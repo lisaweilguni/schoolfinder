@@ -75,7 +75,7 @@ export const mainLayout = css`
   flex-direction: row;
   justify-content: space-around;
 
-  @media (max-width: 700px) {
+  @media (max-width: 1023px) {
     display: flex;
     flex-direction: column;
     gap: 40px;
