@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
+import LoadingAnimation from '../../components/LoadingAnimation';
 import { getAllAreas } from '../../database/areas';
 import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
@@ -15,6 +16,7 @@ import {
 import {
   beige,
   categoryBox,
+  darkText,
   defaultButton,
   grey,
   h1Styles,
@@ -34,6 +36,11 @@ const searchPageLayoutStyles = css`
   text-align: center;
   align-items: center;
   gap: 30px;
+
+  a {
+    text-decoration: none;
+    color: ${darkText};
+  }
 
   @media (max-width: 800px) {
     padding: 60px 10px;
@@ -152,8 +159,8 @@ const countStyles = css`
 `;
 
 const iconStyles = css`
+  display: flex;
   align-items: center;
-  margin-top: 45px;
 
   @media (max-width: 800px) {
     display: none;
@@ -200,10 +207,12 @@ export default function Search(props: Props) {
     SelectType[]
   >([]);
   const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load all schools into state on first render and every time props.schools changes
   useEffect(() => {
     setAllSchools(props.schools);
+    setIsLoading(false);
   }, [props.schools, allSchools]);
 
   // Declare handler for specialization multi-select
@@ -301,6 +310,7 @@ export default function Search(props: Props) {
             </button>
           </div>
         </div>
+        {isLoading && <LoadingAnimation />}
         <div css={countStyles}>
           {count && count === 1
             ? `${count} school found`
@@ -332,11 +342,14 @@ export default function Search(props: Props) {
           })
           .map((school) => {
             return (
-              <div
-                css={schoolPreviewBoxStyles}
+              <Link
                 key={`school-${school.schoolId}`}
+                href={`/schools/${school.schoolId}`}
               >
-                <Link href={`/schools/${school.schoolId}`}>
+                <a
+                  css={schoolPreviewBoxStyles}
+                  href={`/schools/${school.schoolId}`}
+                >
                   <div css={schoolPreviewLeftStyles}>
                     <div css={imageStyles}>
                       <Image
@@ -365,20 +378,18 @@ export default function Search(props: Props) {
                       </div>
                     </div>
                   </div>
-                </Link>
-                <div css={iconStyles}>
-                  <div>
-                    <Link href={`/schools/${school.schoolId}`}>
+                  <div css={iconStyles}>
+                    <div>
                       <Image
                         src="/images/next.png"
                         alt="Arrow"
                         width="20"
                         height="20"
                       />
-                    </Link>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </a>
+              </Link>
             );
           })}
       </div>

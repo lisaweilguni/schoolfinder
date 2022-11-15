@@ -4,8 +4,10 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Geocode from 'react-geocode';
+import Lottie from 'react-lottie';
+import LoadingAnimation from '../../components/LoadingAnimation';
 import { getSchoolWithSpecializationsById } from '../../database/schools';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
 import { getSchoolWithAreaNameAndSpecializations } from '../../utils/dataStructure';
@@ -17,6 +19,8 @@ import {
   mainLayout,
 } from '../../utils/sharedStyles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './';
+
+Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
 
 const backButtonSectionStyles = css`
   @media (max-width: 600px) {
@@ -98,10 +102,46 @@ export default function SingleSchool(props: Props) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
-  const center = useMemo(() => ({ lat: 48.210033, lng: 16.363449 }), []);
+  const [address, setAddress] = useState(
+    `${props.school.street} ${props.school.postalCode}`,
+  );
+  const [coordinates, setCoordinates] = useState({
+    lat: 48.210033,
+    lng: 16.363449,
+  });
 
-  if (!isLoaded) return <div>Loading...</div>;
+  // Get latitude & longitude from address.
+  const findLatAndLng = useCallback(async () => {
+    await Geocode.fromAddress(address).then(
+      (response) => {
+        setCoordinates(response.results[0].geometry.location);
+      },
+      (error) => {
+        console.error(error);
+      },
+    );
+  }, [address]);
 
+  // Set coordinates on first render and every time address changes
+  useEffect(() => {
+    findLatAndLng().catch(() =>
+      console.log('getting coordinates from address failed'),
+    );
+  }, [findLatAndLng, address]);
+
+  // Set coordinates for center and marker of map
+  const center = { lat: coordinates.lat, lng: coordinates.lng };
+
+  // Show loading if map is not loaded yet
+  if (!isLoaded) {
+    return (
+      <div>
+        <LoadingAnimation />
+      </div>
+    );
+  }
+
+  // Show error if school not found
   if ('error' in props) {
     return (
       <div>
@@ -222,8 +262,6 @@ export async function getServerSideProps(
   }
 
   const foundSchool = await getSchoolWithSpecializationsById(schoolId);
-  const schoolTransformed =
-    getSchoolWithAreaNameAndSpecializations(foundSchool);
 
   if (foundSchool.length === 0) {
     context.res.statusCode = 404;
@@ -233,19 +271,6 @@ export async function getServerSideProps(
       },
     };
   }
-
-  // Get latitude & longitude from address.
-  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-  const schoolWithLatLng = Geocode.fromAddress(schoolTransformed.street).then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
-    },
-    (error) => {
-      console.error(error);
-    },
-  );
-  console.log(typeof schoolWithLatLng);
 
   return {
     props: {

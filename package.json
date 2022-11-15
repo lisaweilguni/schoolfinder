@@ -16,6 +16,7 @@
     "@types/cookie": "^0.5.1",
     "@types/dotenv-safe": "^8.1.2",
     "@types/react-geocode": "^0.2.1",
+    "@types/react-lottie": "^1.2.6",
     "bcrypt": "^5.1.0",
     "cookie": "^0.5.0",
     "dotenv-cli": "^6.0.0",
@@ -26,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-geocode": "^0.2.3",
+    "react-lottie": "^1.2.3",
     "react-select": "^5.5.7",
     "sharp": "^0.31.1"
   },
