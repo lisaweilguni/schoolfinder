@@ -99,13 +99,9 @@ const iconStyles = css`
   aspect-ratio: 1 / 1;
 `;
 
-type Props =
-  | {
-      school: SchoolWithAreaNameAndSpecializationsTransformed;
-    }
-  | {
-      error: string;
-    };
+type Props = {
+  school: SchoolWithAreaNameAndSpecializationsTransformed;
+};
 
 export default function SingleSchool(props: Props) {
   const { isLoaded } = useLoadScript({
@@ -114,7 +110,6 @@ export default function SingleSchool(props: Props) {
   const [address, setAddress] = useState(
     `${props.school.street} ${props.school.postalCode} ${props.school.areaName}`,
   );
-  console.log(address);
   const [coordinates, setCoordinates] = useState({
     lat: 48.210033,
     lng: 16.363449,
@@ -138,20 +133,6 @@ export default function SingleSchool(props: Props) {
       console.log('getting coordinates from address failed'),
     );
   }, [findLatAndLng, address]);
-
-  // Show error if school not found
-  if ('error' in props) {
-    return (
-      <div>
-        <Head>
-          <title>School not found</title>
-          <meta name="description" content="School not found" />
-        </Head>
-        <h1 css={h1Styles}>{props.error}</h1>
-        Sorry, try the <Link href="/schools">search page</Link> instead.
-      </div>
-    );
-  }
 
   // Set coordinates for center and marker of map
   const center = { lat: coordinates.lat, lng: coordinates.lng };
@@ -263,10 +244,10 @@ export async function getServerSideProps(
   const schoolId = parseIntFromContextQuery(context.query.schoolId);
 
   if (typeof schoolId === 'undefined') {
-    context.res.statusCode = 404;
     return {
-      props: {
-        error: 'School not found',
+      redirect: {
+        destination: '/404',
+        permanent: false,
       },
     };
   }
@@ -274,10 +255,10 @@ export async function getServerSideProps(
   const foundSchool = await getSchoolWithSpecializationsById(schoolId);
 
   if (foundSchool.length === 0) {
-    context.res.statusCode = 404;
     return {
-      props: {
-        error: 'School not found',
+      redirect: {
+        destination: '/404',
+        permanent: false,
       },
     };
   }

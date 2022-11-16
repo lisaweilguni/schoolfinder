@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import { getAllAreas } from '../../database/areas';
-import { getAllSchools, getAllSchoolsWithLimit } from '../../database/schools';
+import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
 import {
   mergeDuplicateSchools,
@@ -93,6 +93,11 @@ const schoolPreviewBoxStyles = css`
   padding: 20px 50px;
   font-size: ${small};
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    transform: translate(0, -9px);
+  }
 
   @media (max-width: 800px) {
     width: 300px;

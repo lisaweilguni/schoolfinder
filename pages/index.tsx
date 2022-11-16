@@ -25,6 +25,8 @@ const titleSectionStyles = css`
   @media (max-width: 1023px) {
     gap: 10px;
     max-width: 90%;
+    justify-content: center;
+    align-items: center;
   }
 
   @media (max-width: 600px) {

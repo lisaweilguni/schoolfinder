@@ -22,14 +22,14 @@ const contentBoxStyles = css`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 510px;
+  width: 510px;
   height: 440px;
   border: 1px solid;
   border: 1px solid ${grey};
   border-radius: 5px;
   align-items: center;
   text-align: center;
-  padding: 0 80px;
+  padding: 0 4vw;
   margin-top: 20px;
 
   @media (max-width: 1023px) {
@@ -40,6 +40,8 @@ const contentBoxStyles = css`
   @media (max-width: 600px) {
     padding: 0 20px;
     margin-top: 0px;
+    width: 90vw;
+    height: 70vh;
   }
 `;
 
