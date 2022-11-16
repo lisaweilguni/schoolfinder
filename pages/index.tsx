@@ -14,7 +14,7 @@ import {
   selectStylesHome,
   small,
   titleStyles,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import { SelectType } from './schools';
 
 const titleSectionStyles = css`

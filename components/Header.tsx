@@ -9,7 +9,7 @@ import {
   loginButton,
   small,
   white,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import BurgerMenu from './BurgerMenu';
 
 const headerStyles = css`

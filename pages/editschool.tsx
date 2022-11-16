@@ -26,7 +26,7 @@ import {
   inputNameWrapper,
   mainLayout,
   selectStyles,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import { SchoolResponseBody } from './api/users/schools';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './schools';
 

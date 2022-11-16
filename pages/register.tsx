@@ -15,7 +15,7 @@ import {
   inputNameWrapper,
   mainLayout,
   textBelowButtonStyles,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import { RegisterResponseBody } from './api/register';
 
 const inputSectionStyles = css`
@@ -154,6 +154,8 @@ export default function Register(props: Props) {
               <label htmlFor="e-mail">E-mail</label>
               <input
                 id="e-mail"
+                type="email"
+                maxLength={50}
                 value={email}
                 onChange={(event) => {
                   setEmail(event.currentTarget.value);
@@ -165,6 +167,7 @@ export default function Register(props: Props) {
               <input
                 id="password"
                 type="password"
+                maxLength={50}
                 value={password}
                 onChange={(event) => {
                   setPassword(event.currentTarget.value);

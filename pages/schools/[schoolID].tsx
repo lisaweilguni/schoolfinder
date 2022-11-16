@@ -10,7 +10,7 @@ import LoadingAnimation from '../../components/LoadingAnimation';
 import { getSchoolWithSpecializationsById } from '../../database/schools';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
 import { getSchoolWithAreaNameAndSpecializations } from '../../utils/dataStructure';
-import { beige, categoryBox, grey, h1Styles } from '../../utils/sharedStyles';
+import { beige, categoryBox, grey, h1Styles } from '../../utils/styles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './';
 
 Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);

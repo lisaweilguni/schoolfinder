@@ -22,7 +22,7 @@ import {
   inputNameWrapper,
   mainLayout,
   selectStyles,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import { SchoolResponseBody } from './api/users/schools';
 
 type Props = {
@@ -124,6 +124,7 @@ export default function AddSchool(props: Props) {
               <input
                 id="school-name"
                 placeholder="HTL Spengergasse"
+                maxLength={40}
                 value={schoolName}
                 onChange={(event) => {
                   setSchoolName(event.currentTarget.value);
@@ -157,6 +158,7 @@ export default function AddSchool(props: Props) {
                 <input
                   id="postal-code"
                   placeholder="1050"
+                  maxLength={4}
                   value={postalCode}
                   onChange={(event) => {
                     setPostalCode(event.currentTarget.value);
@@ -169,6 +171,7 @@ export default function AddSchool(props: Props) {
               <input
                 id="street"
                 placeholder="Spengergasse 20"
+                maxLength={60}
                 value={street}
                 onChange={(event) => {
                   setStreet(event.currentTarget.value);
@@ -195,6 +198,7 @@ export default function AddSchool(props: Props) {
                 <input
                   id="website"
                   placeholder="www.spengergasse.at"
+                  maxLength={30}
                   value={website}
                   onChange={(event) => {
                     setWebsite(event.currentTarget.value);

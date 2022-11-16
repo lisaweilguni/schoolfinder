@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { deleteSessionByToken } from '../database/sessions';
-import { h1Styles } from '../utils/sharedStyles';
+import { h1Styles } from '../utils/styles';
 
 const titleSectionStyles = css`
   max-width: 70%;

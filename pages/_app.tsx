@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { User } from '../database/users';
-import { darkText } from '../utils/sharedStyles';
+import { darkText } from '../utils/styles';
 import { SelectType } from './schools';
 
 function MyApp({ Component, pageProps }: AppProps) {

@@ -11,7 +11,7 @@ import {
   lightText,
   mainLayout,
   small,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 
 const titleStyle = css`
   @media (max-width: 600px) {
@@ -31,6 +31,11 @@ const contentBoxStyles = css`
   text-align: center;
   padding: 0 4vw;
   margin-top: 20px;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    transform: translate(0, -9px);
+  }
 
   @media (max-width: 1023px) {
     padding: 0 60px;

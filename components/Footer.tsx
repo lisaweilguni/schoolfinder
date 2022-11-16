@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import { darkBlue, small, white } from '../utils/sharedStyles';
+import { darkBlue, small, white } from '../utils/styles';
 
 const footerStyles = css`
   display: flex;

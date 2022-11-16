@@ -27,7 +27,7 @@ import {
   selectStylesSearchSmall,
   small,
   white,
-} from '../../utils/sharedStyles';
+} from '../../utils/styles';
 
 const searchPageLayoutStyles = css`
   display: flex;
@@ -406,6 +406,7 @@ export async function getServerSideProps() {
   const areasFromDatabase = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
   const schoolsFromDatabase = await getAllSchools();
+  console.log(schoolsFromDatabase);
 
   // Transform data and merge duplicates with utils data structure functions
   const schoolsTransformed = transformMultipleSchools(schoolsFromDatabase);

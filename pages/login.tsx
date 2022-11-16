@@ -16,7 +16,7 @@ import {
   inputFieldLarge,
   mainLayout,
   textBelowButtonStyles,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import { LoginResponseBody } from './api/login';
 
 const inputSectionStyles = css`

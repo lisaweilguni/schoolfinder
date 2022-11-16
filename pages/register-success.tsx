@@ -12,7 +12,7 @@ import {
   higherMarginTopLayout,
   lightText,
   mainLayout,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 
 const titleSectionStyles = css`
   max-width: 45%;

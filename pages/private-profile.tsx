@@ -21,7 +21,7 @@ import {
   mainLayout,
   small,
   white,
-} from '../utils/sharedStyles';
+} from '../utils/styles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './schools';
 
 const profileInformationBox = css`
