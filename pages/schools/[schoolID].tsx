@@ -13,8 +13,6 @@ import { getSchoolWithAreaNameAndSpecializations } from '../../utils/dataStructu
 import { beige, categoryBox, grey, h1Styles } from '../../utils/styles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './';
 
-Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-
 export const singleSchoolPageLayout = css`
   display: flex;
   flex-direction: row;
@@ -103,6 +101,10 @@ type Props = {
   school: SchoolWithAreaNameAndSpecializationsTransformed;
 };
 
+if (process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
+  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+}
+
 export default function SingleSchool(props: Props) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -115,7 +117,7 @@ export default function SingleSchool(props: Props) {
     lng: 16.363449,
   });
 
-  // Get latitude & longitude from address.
+  // Get latitude & longitude from address
   const findLatAndLng = useCallback(async () => {
     await Geocode.fromAddress(address).then(
       (response) => {
