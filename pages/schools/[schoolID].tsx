@@ -99,15 +99,16 @@ const iconStyles = css`
 
 type Props = {
   school: SchoolWithAreaNameAndSpecializationsTransformed;
+  apiKey: string | undefined;
 };
 
-if (process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
-  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+if (process.env.NEXT_PUBLIC_GOOGLE_API_KEY) {
+  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
 }
 
 export default function SingleSchool(props: Props) {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: props.apiKey,
   });
   const [address, setAddress] = useState(
     `${props.school.street} ${props.school.postalCode} ${props.school.areaName}`,
@@ -255,6 +256,7 @@ export async function getServerSideProps(
   }
 
   const foundSchool = await getSchoolWithSpecializationsById(schoolId);
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
   if (foundSchool.length === 0) {
     return {
@@ -268,6 +270,7 @@ export async function getServerSideProps(
   return {
     props: {
       school: getSchoolWithAreaNameAndSpecializations(foundSchool),
+      apiKey: apiKey,
     },
   };
 }
