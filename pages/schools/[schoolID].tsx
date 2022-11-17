@@ -99,7 +99,7 @@ const iconStyles = css`
 
 type Props = {
   school: SchoolWithAreaNameAndSpecializationsTransformed;
-  apiKey: string | undefined;
+  apiKey: string;
 };
 
 if (process.env.NEXT_PUBLIC_GOOGLE_API_KEY) {
