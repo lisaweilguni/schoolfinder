@@ -102,10 +102,6 @@ const iconStyles = css`
 //   apiKey: string;
 // };
 
-if (process.env.NEXT_PUBLIC_GOOGLE_API_KEY) {
-  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
-}
-
 export default function SingleSchool(props) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: props.apiKey,
@@ -117,6 +113,7 @@ export default function SingleSchool(props) {
     lat: 48.210033,
     lng: 16.363449,
   });
+  Geocode.setApiKey(props.apiKey);
 
   // Get latitude & longitude from address
   const findLatAndLng = useCallback(async () => {

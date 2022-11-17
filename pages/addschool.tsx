@@ -124,7 +124,7 @@ export default function AddSchool(props: Props) {
               <input
                 id="school-name"
                 placeholder="HTL Spengergasse"
-                maxLength={40}
+                maxLength={30}
                 value={schoolName}
                 onChange={(event) => {
                   setSchoolName(event.currentTarget.value);
