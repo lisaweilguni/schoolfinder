@@ -97,16 +97,16 @@ const iconStyles = css`
   aspect-ratio: 1 / 1;
 `;
 
-type Props = {
-  school: SchoolWithAreaNameAndSpecializationsTransformed;
-  apiKey: string;
-};
+// type Props = {
+//   school: SchoolWithAreaNameAndSpecializationsTransformed;
+//   apiKey: string;
+// };
 
 if (process.env.NEXT_PUBLIC_GOOGLE_API_KEY) {
   Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
 }
 
-export default function SingleSchool(props: Props) {
+export default function SingleSchool(props) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: props.apiKey,
   });
@@ -240,9 +240,7 @@ export default function SingleSchool(props: Props) {
   );
 }
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext,
-): Promise<GetServerSidePropsResult<Props>> {
+export async function getServerSideProps(context) {
   // Retrieve the school ID from the URL
   const schoolId = parseIntFromContextQuery(context.query.schoolId);
 
@@ -274,3 +272,7 @@ export async function getServerSideProps(
     },
   };
 }
+
+// export async function getServerSideProps(
+//   context: GetServerSidePropsContext,
+// ): Promise<GetServerSidePropsResult<Props>> {
