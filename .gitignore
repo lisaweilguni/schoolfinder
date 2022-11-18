@@ -14,7 +14,6 @@
 
 # production
 /build
-/fly.toml
 
 # misc
 .DS_Store
@@ -41,3 +40,4 @@ next-env.d.ts
 playwright/test-results/
 playwright/report/
 /playwright/.cache/
+fly.toml
