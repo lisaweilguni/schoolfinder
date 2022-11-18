@@ -85,7 +85,7 @@ const getStartedButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  padding: 1.5px 0;
+  padding: 1px;
   width: 120px;
   font-size: 0.7rem;
   font-family: 'Inter', sans-serif;
@@ -108,7 +108,7 @@ const getStartedButton = css`
     color: ${white};
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 1023px) {
     display: none;
   }
 `;
@@ -173,7 +173,7 @@ export default function Header(props: Props) {
     {
       element: '#step-one',
       intro:
-        "Welcome to schoolfinder! You're looking for the right high school for you? Select your area here and get started.",
+        "Welcome to schoolfinder! You're looking for the right high school for you? Get started here.",
       position: 'bottom',
     },
     {
@@ -223,9 +223,11 @@ export default function Header(props: Props) {
             initialStep={initialStep}
             onExit={onExit}
           />
-          <button css={getStartedButton} onClick={() => startIntro()}>
-            Get started
-          </button>
+          {!props.user && (
+            <button css={getStartedButton} onClick={() => startIntro()}>
+              Get started
+            </button>
+          )}
         </div>
         {props.user ? (
           <nav css={navStyles(burgerMenuOpen)}>
