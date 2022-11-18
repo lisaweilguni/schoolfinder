@@ -1,16 +1,28 @@
+import 'intro.js/introjs.css';
 import { css } from '@emotion/react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { User } from '../database/users';
 import {
+  darkBlue,
   darkText,
+  grey,
   lightPurple,
   loginButton,
   small,
   white,
 } from '../utils/styles';
 import BurgerMenu from './BurgerMenu';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const Steps = dynamic(
+  () => {
+    return import('intro.js-react').then((mod) => mod.Steps);
+  },
+  { ssr: false },
+);
 
 const headerStyles = css`
   display: flex;
@@ -50,10 +62,55 @@ const linkStyles = css`
   }
 `;
 
+const headerLeftStyles = css`
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+`;
+
 const logoStyles = css`
   display: flex;
   align-items: center;
   align-self: center;
+`;
+
+const getStartedButton = css`
+  display: inline-block;
+  background-color: transparent;
+  color: ${white};
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid ${white};
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  padding: 1.5px 0;
+  width: 120px;
+  font-size: 0.7rem;
+  font-family: 'Inter', sans-serif;
+  display: none;
+
+  :hover {
+    background-color: ${darkBlue};
+    color: ${white};
+  }
+
+  :active {
+    background-color: ${darkBlue};
+    color: ${white};
+  }
+
+  :disabled {
+    background-color: ${grey};
+    opacity: 50%;
+    border: 1px solid #efefef;
+    color: ${white};
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const navStyles = (open: boolean) => css`
@@ -110,21 +167,65 @@ function Anchor({ children, ...restProps }: any) {
 
 export default function Header(props: Props) {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
+  const [stepsEnabled, setStepsEnabled] = useState(false);
+  const [initialStep] = useState(0);
+  const [steps] = useState([
+    {
+      element: '#step-one',
+      intro:
+        "Welcome to schoolfinder! You're looking for the right high school for you? Select your area here and get started.",
+      position: 'bottom',
+    },
+    {
+      element: '#step-two',
+      intro:
+        'Click here to view all schools and search based on your area and interests.',
+      position: 'bottom',
+    },
+    {
+      element: '#step-three',
+      intro: 'Learn more about schoolfinder and how we can support you.',
+      position: 'bottom',
+    },
+    {
+      element: '#step-four',
+      intro:
+        "You're here to add a school to our platform? Sign up for free and get started.",
+      position: 'bottom',
+    },
+  ]);
+  const onExit = () => {
+    setStepsEnabled(false);
+  };
+  const startIntro = () => {
+    setStepsEnabled(true);
+  };
 
   return (
     <header>
       <div css={headerStyles}>
-        <div css={logoStyles}>
-          <Link href="/">
-            <a>
-              <Image
-                src="/images/logo_white.png"
-                alt="Schoolfinder logo"
-                width="140.75"
-                height="39"
-              />
-            </a>
-          </Link>
+        <div css={headerLeftStyles}>
+          <div css={logoStyles}>
+            <Link href="/">
+              <a>
+                <Image
+                  src="/images/logo_white.png"
+                  alt="Schoolfinder logo"
+                  width="140.75"
+                  height="39"
+                />
+              </a>
+            </Link>
+          </div>
+          <Steps
+            steps={steps}
+            enabled={stepsEnabled}
+            initialStep={initialStep}
+            onExit={onExit}
+          />
+          <button css={getStartedButton} onClick={() => startIntro()}>
+            Get started
+          </button>
         </div>
         {props.user ? (
           <nav css={navStyles(burgerMenuOpen)}>
@@ -173,14 +274,14 @@ export default function Header(props: Props) {
           <nav css={navStyles(burgerMenuOpen)}>
             <ul>
               <li>
-                <div>
+                <div id="step-two">
                   <Link href="/schools/">
                     <a css={linkStyles}>Search</a>
                   </Link>
                 </div>
               </li>
               <li>
-                <div>
+                <div id="step-three">
                   <Link href="/about">
                     <a css={linkStyles}>About</a>
                   </Link>
@@ -190,9 +291,9 @@ export default function Header(props: Props) {
                 <div>
                   <Link href="/private-profile">
                     <a css={linkStyles}>
-                      <div>
+                      <div id="step-four">
                         <Image
-                          src="/images/user.png"
+                          src="/images/add_profile.png"
                           alt="Profile icon"
                           width="20"
                           height="20"

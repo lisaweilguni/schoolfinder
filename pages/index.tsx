@@ -94,7 +94,7 @@ export default function Home(props: Props) {
               Find your path in the jungle of high schools. Major life decisions
               made easier.
             </div>
-            <div css={inputSectionStyles}>
+            <div css={inputSectionStyles} id="step-one">
               <div>
                 <Select
                   instanceId="specialization"
