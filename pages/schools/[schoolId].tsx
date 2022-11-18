@@ -97,25 +97,23 @@ const iconStyles = css`
   aspect-ratio: 1 / 1;
 `;
 
-// type Props = {
-//   school: SchoolWithAreaNameAndSpecializationsTransformed;
-//   apiKey: string;
-// };
+type Props = {
+  school: SchoolWithAreaNameAndSpecializationsTransformed;
+};
 
-export default function SingleSchool(props) {
+export default function SingleSchool(props: Props) {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: props.apiKey,
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
-  const [address, setAddress] = useState(
-    `${props.school.street} ${props.school.postalCode} ${props.school.areaName}`,
-  );
   const [coordinates, setCoordinates] = useState({
     lat: 48.210033,
     lng: 16.363449,
   });
-  Geocode.setApiKey(props.apiKey);
 
   // Get latitude & longitude from address
+  const address = `${props.school.street} ${props.school.postalCode} ${props.school.areaName}`;
+  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+
   const findLatAndLng = useCallback(async () => {
     await Geocode.fromAddress(address).then(
       (response) => {
@@ -237,7 +235,9 @@ export default function SingleSchool(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<Props>> {
   // Retrieve the school ID from the URL
   const schoolId = parseIntFromContextQuery(context.query.schoolId);
 
@@ -251,7 +251,6 @@ export async function getServerSideProps(context) {
   }
 
   const foundSchool = await getSchoolWithSpecializationsById(schoolId);
-  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
   if (foundSchool.length === 0) {
     return {
@@ -265,11 +264,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       school: getSchoolWithAreaNameAndSpecializations(foundSchool),
-      apiKey: apiKey,
     },
   };
 }
-
-// export async function getServerSideProps(
-//   context: GetServerSidePropsContext,
-// ): Promise<GetServerSidePropsResult<Props>> {

@@ -24,6 +24,17 @@ import {
 } from '../utils/styles';
 import { SchoolWithAreaNameAndSpecializationsTransformed } from './schools';
 
+const profileInformationSectionStyles = css`
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 const profileInformationBox = css`
   display: flex;
   flex-direction: column;
@@ -36,6 +47,13 @@ const profileInformationBox = css`
   padding: 30px 30px;
   align-items: left;
   gap: 15px;
+
+  @media (max-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+  }
 `;
 
 const labelStyles = css`
@@ -74,6 +92,7 @@ const schoolPreviewBoxStyles = css`
   font-size: ${small};
   margin-top: 60px;
   position: relative;
+
   @media (max-width: 1023px) {
     margin-left: 20px;
     padding: 20px 40px;
@@ -208,7 +227,7 @@ export default function Profile(props: Props) {
   >();
   const router = useRouter();
 
-  // Load all schools into state on first render and every time props.schools changes
+  // Load schools on first render and every time props.schools changes
   useEffect(() => {
     setSchool(props.school);
   }, [props.school]);
@@ -264,7 +283,7 @@ export default function Profile(props: Props) {
       </Head>
 
       <div css={mainLayout}>
-        <div>
+        <div css={profileInformationSectionStyles}>
           <h1 css={h1Styles}>
             Welcome, <span css={capitalizeText}>{props.user.firstName}!</span>
           </h1>

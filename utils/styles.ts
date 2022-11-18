@@ -84,6 +84,9 @@ export const mainLayout = css`
     justify-content: center;
     margin-top: 50px;
   }
+  @media (max-width: 600px) {
+    align-items: center;
+  }
 `;
 
 export const higherMarginTopLayout = css`

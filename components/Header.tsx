@@ -45,6 +45,9 @@ const linkStyles = css`
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-family: 'Inter', sans-serif;
 
   :hover {
     color: ${darkText};
@@ -235,31 +238,47 @@ export default function Header(props: Props) {
               <li>
                 <div>
                   <Link href="/schools/">
-                    <a css={linkStyles}>Search</a>
+                    <button
+                      css={linkStyles}
+                      onClick={() => setBurgerMenuOpen(false)}
+                    >
+                      Search
+                    </button>
                   </Link>
                 </div>
               </li>
               <li>
                 <div>
                   <Link href="/about">
-                    <a css={linkStyles}>About</a>
+                    <button
+                      css={linkStyles}
+                      onClick={() => setBurgerMenuOpen(false)}
+                    >
+                      About
+                    </button>
                   </Link>
                 </div>
               </li>
               <li>
                 <div>
-                  <Link href="/private-profile">
-                    <a css={linkStyles}>
-                      <div>
-                        <Image
-                          src="/images/user.png"
-                          alt="Profile icon"
-                          width="20"
-                          height="20"
-                        />
-                      </div>
-                    </a>
-                  </Link>
+                  {' '}
+                  <button
+                    css={linkStyles}
+                    onClick={() => setBurgerMenuOpen(false)}
+                  >
+                    <Link href="/private-profile">
+                      <a css={linkStyles}>
+                        <div>
+                          <Image
+                            src="/images/user.png"
+                            alt="Profile icon"
+                            width="20"
+                            height="20"
+                          />
+                        </div>
+                      </a>
+                    </Link>
+                  </button>
                 </div>
               </li>
               <li>
@@ -278,31 +297,46 @@ export default function Header(props: Props) {
               <li>
                 <div id="step-two">
                   <Link href="/schools/">
-                    <a css={linkStyles}>Search</a>
+                    <button
+                      css={linkStyles}
+                      onClick={() => setBurgerMenuOpen(false)}
+                    >
+                      Search
+                    </button>
                   </Link>
                 </div>
               </li>
               <li>
                 <div id="step-three">
                   <Link href="/about">
-                    <a css={linkStyles}>About</a>
+                    <button
+                      css={linkStyles}
+                      onClick={() => setBurgerMenuOpen(false)}
+                    >
+                      About
+                    </button>
                   </Link>
                 </div>
               </li>
               <li>
                 <div>
-                  <Link href="/private-profile">
-                    <a css={linkStyles}>
-                      <div id="step-four">
-                        <Image
-                          src="/images/add_profile.png"
-                          alt="Profile icon"
-                          width="20"
-                          height="20"
-                        />
-                      </div>
-                    </a>
-                  </Link>
+                  <button
+                    css={linkStyles}
+                    onClick={() => setBurgerMenuOpen(false)}
+                  >
+                    <Link href="/private-profile">
+                      <a css={linkStyles}>
+                        <div id="step-four">
+                          <Image
+                            src="/images/add_profile.png"
+                            alt="Profile icon"
+                            width="20"
+                            height="20"
+                          />
+                        </div>
+                      </a>
+                    </Link>
+                  </button>
                 </div>
               </li>
             </ul>

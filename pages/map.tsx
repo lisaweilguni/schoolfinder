@@ -17,13 +17,15 @@ export default function MapPage() {
         <meta name="description" content="Map page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GoogleMap
-        mapContainerClassName="map-container"
-        zoom={10}
-        center={center}
-      >
-        <MarkerF position={center} />
-      </GoogleMap>
+      <div style={{ height: `100%` }}>
+        <GoogleMap
+          mapContainerClassName="map-container"
+          zoom={10}
+          center={center}
+        >
+          <MarkerF position={center} />
+        </GoogleMap>
+      </div>
     </div>
   );
 }

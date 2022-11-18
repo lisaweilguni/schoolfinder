@@ -55,6 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           .map-container {
             width: 100%;
             height: 100vh;
+            position: static;
           }
 
           .map-container-single-school {

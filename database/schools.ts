@@ -77,14 +77,12 @@ export async function createSchool(
   `;
 
   // Insert specializations
-  specializationIds.forEach(async (specializationId) => {
-    await sql`
-    INSERT INTO schools_specializations
+  for (const specializationId of specializationIds) {
+    await sql`INSERT INTO schools_specializations
      (school_id, specialization_id)
     VALUES
-     (${school!.id}, ${specializationId})
-  `;
-  });
+     (${school!.id}, ${specializationId})`;
+  }
 
   // Joint query to retrieve the matching specializations
   const specializations = await sql<Specialization[]>`
@@ -271,14 +269,12 @@ export async function updateSchool(
   `;
 
   // Insert new specializations
-  specializationIds.forEach(async (specializationId) => {
-    await sql`
-    INSERT INTO schools_specializations
+  for (const specializationId of specializationIds) {
+    await sql`INSERT INTO schools_specializations
      (school_id, specialization_id)
     VALUES
-     (${school!.id}, ${specializationId})
-  `;
-  });
+     (${school!.id}, ${specializationId})`;
+  }
 
   // Joint query to retrieve the matching specializations
   const specializations = await sql<Specialization[]>`

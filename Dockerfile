@@ -8,6 +8,7 @@ WORKDIR /app
 COPY . .
 # Set an environmental variable
 ENV NODE_ENV production
+ARG NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 ENV FLY_IO true
 RUN yq --inplace --output-format=json '.dependencies = .dependencies * (.devDependencies | to_entries | map(select(.key | test("^(typescript|@types/*|@upleveled/)"))) | from_entries)' package.json
 RUN yarn install --frozen-lockfile

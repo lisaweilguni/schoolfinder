@@ -15,6 +15,9 @@ processes = []
   allowed_public_ports = []
   auto_rollback = true
 
+[build.args]
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSyA5tn0ZDhlD-oD1tmH4jT3ZQ68A5bZcHdA"
+
 [[services]]
   http_checks = []
   internal_port = 8080
