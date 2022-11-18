@@ -14,6 +14,7 @@
 
 # production
 /build
+/fly.toml
 
 # misc
 .DS_Store
