@@ -16,7 +16,7 @@ processes = []
   auto_rollback = true
 
 [build.args]
-  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSyA5tn0ZDhlD-oD1tmH4jT3ZQ68A5bZcHdA"
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=""
 
 [[services]]
   http_checks = []
