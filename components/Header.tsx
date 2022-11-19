@@ -69,6 +69,7 @@ const headerLeftStyles = css`
   display: flex;
   flex-direction: row;
   gap: 25px;
+  align-items: center;
 `;
 
 const logoStyles = css`
@@ -78,7 +79,6 @@ const logoStyles = css`
 `;
 
 const getStartedButton = css`
-  display: inline-block;
   background-color: transparent;
   color: ${white};
   text-transform: uppercase;
@@ -88,11 +88,11 @@ const getStartedButton = css`
   letter-spacing: 2px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  padding: 1px;
+  padding: 0.5px;
+  height: 30px;
   width: 120px;
   font-size: 0.7rem;
   font-family: 'Inter', sans-serif;
-  display: none;
 
   :hover {
     background-color: ${darkBlue};
@@ -208,7 +208,7 @@ export default function Header(props: Props) {
     <header>
       <div css={headerStyles}>
         <div css={headerLeftStyles}>
-          <div css={logoStyles}>
+          <div css={logoStyles} id="step-one">
             <Link href="/">
               <a>
                 <Image

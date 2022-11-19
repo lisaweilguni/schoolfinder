@@ -270,7 +270,7 @@ export default function Profile(props: Props) {
     // refresh the user on state
     await props.refreshUserProfile();
 
-    // Redirect user to private page
+    // Redirect user to home
     await router.push(`/`);
   }
 

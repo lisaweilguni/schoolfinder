@@ -135,7 +135,7 @@ export default function SingleSchool(props: Props) {
   // Set coordinates for center and marker of map
   const center = { lat: coordinates.lat, lng: coordinates.lng };
 
-  // Show loading if map is not loaded yet
+  // Show loading animation if map is not loaded yet
   if (!isLoaded) {
     return (
       <div>
@@ -214,6 +214,7 @@ export default function SingleSchool(props: Props) {
                     alt="Website icon"
                     width="20"
                     height="20"
+                    css={iconStyles}
                   />
                   {props.school.website}
                 </div>
@@ -223,6 +224,7 @@ export default function SingleSchool(props: Props) {
                     alt="Money icon"
                     width="20"
                     height="20"
+                    css={iconStyles}
                   />
                   {props.school.isPublic ? 'public' : 'private'}
                 </div>
