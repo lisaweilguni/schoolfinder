@@ -83,18 +83,14 @@ const iconLineStyles = css`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  object-fit: contain;
-  aspect-ratio: 1 / 1;
 
   @media (max-width: 600px) {
-    flex-direction: row wrap;
     text-align: left;
   }
 `;
 
 const iconStyles = css`
   object-fit: contain;
-  aspect-ratio: 1 / 1;
 `;
 
 type Props = {
