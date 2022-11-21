@@ -1,34 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# schoolfinder
 
-## Getting Started
+## Description
 
-First, run the development server:
+schoolfinder is a full-stack progressive web app that helps students find the right high school. Schools can sign up and create a profile, students and parents can search based on location and multiple interests.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Visit the deployed site of **schoolfinder** [here](https://schoolfinder.fly.dev/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![image](https://user-images.githubusercontent.com/109659918/203014655-9acd186f-e048-4c4e-85f7-e9590186d665.png)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Design
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+This application is fully responsive for all screen sizes.
+The design, layout and prototype was developed in Figma and implemented with Emotion.
+In case you are interested, view my **figma design board** [here](https://www.figma.com/file/KKkyvPkQFprLiXeW85meAG/schoolfinder?node-id=0%3A1&t=ylX6z3YB8sZQU49p-1).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Functionalities
 
-## Learn More
+- Search page with the option to filter based on location and multiple interests
+- Full user authentication process (registration and login)
+- User authorisation incl. creation of session tokens
+- Registered schools can add schools to the platform (incl. option to choose up to three specializations)
+- Dynamic routing for each school details page
+- The location of each school is displayed on a map (Google Maps API)
+- Private profile page where registered schools can edit or delete their profile and school information
+- First-time users can get a tour of the functionalities
+- The header adapts based on screen size and status of the user (logged in / not logged in)
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- Typescript
+- React
+- PostgreSQL
+- Node.js
+- Emotion
+- REST API
+- Google API (Geocode, Maps)
+- Figma
+- DrawSQL
+- Jest
+- Playwright
+- Fly.io
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Screenshots
 
-## Deploy on Vercel
+### Search page
+![image](https://user-images.githubusercontent.com/109659918/203014970-7897fc95-4c6c-4d6e-be52-a0d2c21b7af9.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### School details
+![image](https://user-images.githubusercontent.com/109659918/203015517-fb9dc460-1118-4987-acd3-f139bc72952d.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Private profile
+![image](https://user-images.githubusercontent.com/109659918/203015317-82dab6bc-8c08-4a88-ae5a-ad55e12a2b8d.png)
+
+### Design system in Figma
+![image](https://user-images.githubusercontent.com/109659918/203016478-636ac265-8411-4cf7-9ff0-135a005517b5.png)
+
+### Database schema on DrawSQL
+![Screenshot 2022-11-21 at 10 44 12](https://user-images.githubusercontent.com/109659918/203018384-b25c9463-df9b-4f4d-8c1f-ddd042d6b073.png)
+
+### Mobile layout
+![Screenshot 2022-11-21 at 11 09 25](https://user-images.githubusercontent.com/109659918/203023857-742eeb34-9438-4f21-86cd-1ed62341a8f8.png)
+
+## Setup instructions
+
+- Clone the repository with `git clone <repo>`
+- Setup the database by downloading and installing PostgreSQL
+- Create a user and a database
+- Create a new file .env
+- Create an API key on the Google Maps Platform and store it in your .env with a variable name starting with NEXT_PUBLIC_
+- Copy the environment variables from .env-example into .env
+- Replace the placeholders xxxxx with your username, password and name of database
+- Install dotenv-cli with `yarn add dotenv-cli`
+- Run `yarn install` in your command line
+- Run the migrations with `yarn migrate up`
+- Start the server by running `yarn dev`
+
+## Deploy on fly.io
+
+- Generate a Fly.io Token, called _GitHub Actions Deploy Token_ and copy the text
+- Create a new repository secret in the GitHub repo, named FLY_API_TOKEN
+- Log into Fly.io on the command line: `flyctl auth login`
+- Create an app `flyctl apps create --name <app name>`
+- Create the Fly.io config files
+- Add database credentials using Fly.io secrets
+  `flyctl secrets set PGHOST=localhost PGDATABASE=$(openssl rand -hex 16) PGUSERNAME=upleveled$(openssl rand -hex 16) PGPASSWORD=$(openssl rand -base64 32)`
+- Add built time environment variables to the config files (fly.toml, Dockerfile) as described [here](https://fly.io/docs/languages-and-frameworks/nextjs/#what-about-build-time-environment-variables)
+- Create a 1GB volume for the PostgreSQL database in Frankfurt
+  `flyctl volumes create postgres --size 1 --region fra`
+- Deploy: `flyctl deploy`
+
+
