@@ -195,7 +195,6 @@ export type SchoolWithAreaNameAndSpecializationsTransformed = {
 };
 
 type Props = {
-  schools: SchoolWithAreaNameAndSpecializationsTransformed[];
   areas: SelectType[];
   specializations: SelectType[];
   setAreaFilter: Dispatch<SetStateAction<SelectType>>;
@@ -213,12 +212,24 @@ export default function Search(props: Props) {
   >([]);
   const [interestsFilter, setInterestsFilter] = useState<SelectType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showCount, setShowCount] = useState(false);
 
-  // Load all schools on first render and every time props.schools changes
+  async function getSchoolsFromApi() {
+    const response = await fetch('/api/schools');
+    const schoolsFromDatabase = await response.json();
+    const schoolsTransformed = transformMultipleSchools(schoolsFromDatabase);
+    const schoolsMerged = mergeDuplicateSchools(schoolsTransformed);
+    const schools = [...schoolsMerged].reverse();
+
+    setAllSchools(schools);
+  }
+
   useEffect(() => {
-    setAllSchools(props.schools);
+    getSchoolsFromApi().catch((err) => {
+      console.log(err);
+    });
     setIsLoading(false);
-  }, [props.schools, allSchools]);
+  }, []);
 
   // Declare handler for specialization multi-select
   const maxSelectOptions = 3;
@@ -232,7 +243,7 @@ export default function Search(props: Props) {
   };
 
   // School count
-  const count = allSchools?.filter((school) => {
+  const counter = allSchools?.filter((school) => {
     let filter = true;
     // Check if selected area name matches the school area
     if (props.areaFilter && school.areaName !== props.areaFilter.label) {
@@ -309,6 +320,7 @@ export default function Search(props: Props) {
               onClick={() => {
                 props.setAreaFilter(selectedArea);
                 setInterestsFilter(selectedSpecializations);
+                setShowCount(true);
               }}
             >
               <span>Search</span>
@@ -317,9 +329,11 @@ export default function Search(props: Props) {
         </div>
         {isLoading && <LoadingAnimation />}
         <div css={countStyles}>
-          {count && count === 1
-            ? `${count} school found`
-            : `${count} schools found`}
+          {showCount
+            ? counter === 1
+              ? `${counter} school found`
+              : `${counter} schools found`
+            : ''}
         </div>
         {allSchools
           ?.filter((school) => {
@@ -405,15 +419,9 @@ export default function Search(props: Props) {
 export async function getServerSideProps() {
   const areasFromDatabase = await getAllAreas();
   const specializationsFromDatabase = await getAllSpecializations();
-  const schoolsFromDatabase = await getAllSchools();
-
-  // Transform data and merge duplicates with utils data structure functions
-  const schoolsTransformed = transformMultipleSchools(schoolsFromDatabase);
-  const schools = mergeDuplicateSchools(schoolsTransformed);
 
   return {
     props: {
-      schools: schools,
       areas: transformDataForSelect(areasFromDatabase),
       specializations: transformDataForSelect(specializationsFromDatabase),
     },
