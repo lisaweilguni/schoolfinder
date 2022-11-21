@@ -216,7 +216,6 @@ const imageStyles = css`
 `;
 
 type Props = {
-  school?: SchoolWithAreaNameAndSpecializationsTransformed;
   user: User;
   refreshUserProfile: () => Promise<void>;
 };
@@ -227,10 +226,21 @@ export default function Profile(props: Props) {
   >();
   const router = useRouter();
 
-  // Load schools on first render and every time props.schools changes
+  // Fetch school from api
+  async function getSchoolHandler() {
+    const schoolResponse = await fetch('/api/users/schools');
+    const schoolResponseBody = await schoolResponse.json();
+    const foundSchool =
+      getSchoolWithAreaNameAndSpecializations(schoolResponseBody);
+    setSchool(foundSchool);
+  }
+
+  // Load school on first render
   useEffect(() => {
-    setSchool(props.school);
-  }, [props.school]);
+    getSchoolHandler().catch((err) => {
+      console.log(err);
+    });
+  }, []);
 
   // Delete school handler
   async function deleteSchool(userId: number) {
@@ -338,7 +348,7 @@ export default function Profile(props: Props) {
               </Link>
             </button>
             <button css={viewStyles}>
-              <Link href={`/schools/${props.school?.schoolId}`}>
+              <Link href={`/schools/${school.schoolId}`}>
                 <div>
                   <Image
                     src="/images/open_dark.png"
@@ -440,7 +450,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       user: user,
-      school: getSchoolWithAreaNameAndSpecializations(foundSchool),
     },
   };
 }

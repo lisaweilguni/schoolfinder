@@ -2,16 +2,21 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import {
   createSchool,
   deleteSchoolByUserId,
+  getSchoolByToken,
   getSchoolByUserId,
   School,
+  SchoolWithAreaNameAndSpecializations,
   SchoolWithSpecializations,
   updateSchool,
 } from '../../../database/schools';
 import { getValidSessionByToken } from '../../../database/sessions';
 
 export type SchoolResponseBody =
-  | { school: SchoolWithSpecializations | School }
-  | { errors: { message: string }[] };
+  | {
+      school: SchoolWithSpecializations | School;
+    }
+  | { errors: { message: string }[] }
+  | SchoolWithAreaNameAndSpecializations[];
 
 export default async function handler(
   request: NextApiRequest,
@@ -26,6 +31,23 @@ export default async function handler(
       .status(400)
       .json({ errors: [{ message: 'No valid session token passed' }] });
     return;
+  }
+
+  if (request.method === 'GET') {
+    if (!request.cookies.sessionToken) {
+      response
+        .status(400)
+        .json({ errors: [{ message: 'No session token passed' }] });
+      return;
+    }
+
+    const schoolFromDatabase = await getSchoolByToken(
+      request.cookies.sessionToken,
+    );
+    const school = [
+      ...(schoolFromDatabase !== undefined ? schoolFromDatabase : []),
+    ];
+    return response.status(200).json(school);
   }
 
   if (request.method === 'POST') {

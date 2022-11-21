@@ -233,6 +233,38 @@ export async function getSchoolByUserId(userId: number, token: string) {
   return school;
 }
 
+export async function getSchoolByToken(token: string) {
+  if (!token) return undefined;
+  const school = await sql<SchoolWithAreaNameAndSpecializations[]>`
+    SELECT
+     schools.id AS school_id,
+     schools.name AS school_name,
+     schools.area_id,
+     areas.name as area_name,
+     schools.postal_code,
+     schools.street,
+     schools.website,
+     schools.is_public,
+     specializations.id as specialization_id,
+     specializations.name as specialization_name
+    FROM
+     users,
+     schools,
+     areas,
+     specializations,
+     schools_specializations,
+     sessions
+    WHERE
+     sessions.token = ${token} AND
+     users.id = sessions.user_id AND
+     schools.user_id = users.id AND
+     schools.area_id = areas.id AND
+     specializations.id = schools_specializations.specialization_id AND
+     schools.id = schools_specializations.school_id
+  `;
+  return school;
+}
+
 export async function updateSchool(
   name: string,
   areaId: number,
