@@ -62,6 +62,10 @@ In case you are interested, view my **figma design board** [here](https://www.fi
 ### Mobile layout
 ![Screenshot 2022-11-21 at 11 09 25](https://user-images.githubusercontent.com/109659918/203023857-742eeb34-9438-4f21-86cd-1ed62341a8f8.png)
 
+### Project Planning Notion
+![Notion2](https://user-images.githubusercontent.com/109659918/203324457-92d23578-d8a8-4a16-8c6b-df082322841f.png)
+
+
 ## Setup instructions
 
 - Clone the repository with `git clone <repo>`
