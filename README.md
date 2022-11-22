@@ -59,8 +59,12 @@ In case you are interested, view my **figma design board** [here](https://www.fi
 ### Database schema on DrawSQL
 ![Screenshot 2022-11-21 at 10 44 12](https://user-images.githubusercontent.com/109659918/203018384-b25c9463-df9b-4f4d-8c1f-ddd042d6b073.png)
 
-### Mobile layout
-![Screenshot 2022-11-21 at 11 09 25](https://user-images.githubusercontent.com/109659918/203023857-742eeb34-9438-4f21-86cd-1ed62341a8f8.png)
+### Responsive Design
+![image](https://user-images.githubusercontent.com/109659918/203347087-216e40bc-e252-415d-8ce5-764041a65611.png)
+
+### Project Planning Notion
+![Notion2](https://user-images.githubusercontent.com/109659918/203324457-92d23578-d8a8-4a16-8c6b-df082322841f.png)
+
 
 ## Setup instructions
 
