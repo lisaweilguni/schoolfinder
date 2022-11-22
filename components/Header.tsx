@@ -324,7 +324,7 @@ export default function Header(props: Props) {
                     css={linkStyles}
                     onClick={() => setBurgerMenuOpen(false)}
                   >
-                    <Link href="/private-profile">
+                    <Link href="/register">
                       <a css={linkStyles}>
                         <div id="step-four">
                           <Image

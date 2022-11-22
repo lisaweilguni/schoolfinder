@@ -6,7 +6,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import { getAllAreas } from '../../database/areas';
-import { getAllSchools } from '../../database/schools';
 import { getAllSpecializations } from '../../database/specializations';
 import {
   mergeDuplicateSchools,
