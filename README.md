@@ -56,15 +56,20 @@ In case you are interested, view my **figma design board** [here](https://www.fi
 ### Design system in Figma
 ![image](https://user-images.githubusercontent.com/109659918/203016478-636ac265-8411-4cf7-9ff0-135a005517b5.png)
 
-### Database schema on DrawSQL
-![Screenshot 2022-11-21 at 10 44 12](https://user-images.githubusercontent.com/109659918/203018384-b25c9463-df9b-4f4d-8c1f-ddd042d6b073.png)
-
 ### Responsive Design
 ![image](https://user-images.githubusercontent.com/109659918/203347087-216e40bc-e252-415d-8ce5-764041a65611.png)
 
-### Project Planning Notion
+### Wireframing
+![image](https://user-images.githubusercontent.com/109659918/203993323-f72f8597-5d77-4c76-8841-70178da0da7a.png)
+
+### Wireframing (grey-scale)
+![image](https://user-images.githubusercontent.com/109659918/203993247-a6c08956-a523-4bf6-9f0e-0f00776f3ab6.png)
+
+### Project Management (Notion)
 ![Notion2](https://user-images.githubusercontent.com/109659918/203324457-92d23578-d8a8-4a16-8c6b-df082322841f.png)
 
+### Database schema on DrawSQL
+![Screenshot 2022-11-21 at 10 44 12](https://user-images.githubusercontent.com/109659918/203018384-b25c9463-df9b-4f4d-8c1f-ddd042d6b073.png)
 
 ## Setup instructions
 
