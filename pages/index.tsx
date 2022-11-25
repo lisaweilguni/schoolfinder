@@ -95,7 +95,7 @@ export default function Home(props: Props) {
               made easier.
             </div>
             <div css={inputSectionStyles}>
-              <div>
+              <div data-test-id="area-select">
                 <Select
                   instanceId="specialization"
                   styles={selectStylesHome}
@@ -110,6 +110,7 @@ export default function Home(props: Props) {
               <div>
                 <button
                   css={defaultButton}
+                  data-test-id="search-button"
                   onClick={async () => {
                     props.setAreaFilter(selectedArea);
                     await router.push(`/schools`);
