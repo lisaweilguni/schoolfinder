@@ -5,6 +5,7 @@
 schoolfinder is a full-stack progressive web app that helps students find the right high school. Schools can sign up and create a profile, students and parents can search based on location and multiple interests.
 
 Visit the deployed site of **schoolfinder** [here](https://schoolfinder.fly.dev/).
+Watch a 3-minute intro video to the project [here](https://www.youtube.com/watch?v=_yXq5PoJ0kg&feature=youtu.be).
 
 ![image](https://user-images.githubusercontent.com/109659918/203014655-9acd186f-e048-4c4e-85f7-e9590186d665.png)
 
